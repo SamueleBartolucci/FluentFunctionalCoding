@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FluentCoding.FluentExtensions.Map
+namespace FluentCoding
 {
     public static partial class FluentExtension
     {

@@ -5,6 +5,8 @@ VisualStudioVersion = 17.12.35527.113 d17.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentCoding", "FluentCoding\FluentCoding.csproj", "{8BACF8F6-CDEE-43F8-941C-D88F8D79C235}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentCodingTest", "FluentCodingTest\FluentCodingTest.csproj", "{ADB40031-0C33-4897-B406-AA15AC27EB31}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{8BACF8F6-CDEE-43F8-941C-D88F8D79C235}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8BACF8F6-CDEE-43F8-941C-D88F8D79C235}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8BACF8F6-CDEE-43F8-941C-D88F8D79C235}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ADB40031-0C33-4897-B406-AA15AC27EB31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ADB40031-0C33-4897-B406-AA15AC27EB31}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ADB40031-0C33-4897-B406-AA15AC27EB31}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ADB40031-0C33-4897-B406-AA15AC27EB31}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
