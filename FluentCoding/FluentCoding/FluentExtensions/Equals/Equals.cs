@@ -1,0 +1,38 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace FluentCoding.FluentExtensions.Map
+{
+    public static partial class FluentExtension
+    {
+        /// <summary>
+        /// Search if at least one item from the domains match the input value
+        /// Basic Equals used as comparison
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="subject"></param>
+        /// <param name="valuesToCompareWith"></param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool EqualsToAny<T>(this T subject, params T[] valuesToCompareWith)
+            => subject != null && valuesToCompareWith.Any(domainValue => subject.Equals(domainValue));
+
+
+        /// <summary>
+        /// Search if at least one item from a domains match the input value
+        /// The provided equalityComparison function is used as comparison
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="K"></typeparam>
+        /// <param name="subject"></param>
+        /// <param name="comparerFunc"></param>
+        /// <param name="valuesToCompareWith"></param>
+        /// <returns></returns>
+        public static bool EqualsToAny<T, K>(this T subject, Func<T, K, bool> comparerFunc, params K[] valuesToCompareWith)
+            => subject != null && valuesToCompareWith.Any(valueToCompare => comparerFunc(subject, valueToCompare));
+    }
+}
