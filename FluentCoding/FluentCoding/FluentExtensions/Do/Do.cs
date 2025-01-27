@@ -13,17 +13,17 @@ namespace FluentCoding
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <typeparam name="K"></typeparam>
-        /// <param name="actionSubject"></param>
+        /// <param name="subject"></param>
         /// <param name="actionsToApplyOnSubject"></param>
         /// <returns></returns>
-        public static T Do<T>(this T actionSubject, params Action<T>[] actionsToApplyOnSubject)
+        public static T Do<T>(this T subject, params Action<T>[] actionsToApplyOnSubject)
         {
-            if (actionSubject == null) return default;
+            if (subject == null) return default;
 
             foreach (var doOnSubject in actionsToApplyOnSubject)
-                doOnSubject(actionSubject);
+                doOnSubject(subject);
 
-            return actionSubject;
+            return subject;
         }
 
 
@@ -33,17 +33,17 @@ namespace FluentCoding
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <typeparam name="K"></typeparam>
-        /// <param name="actionSubject"></param>
+        /// <param name="subject"></param>
         /// <param name="functionsToApplyOnSubject"></param>
         /// <returns></returns>
-        public static T Do<T, K>(this T actionSubject, params Func<T,K>[] functionsToApplyOnSubject)
+        public static T Do<T, K>(this T subject, params Func<T,K>[] functionsToApplyOnSubject)
         {
-            if (actionSubject == null) return default;
+            if (subject == null) return default;
 
             foreach (var mapOnSubject in functionsToApplyOnSubject)
-                mapOnSubject(actionSubject);
+                mapOnSubject(subject);
 
-            return actionSubject;
+            return subject;
         }
     }
 }

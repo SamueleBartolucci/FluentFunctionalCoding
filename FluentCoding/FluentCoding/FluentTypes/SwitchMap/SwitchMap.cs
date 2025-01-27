@@ -1,39 +1,39 @@
-﻿namespace FluentCoding
-{
-    public struct SwitchMap<TIn, TOut>
-    {
-        internal TIn SwitchSubject { get; set; }
-        internal Func<TIn, TOut> DefaultCase = null;
-        internal Dictionary<Func<TIn, bool>, Func<TIn, TOut>> CasesByPriority = new Dictionary<Func<TIn, bool>, Func<TIn, TOut>>();
+﻿using System.Collections.ObjectModel;
 
-        private SwitchMap(TIn switchSubject) => this.SwitchSubject = switchSubject;
+namespace FluentCoding
+{
+    public readonly struct SwitchMap<TIn, TOut>
+    {
+        internal readonly TIn _subject;
+        internal readonly Func<TIn, TOut> _defaultCase = null;
+        internal readonly Dictionary<Func<TIn, bool>, Func<TIn, TOut>> _casesByPriority = new Dictionary<Func<TIn, bool>, Func<TIn, TOut>>();
+
+        private SwitchMap(TIn switchSubject) => this._subject = switchSubject;
 
         public SwitchMap(TIn switchSubject, Func<TIn, TOut> defaultCase) : this(switchSubject)
-            => this.DefaultCase = defaultCase;
+            => this._defaultCase = defaultCase;
 
         public SwitchMap<TIn, TOut> Case(bool predicate, Func<TIn, TOut> map)
         {
-            CasesByPriority.Add(_ => predicate, map);
+            _casesByPriority.Add(_ => predicate, map);
             return this;
         }
         public SwitchMap<TIn, TOut> Case(Func<bool> predicate, Func<TIn, TOut> map)
         {
-            CasesByPriority.Add(_ => predicate(), map);
+            _casesByPriority.Add(_ => predicate(), map);
             return this;
         }
 
         public SwitchMap<TIn, TOut> Case(Func<TIn, bool> predicate, Func<TIn, TOut> map)
         {
-            CasesByPriority.Add(predicate, map);
+            _casesByPriority.Add(predicate, map);
             return this;
         }
 
-        public TOut Match() => Match(SwitchSubject);
-
-        internal TOut Match(TIn switchSubjectg)
-        {            
-            var matchCase = CasesByPriority.FirstOrDefault(testCase => testCase.Key(switchSubjectg));
-            return matchCase.Value(switchSubjectg) ?? DefaultCase(switchSubjectg);
+        public TOut Match()
+        {
+            var sbj = this._subject;
+            return (_casesByPriority.FirstOrDefault(testCase => testCase.Key(sbj)).Value ?? _defaultCase)(sbj);
         }
     }
 }

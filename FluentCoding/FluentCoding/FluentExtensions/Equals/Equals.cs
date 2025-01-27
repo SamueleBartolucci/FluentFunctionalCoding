@@ -15,11 +15,11 @@ namespace FluentCoding
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="subject"></param>
-        /// <param name="valuesToCompareWith"></param>
+        /// <param name="valuesDomainToCompareWith"></param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool EqualsToAny<T>(this T subject, params T[] valuesToCompareWith)
-            => subject != null && valuesToCompareWith.Any(domainValue => subject.Equals(domainValue));
+        public static bool EqualsToAny<T>(this T subject, params T[] valuesDomainToCompareWith)
+            => subject != null && valuesDomainToCompareWith.Any(domainValue => subject.Equals(domainValue));
 
 
         /// <summary>
@@ -30,9 +30,9 @@ namespace FluentCoding
         /// <typeparam name="K"></typeparam>
         /// <param name="subject"></param>
         /// <param name="comparerFunc"></param>
-        /// <param name="valuesToCompareWith"></param>
+        /// <param name="valuesDomainToCompareWith"></param>
         /// <returns></returns>
-        public static bool EqualsToAny<T, K>(this T subject, Func<T, K, bool> comparerFunc, params K[] valuesToCompareWith)
-            => subject != null && valuesToCompareWith.Any(valueToCompare => comparerFunc(subject, valueToCompare));
+        public static bool EqualsToAny<T, K>(this T subject, Func<T, K, bool> comparerFunc, params K[] valuesDomainToCompareWith)
+            => subject != null && valuesDomainToCompareWith.Any(valueToCompare => comparerFunc(subject, valueToCompare));
     }
 }

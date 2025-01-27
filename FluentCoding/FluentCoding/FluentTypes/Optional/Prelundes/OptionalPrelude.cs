@@ -1,0 +1,27 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace FluentCoding.FluentTypes.Optional.Prelundes
+{
+    public static partial class Prelude
+    {
+        /// <summary>
+        /// Return Some of the input value
+        /// If the value is null the return is None
+        /// </summary>
+        /// <typeparam name="O"></typeparam>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static Optional<O> Some<O>(O value) => value == null ? Optional<O>.None() : Optional<O>.Some(value);
+
+        /// <summary>
+        /// Return None
+        /// </summary>
+        /// <returns></returns>
+        public static Optional<O> None<O>() => Optional<O>.None();
+
+    }
+}

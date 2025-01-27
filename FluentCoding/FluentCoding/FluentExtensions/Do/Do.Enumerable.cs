@@ -31,6 +31,7 @@ namespace FluentCoding
 
         /// <summary>
         /// Apply a set of functions on each item from the subject (when this is not null) then return the subject
+        /// The funct result is discarded
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <typeparam name="K"></typeparam>

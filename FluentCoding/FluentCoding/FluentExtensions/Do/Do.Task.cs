@@ -13,22 +13,23 @@ namespace FluentCoding
         /// Apply a set of actions to the subject (when this is not null) and then return the subject
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="actionSubject"></param>
+        /// <param name="subject"></param>
         /// <param name="actionsToApplyOnSubject"></param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static async Task<T> DoAsync<T>(this Task<T> actionSubject, params Action<T>[] actionsToApplyOnSubject)
-            => (await actionSubject).Do(actionsToApplyOnSubject);
+        public static async Task<T> DoAsync<T>(this Task<T> subject, params Action<T>[] actionsToApplyOnSubject)
+            => (await subject).Do(actionsToApplyOnSubject);
 
         /// <summary>
         /// Apply a set of functions to the subject (when this is not null) and then return the subject
+        /// /// The funct result is discarded
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="actionSubject"></param>
+        /// <param name="subject"></param>
         /// <param name="functionsToApplyOnSubject"></param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static async Task<T> DoAsync<T>(this Task<T> actionSubject, params Func<T, T>[] functionsToApplyOnSubject)
-            => (await actionSubject).Do(functionsToApplyOnSubject);
+        public static async Task<T> DoAsync<T>(this Task<T> subject, params Func<T, T>[] functionsToApplyOnSubject)
+            => (await subject).Do(functionsToApplyOnSubject);
     }
 }

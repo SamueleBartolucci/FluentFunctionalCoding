@@ -10,7 +10,7 @@ namespace FluentCoding
     {
         /// <summary>
         /// Choose between the left or the right value.
-        /// Pick left when not null and chooseRight bool is false
+        /// Pick left when not null and 'chooseRight' bool is false
         /// Empty string is considered NOT null
         /// </summary>
         /// <typeparam name="T"></typeparam>
@@ -38,7 +38,7 @@ namespace FluentCoding
         /// <summary>
         /// Choose between the left or the right value.
         /// Pick left when not null and chooseRightWhen(leftValue) is false
-        /// Empty string is considered NOT null
+        /// Empty string is considered NOT null        
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="leftValue"></param>
@@ -52,42 +52,45 @@ namespace FluentCoding
         /// <summary>
         /// Choose between the left or the right value.
         /// Pick left when not null and chooseRight bool is false
-        /// Empty string is considered NOT null
+        /// Empty string is considered NOT null.
+        /// The orRightValueFunc is evaluated only when right value must be returned
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="leftValue"></param>
-        /// <param name="orRightValue"></param>
+        /// <param name="orRightValueFunc"></param>
         /// <param name="chooseRight"></param>
         /// <returns></returns>
-        public static T Or<T>(this T leftValue, Func<T> orRightValue, bool chooseRight = false)
-            => (leftValue == null || chooseRight) ? orRightValue() : leftValue;
+        public static T Or<T>(this T leftValue, Func<T> orRightValueFunc, bool chooseRight = false)
+            => (leftValue == null || chooseRight) ? orRightValueFunc() : leftValue;
 
 
         /// <summary>
         /// Choose between the left or the right value.
         /// Pick left when not null and chooseRightWhen() is false
         /// Empty string is considered NOT null
+        /// The orRightValueFunc is evaluated only when right value must be returned
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="leftValue"></param>
-        /// <param name="orRightValue"></param>
+        /// <param name="orRightValueFunc"></param>
         /// <param name="chooseRightWhen"></param>
         /// <returns></returns>
-        public static T Or<T>(this T leftValue, Func<T> orRightValue, Func<bool> chooseRightWhen)
-            => (leftValue == null || chooseRightWhen()) ? orRightValue() : leftValue;
+        public static T Or<T>(this T leftValue, Func<T> orRightValueFunc, Func<bool> chooseRightWhen)
+            => (leftValue == null || chooseRightWhen()) ? orRightValueFunc() : leftValue;
 
         /// <summary>
         /// Choose between the left or the right value.
         /// Pick left when not null and chooseRightWhen(leftValue) is false
         /// Empty string is considered NOT null
+        /// The orRightValueFunc is evaluated only when right value must be returned
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="leftValue"></param>
-        /// <param name="orRightValue"></param>
+        /// <param name="orRightValueFunc"></param>
         /// <param name="chooseRightWhen"></param>
         /// <returns></returns>
-        public static T Or<T>(this T leftValue, Func<T> orRightValue, Func<T, bool> chooseRightWhen)
-           => (leftValue == null || chooseRightWhen(leftValue)) ? orRightValue() : leftValue;
+        public static T Or<T>(this T leftValue, Func<T> orRightValueFunc, Func<T, bool> chooseRightWhen)
+           => (leftValue == null || chooseRightWhen(leftValue)) ? orRightValueFunc() : leftValue;
 
     }
 }
