@@ -1,43 +1,49 @@
-﻿namespace FluentCoding
+﻿using System.Diagnostics.Contracts;
+
+namespace FluentCoding
 {
-    public static partial class FluentExtension
+
+    public readonly partial struct Optional<O>
     {
         /// <summary>
-        /// Apply a set of actions to the subject (when this is not null) and then return the subject
+        /// Apply a set of actions to the subject (when IsSome) and then return the subject
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <typeparam name="K"></typeparam>
         /// <param name="subject"></param>
         /// <param name="actionsToApplyOnSubject"></param>
         /// <returns></returns>
-        public static T Do<T>(this T subject, params Action<T>[] actionsToApplyOnSubject)
+        public Optional<O> Do(params Action<O>[] actionsToApplyOnSubject)
         {
-            if (subject == null) return default;
+
+            if (!_isSomething) return this;
 
             foreach (var doOnSubject in actionsToApplyOnSubject)
-                doOnSubject(subject);
+                doOnSubject(_subject);
 
-            return subject;
+            return this;
         }
 
 
 
         /// <summary>
-        /// Apply a set of functions to the subject (when this is not null) and then return the subject
+        /// Apply a set of functions to the subject (when IsSome) and then return the subject
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <typeparam name="K"></typeparam>
         /// <param name="subject"></param>
         /// <param name="functionsToApplyOnSubject"></param>
         /// <returns></returns>
-        public static T Do<T, K>(this T subject, params Func<T, K>[] functionsToApplyOnSubject)
+        public Optional<O> Do<K>(params Func<O, K>[] functionsToApplyOnSubject)
         {
-            if (subject == null) return default;
+            if (!_isSomething) return this;
 
             foreach (var mapOnSubject in functionsToApplyOnSubject)
-                mapOnSubject(subject);
+                mapOnSubject(_subject);
 
-            return subject;
+            return this;
         }
+
     }
+
 }

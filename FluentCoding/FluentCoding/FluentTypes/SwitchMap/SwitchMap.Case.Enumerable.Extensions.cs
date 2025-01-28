@@ -1,13 +1,8 @@
-﻿
-using System;
-using System.Linq.Expressions;
-using System.Security.AccessControl;
-
-namespace FluentCoding
+﻿namespace FluentCoding
 {
 
     public static partial class SwitchMapExtension
-    {   
+    {
         public static SwitchMap<IEnumerable<TIn>, TOut> CaseAny<TIn, TOut>(this SwitchMap<IEnumerable<TIn>, TOut> switchCase, Func<TIn, bool> casePredicate, Func<IEnumerable<TIn>, TOut> caseMap)
             => switchCase.Case(subject => subject.Any(casePredicate), caseMap);
 

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FluentCoding
+﻿namespace FluentCoding
 {
     public static partial class FluentExtension
     {
@@ -16,7 +10,7 @@ namespace FluentCoding
         /// <param name="subjectsToMap"></param>
         /// <param name="mapFunc"></param>
         /// <returns></returns>
-        public static IEnumerable<K> MapAll<T, K>(this IEnumerable<T> subjectsToMap, Func<T, K> mapFunc) 
+        public static IEnumerable<K> MapAll<T, K>(this IEnumerable<T> subjectsToMap, Func<T, K> mapFunc)
             => subjectsToMap == null ? default : subjectsToMap.Select(mapFunc);
     }
 }

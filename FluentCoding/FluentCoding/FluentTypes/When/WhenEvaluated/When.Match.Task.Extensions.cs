@@ -1,20 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FluentCoding
+﻿namespace FluentCoding
 {
     public static partial class WhenForTasks
     {
-
-        public static async Task<When<T>> OnTrueAsynch<T>(this Task<When<T>> when, Action<T> actionToCallOnSubject)
-            => (await when).OnTrue(actionToCallOnSubject);
-
-        public static async Task<When<T>> OnFalseAsynch<T>(this Task<When<T>> when, Action<T> actionToCallOnSubject)
-            => (await when).OnFalse(actionToCallOnSubject);
-
         public static async Task<T> MatchTrueAsynch<T>(this Task<When<T>> when, Func<T, T> mapOnTrue)
          => (await when).MatchTrue(mapOnTrue);
 

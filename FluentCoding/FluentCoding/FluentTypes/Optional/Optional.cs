@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Diagnostics.Contracts;
 
-namespace FluentCoding.FluentTypes.Optional
+namespace FluentCoding
 {
     public readonly partial struct Optional<O>
     {
@@ -26,14 +22,14 @@ namespace FluentCoding.FluentTypes.Optional
         /// Check if Optional value is some
         /// </summary>
         /// <returns></returns>
-        public bool IsSome() => this._isSomething;
+        public bool IsSome => this._isSomething;
 
 
         /// <summary>
         /// Check if Optional value is None
         /// </summary>
         /// <returns></returns>
-        public bool IsNone() => !this._isSomething;
+        public bool IsNone => !this._isSomething;
 
 
         /// <summary>
@@ -42,6 +38,7 @@ namespace FluentCoding.FluentTypes.Optional
         /// </summary>
         /// <param name="action"></param>
         /// <returns></returns>
+        [Pure]
         public Optional<O> OnSome(Action<O> action)
         {
             action(_subject);
@@ -55,6 +52,7 @@ namespace FluentCoding.FluentTypes.Optional
         /// </summary>
         /// <param name="action"></param>
         /// <returns></returns>
+        [Pure]
         public Optional<O> OnSome<T>(Func<O, T> funcAsAction)
         {
             funcAsAction(_subject);
@@ -67,6 +65,7 @@ namespace FluentCoding.FluentTypes.Optional
         /// </summary>
         /// <param name="action"></param>
         /// <returns></returns>
+        [Pure]
         public Optional<O> OnNone(Action action)
         {
             action();
@@ -80,20 +79,11 @@ namespace FluentCoding.FluentTypes.Optional
         /// <typeparam name="T"></typeparam>
         /// <param name="funcAsAction"></param>
         /// <returns></returns>
+        [Pure]
         public Optional<O> OnNone<T>(Func<T> funcAsAction)
         {
             funcAsAction();
             return this;
         }
-
-
-
-        public O MatchNone(Func<O> mapOnNone)
-            => _isSomething ? _subject : mapOnNone();
-
-
-        public T Match<T>(Func<O, T> mapOnSome, Func<T> mapOnNone)
-            => _isSomething ? mapOnSome(_subject) : mapOnNone();
-
     }
 }

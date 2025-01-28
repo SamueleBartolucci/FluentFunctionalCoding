@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FluentCoding
+﻿namespace FluentCoding
 {
     public static partial class FluentExtension
     {
@@ -16,7 +10,7 @@ namespace FluentCoding
         /// <param name="subjectToMap"></param>
         /// <param name="mapFunc"></param>
         /// <returns></returns>
-        public static async Task<K> MapAsync<T, K>(this Task<T> subjectToMap, Func<T, K> mapFunc) 
+        public static async Task<K> MapAsync<T, K>(this Task<T> subjectToMap, Func<T, K> mapFunc)
             => (await subjectToMap).Map(mapFunc);
 
     }
