@@ -10,9 +10,11 @@ namespace FluentCoding
         //public static explicit operator O(Optional<O> input) => input.IsSome ? input._subject : default(O);
 
         [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator Optional<O>(O input) => input == null ? None() : Some(input);
 
         [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator bool(Optional<O> input) => input.IsSome;
 
         [Pure]

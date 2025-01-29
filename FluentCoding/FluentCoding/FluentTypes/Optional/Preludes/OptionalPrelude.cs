@@ -9,7 +9,7 @@
         /// <typeparam name="O"></typeparam>
         /// <param name="value"></param>
         /// <returns></returns>
-        public static Optional<O> Some<O>(O value) => value == null ? Optional<O>.None() : Optional<O>.Some(value);
+        public static Optional<O> Some<O>(this O value) => value == null ? Optional<O>.None() : Optional<O>.Some(value);
 
         /// <summary>
         /// Return None
