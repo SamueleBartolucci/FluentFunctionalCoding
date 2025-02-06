@@ -1,59 +1,66 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
 namespace FluentCoding
 {
-    public partial struct TryCatch<S, R>
+    public abstract partial record Try<S, R, E>
     {
-        internal readonly S _subject;
-        internal R _result;
-        internal Exception _exception;
-        internal bool _isSuccessful;
+        internal static NotImplementedException UnknowImplementation() => new NotImplementedException($"Unknown type, expected: {nameof(TrySuccess<S, R, E>)} or {nameof(TryFailure<S, R, E>)}");
+        //private readonly S _subject;
+        public bool IsSuccess => this switch
+            {
+                TrySuccess<S, R, E> => true,
+                _ => false,
+            };
 
-        //internal readonly Func<S, R> _funcToTry;
-        //internal readonly Func<S, Exception, E> _funcOnCatch;
+        public bool IsFail => this switch
+            {
+                TrySuccess<S, R, E> => false,
+                _ => true,
+            };
 
-        public readonly bool IsSuccess => _isSuccessful;
-        public readonly bool IsFail => !_isSuccessful;
-
-        private TryCatch(S subject)
-        {
-            _subject = subject;            
-        }
-
-        private TryCatch(S subject, Func<S, R> tryFunc)
-        {
-            _subject = subject;
-            TryWrap(tryFunc);
-        }
+        internal Try() {  }
 
 
-        public static TryCatch<S, R> ToTry(S subject, Func<S, R> tryFunc) 
-            => new (subject, tryFunc);
+        //private static readonly Func<S, Exception, Exception> _defaultOnCatchFunc = (sbj, ex) => ex;
 
-        public static TryCatch<S, Nothing> ToTry(S subject, Action<S> tryFunc)
-            => new (subject, sbj => Nothing.Null.Do(_ => tryFunc(sbj)));
-
-
-        internal TryCatch<S, R> TryWrap(Func<S, R> funcToTry)
+        internal static Try<S,R,E> ToTryWrap(S subject, Func<S, R> funcToTry, Func<S, Exception, E> onCatchFunc)
         {
             try
             {
-                _result = funcToTry(_subject);
-                _isSuccessful = true;
+                return new TrySuccess<S, R, E>(subject, funcToTry(subject));                
             }
             catch (Exception e)
             {
-                _exception = e;
-                _isSuccessful = false;                
+                return new TryFailure<S, R, E>(subject, onCatchFunc(subject, e), e);
             }
-            return this;
+            
         }
 
-        public Optional<R> ToOptional() => IsSuccess ? _result.Some() : Optional<R>.None();
+        internal static Try<S, R, Exception> ToTryWrap(S subject, Func<S, R> funcToTry)
+        {
+            try
+            {
+                return new TrySuccess<S, R, Exception>(subject, funcToTry(subject));
+            }
+            catch (Exception e)
+            {
+                return new TryFailure<S, R, Exception>(subject, e, e);
+            }
+
+        }
+
+        public Optional<R> ToOptional() => this switch
+        {
+            TrySuccess<S, R, E> (var s, var r) => r.Some(),
+            TryFailure<S, R, E> (var s, var e, var ex) => Optional<R>.None(),
+            _ => throw UnknowImplementation()
+        };
     }
 }
+

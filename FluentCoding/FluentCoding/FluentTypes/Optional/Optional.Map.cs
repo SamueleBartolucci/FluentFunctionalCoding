@@ -1,17 +1,28 @@
 ﻿using System.Diagnostics.Contracts;
 
+
 namespace FluentCoding
 {
 
-    public readonly partial struct Optional<O>
+    public abstract partial record Optional<O>
     {
         [Pure]
-        public Optional<B> Map<B>(Func<O, B> mapOnSome)
-            => _isSomething ? Optional<B>.Some(mapOnSome(_subject)) : Optional<B>.None();
+        public Optional<B> Map<B>(Func<O, B> mapOnSome) =>
+            this switch
+            {
+                Nothing<O> => Optional<B>.None(),
+                Just<O>(var v) => Optional<B>.Some(mapOnSome(v)),
+                _ => throw UnknowImplementation()
+            };
 
         [Pure]
-        public Optional<O> MapNone(Func<O> mapOnNone)
-            => _isSomething ? Some(_subject) : Some(mapOnNone());
-    }
+        public Optional<O> MapNone(Func<O> mapOnNone) =>
+            this switch
+            {
+                Nothing<O> => Some(mapOnNone()),
+                Just<O>(var v) => Some(v),
+                _ => throw UnknowImplementation()
+            };
+}
 
 }

@@ -1,8 +1,9 @@
-﻿using System.Diagnostics.Contracts;
+﻿using System;
+using System.Diagnostics.Contracts;
 
 namespace FluentCoding
 {
-    public readonly partial struct Optional<O>
+    public abstract partial record Optional<O>
     {
         /// <summary>
         /// Apply an action on the Subject when IsSome    
@@ -13,7 +14,11 @@ namespace FluentCoding
         [Pure]
         public Optional<O> OnSome(Action<O> action)
         {
-            action(_subject);
+
+            if (this is Just<O>(var v))
+                action(v);
+                
+
             return this;
         }
 
@@ -27,7 +32,9 @@ namespace FluentCoding
         [Pure]
         public Optional<O> OnSome<T>(Func<O, T> funcAsAction)
         {
-            funcAsAction(_subject);
+            if (this is Just<O>(var v))
+                funcAsAction(v);
+
             return this;
         }
 
@@ -40,7 +47,9 @@ namespace FluentCoding
         [Pure]
         public Optional<O> OnNone(Action action)
         {
-            action();
+            if (this is Nothing<O>)
+                action();
+
             return this;
         }
 
@@ -54,7 +63,9 @@ namespace FluentCoding
         [Pure]
         public Optional<O> OnNone<T>(Func<T> funcAsAction)
         {
-            funcAsAction();
+            if (this is Nothing<O>)
+                funcAsAction();
+
             return this;
         }
     }

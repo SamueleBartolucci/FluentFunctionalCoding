@@ -1,25 +1,55 @@
 ﻿
 namespace FluentCoding
 {
-    public readonly partial struct Optional<O>
+    public abstract partial record Optional<O>
     {
         public Optional<O> Or(Optional<O> orRightValue, bool chooseRight = false)
-          => (!_isSomething || chooseRight) ? orRightValue : this;
+               => this switch
+               {
+                   Nothing<O> => orRightValue,
+                   Just<O> => chooseRight ? orRightValue : this,
+                   _ => throw UnknowImplementation()
+               };
 
         public Optional<O> Or(Optional<O> orRightValue, Func<bool> chooseRightWhen)
-            => (!_isSomething || chooseRightWhen()) ? orRightValue : this;
+            => this switch
+            {
+                Nothing<O> => orRightValue,
+                Just<O> => chooseRightWhen() ? orRightValue : this,
+                _ => throw UnknowImplementation()
+            };
 
         public Optional<O> Or(Optional<O> orRightValue, Func<O, bool> chooseRightWhen)
-           => this.Match(chooseRightWhen, () => true) ? orRightValue : this;
+          => this switch
+          {
+              Nothing<O> => orRightValue,
+              Just<O>(var v) => chooseRightWhen(v) ? orRightValue : this,
+              _ => throw UnknowImplementation()
+          };
 
         public Optional<O> Or(Func<O> orRightValueFunc, bool chooseRight = false)
-            => (!_isSomething || chooseRight) ? Optional<O>.Some(orRightValueFunc()) : this;
+              => this switch
+              {
+                  Nothing<O> => orRightValueFunc(),
+                  Just<O> => chooseRight ? orRightValueFunc() : this,
+                  _ => throw UnknowImplementation()
+              };
 
         public Optional<O> Or(Func<O> orRightValueFunc, Func<bool> chooseRightWhen)
-            => (!_isSomething || chooseRightWhen()) ? Optional<O>.Some(orRightValueFunc()) : this;
+            => this switch
+            {
+                Nothing<O> => orRightValueFunc(),
+                Just<O> => chooseRightWhen() ? orRightValueFunc() : this,
+                _ => throw UnknowImplementation()
+            };
 
         public Optional<O> Or(Func<O> orRightValueFunc, Func<O, bool> chooseRightWhen)
-           => this.Match(chooseRightWhen, () => true) ? Optional<O>.Some(orRightValueFunc()) : this;
+           => this switch
+           {
+               Nothing<O> => orRightValueFunc(),
+               Just<O>(var v) => chooseRightWhen(v) ? orRightValueFunc() : this,
+               _ => throw UnknowImplementation()
+           };
 
     }
 }

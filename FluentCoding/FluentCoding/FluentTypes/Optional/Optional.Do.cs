@@ -3,7 +3,7 @@
 namespace FluentCoding
 {
 
-    public readonly partial struct Optional<O>
+    public abstract partial record Optional<O>
     {
         /// <summary>
         /// Apply a set of actions to the subject (when IsSome) and then return the subject
@@ -15,11 +15,8 @@ namespace FluentCoding
         /// <returns></returns>
         public Optional<O> Do(params Action<O>[] actionsToApplyOnSubject)
         {
-
-            if (!_isSomething) return this;
-
-            foreach (var doOnSubject in actionsToApplyOnSubject)
-                doOnSubject(_subject);
+            if (this is Just<O>(var v))
+                v.Do(actionsToApplyOnSubject);
 
             return this;
         }
@@ -36,13 +33,12 @@ namespace FluentCoding
         /// <returns></returns>
         public Optional<O> Do<K>(params Func<O, K>[] functionsToApplyOnSubject)
         {
-            if (!_isSomething) return this;
-
-            foreach (var mapOnSubject in functionsToApplyOnSubject)
-                mapOnSubject(_subject);
+            if (this is Just<O>(var v))
+                v.Do(functionsToApplyOnSubject);
 
             return this;
         }
+
 
     }
 

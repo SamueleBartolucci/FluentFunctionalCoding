@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 
 namespace FluentCoding
 {
-    public readonly partial struct Optional<O>
+    public abstract partial record Optional<O>
     {
 
         //[Pure]
