@@ -15,5 +15,7 @@
             this._subject = switchSubject;
             this._isTrue = isTrue;
         }
+
+        internal void Deconstruct(out T value) => (value) = (_subject);
     }
 }

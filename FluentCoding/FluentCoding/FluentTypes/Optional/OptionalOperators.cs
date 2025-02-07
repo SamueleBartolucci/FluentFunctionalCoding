@@ -5,10 +5,6 @@ namespace FluentCoding
 {
     public abstract partial record Optional<O>
     {
-
-        //[Pure]
-        //public static explicit operator O(Optional<O> input) => input.IsSome ? input._subject : default(O);
-
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator Optional<O>(O input) => input == null ? None() : Some(input);

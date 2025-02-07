@@ -3,7 +3,11 @@
     public static partial class WhenIsExtension
     {
         public static When<Optional<T>> Is<T>(this WhenIs<Optional<T>> whenIs, params Func<T, bool>[] predicates)
-            => When<Optional<T>>.WhenMatch(whenIs._subject, predicates.All(p => whenIs._subject.Match(p, () => false)));
+            => whenIs._subject switch 
+            {
+                OptionalJust<T>(var o) => When<Optional<T>>.WhenMatch(o.Some(), predicates.All(p => p(o))),
+                OptionalNone<T> n => When<Optional<T>>.WhenMatch(n, false)
+            };
 
     }
 }

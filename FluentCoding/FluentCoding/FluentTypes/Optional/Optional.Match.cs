@@ -9,8 +9,8 @@ namespace FluentCoding
         public O MatchNone(Func<O> mapOnNone) 
             => this switch
             {
-                Nothing<O> => mapOnNone(),
-                Just<O>(var v) => v,
+                OptionalNone<O> => mapOnNone(),
+                OptionalJust<O>(var v) => v,
                 _ => throw UnknowImplementation()
             }; 
 
@@ -18,8 +18,8 @@ namespace FluentCoding
         public O MatchNone(O valueWhenNone) 
             => this switch
             {
-                Nothing<O> => valueWhenNone,
-                Just<O>(var v) => v,
+                OptionalNone<O> => valueWhenNone,
+                OptionalJust<O>(var v) => v,
                 _ => throw UnknowImplementation()
             }; 
 
@@ -27,10 +27,20 @@ namespace FluentCoding
         public T Match<T>(Func<O, T> mapOnSome, Func<T> mapOnNone)
              => this switch
              {
-                 Nothing<O> => mapOnNone(),
-                 Just<O>(var v) => mapOnSome(v),
+                 OptionalNone<O> => mapOnNone(),
+                 OptionalJust<O>(var v) => mapOnSome(v),
                  _ => throw UnknowImplementation()
-             }; 
+             };
+
+
+        [Pure]
+        public T Match<T>(Func<O, T> mapOnSome, T valueOnNone)
+             => this switch
+             {
+                 OptionalNone<O> => valueOnNone,
+                 OptionalJust<O>(var v) => mapOnSome(v),
+                 _ => throw UnknowImplementation()
+             };
     }
 
 }

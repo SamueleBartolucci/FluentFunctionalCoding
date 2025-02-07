@@ -23,6 +23,10 @@ namespace FluentCodingTest
         [Test]
         public void Test1()
         {
+            List<string> emptyList = new List<string>();
+
+            emptyList.IsNullOrEmpty();
+
             DateTime time = DateTime.Now;
 
             var timestrring = DateTime.Now.Map(x => x.ToString());

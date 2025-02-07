@@ -29,7 +29,7 @@ namespace FluentCoding
 
         //private static readonly Func<S, Exception, Exception> _defaultOnCatchFunc = (sbj, ex) => ex;
 
-        internal static Try<S,R,E> ToTryWrap(S subject, Func<S, R> funcToTry, Func<S, Exception, E> onCatchFunc)
+        internal static Try<S,R,E> Wrap(S subject, Func<S, R> funcToTry, Func<S, Exception, E> onCatchFunc)
         {
             try
             {
@@ -42,7 +42,7 @@ namespace FluentCoding
             
         }
 
-        internal static Try<S, R, Exception> ToTryWrap(S subject, Func<S, R> funcToTry)
+        internal static Try<S, R, Exception> Wrap(S subject, Func<S, R> funcToTry)
         {
             try
             {
@@ -54,13 +54,6 @@ namespace FluentCoding
             }
 
         }
-
-        public Optional<R> ToOptional() => this switch
-        {
-            TrySuccess<S, R, E> (var s, var r) => r.Some(),
-            TryFailure<S, R, E> (var s, var e, var ex) => Optional<R>.None(),
-            _ => throw UnknowImplementation()
-        };
     }
 }
 

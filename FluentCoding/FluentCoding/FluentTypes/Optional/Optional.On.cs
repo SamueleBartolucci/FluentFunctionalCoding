@@ -15,7 +15,7 @@ namespace FluentCoding
         public Optional<O> OnSome(Action<O> action)
         {
 
-            if (this is Just<O>(var v))
+            if (this is OptionalJust<O>(var v))
                 action(v);
                 
 
@@ -32,7 +32,7 @@ namespace FluentCoding
         [Pure]
         public Optional<O> OnSome<T>(Func<O, T> funcAsAction)
         {
-            if (this is Just<O>(var v))
+            if (this is OptionalJust<O>(var v))
                 funcAsAction(v);
 
             return this;
@@ -47,7 +47,7 @@ namespace FluentCoding
         [Pure]
         public Optional<O> OnNone(Action action)
         {
-            if (this is Nothing<O>)
+            if (this is OptionalNone<O>)
                 action();
 
             return this;
@@ -63,7 +63,7 @@ namespace FluentCoding
         [Pure]
         public Optional<O> OnNone<T>(Func<T> funcAsAction)
         {
-            if (this is Nothing<O>)
+            if (this is OptionalNone<O>)
                 funcAsAction();
 
             return this;

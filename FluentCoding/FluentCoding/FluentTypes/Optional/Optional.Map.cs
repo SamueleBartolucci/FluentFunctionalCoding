@@ -10,8 +10,8 @@ namespace FluentCoding
         public Optional<B> Map<B>(Func<O, B> mapOnSome) =>
             this switch
             {
-                Nothing<O> => Optional<B>.None(),
-                Just<O>(var v) => Optional<B>.Some(mapOnSome(v)),
+                OptionalNone<O> => Optional<B>.None(),
+                OptionalJust<O>(var v) => Optional<B>.Some(mapOnSome(v)),
                 _ => throw UnknowImplementation()
             };
 
@@ -19,8 +19,8 @@ namespace FluentCoding
         public Optional<O> MapNone(Func<O> mapOnNone) =>
             this switch
             {
-                Nothing<O> => Some(mapOnNone()),
-                Just<O>(var v) => Some(v),
+                OptionalNone<O> => Some(mapOnNone()),
+                OptionalJust<O>(var v) => Some(v),
                 _ => throw UnknowImplementation()
             };
 }
