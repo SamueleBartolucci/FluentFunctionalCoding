@@ -30,15 +30,15 @@ namespace FluentCoding
         public Optional<O> Or(Func<O> orRightValueFunc, bool chooseRight = false)
               => this switch
               {
-                  OptionalNone<O> => orRightValueFunc(),
-                  OptionalJust<O> => chooseRight ? orRightValueFunc() : this,
+                  OptionalNone<O> => orRightValueFunc().Some(),
+                  OptionalJust<O> => chooseRight ? orRightValueFunc().Some() : this,
                   _ => throw UnknowImplementation()
               };
 
         public Optional<O> Or(Func<O> orRightValueFunc, Func<bool> chooseRightWhen)
             => this switch
             {
-                OptionalNone<O> => orRightValueFunc(),
+                OptionalNone<O> => orRightValueFunc().Some(),
                 OptionalJust<O> => chooseRightWhen() ? orRightValueFunc() : this,
                 _ => throw UnknowImplementation()
             };
@@ -46,8 +46,8 @@ namespace FluentCoding
         public Optional<O> Or(Func<O> orRightValueFunc, Func<O, bool> chooseRightWhen)
            => this switch
            {
-               OptionalNone<O> => orRightValueFunc(),
-               OptionalJust<O>(var v) => chooseRightWhen(v) ? orRightValueFunc() : this,
+               OptionalNone<O> => orRightValueFunc().Some(),
+               OptionalJust<O>(var v) => chooseRightWhen(v) ? orRightValueFunc().Some() : this,
                _ => throw UnknowImplementation()
            };
 
