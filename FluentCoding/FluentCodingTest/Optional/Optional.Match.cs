@@ -19,7 +19,7 @@ namespace FluentCodingTest.Optional.Match
         [Test]
         public void Some_MatchNone_Func()
         {            
-            var optionalString = "1433".Some();
+            var optionalString = "1433".ToOptional();
             var matchedValue = optionalString.MatchNone(TestNoneMap);
             matchedValue.Should().BeOfType<string>();
             matchedValue.Should().Be("1433");
@@ -28,7 +28,7 @@ namespace FluentCodingTest.Optional.Match
         [Test]
         public void Some_MatchNone_Value()
         {
-            var optionalString = "1433".Some();
+            var optionalString = "1433".ToOptional();
             var matchedValue = optionalString.MatchNone("NONE");
             matchedValue.Should().BeOfType<string>();
             matchedValue.Should().Be("1433");

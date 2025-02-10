@@ -13,7 +13,7 @@ namespace FluentCoding
     {
         public Optional<R> ToOptional() => this switch
         {
-            TrySuccess<S, R, E> (var s, var r) => r.Some(),
+            TrySuccess<S, R, E> (var s, var r) => r.ToOptional(),
             TryFailure<S, R, E> (var s, var e, var ex) => Optional<R>.None(),
             _ => throw UnknowImplementation()
         };

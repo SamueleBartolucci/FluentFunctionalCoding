@@ -12,7 +12,7 @@ namespace FluentCoding
             {
                 OptionalNone<O> => Optional<B>.None(),
                 OptionalJust<O>(var v) => Optional<B>.Some(mapOnSome(v)),
-                _ => throw UnknowImplementation()
+                _ => throw UnknowOptionalType()
             };
 
         [Pure]
@@ -21,7 +21,7 @@ namespace FluentCoding
             {
                 OptionalNone<O> => Some(mapOnNone()),
                 OptionalJust<O>(var v) => Some(v),
-                _ => throw UnknowImplementation()
+                _ => throw UnknowOptionalType()
             };
 }
 

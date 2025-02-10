@@ -16,7 +16,7 @@ namespace FluentCodingTest.Optional.To
         [Test]
         public void Some_ToOutcome_Value()
         {
-            var outcome = _testString.Some().ToOutcome(-1);
+            var outcome = _testString.ToOptional().ToOutcome(-1);
             outcome.Should().BeOfType<OutcomeSuccess<int, string>>();
             (outcome as OutcomeSuccess<int, string>)._successValue.Should().Be(_testString);
         }
@@ -25,7 +25,7 @@ namespace FluentCodingTest.Optional.To
         [Test]
         public void Some_ToOutcome_Func()
         {
-            var outcome = _testString.Some().ToOutcome(FuncOnNone);
+            var outcome = _testString.ToOptional().ToOutcome(FuncOnNone);
             outcome.Should().BeOfType<OutcomeSuccess<int, string>>();
             (outcome as OutcomeSuccess<int, string>)._successValue.Should().Be(_testString);
         }

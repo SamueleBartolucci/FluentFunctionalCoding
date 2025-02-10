@@ -14,7 +14,7 @@ namespace FluentCodingTest.Optional.Init
         [Test]
         public void Some_IsSome_True_IsNone_False()
         {
-            var optionalString = "test".Some();
+            var optionalString = "test".ToOptional();
             optionalString.IsSome.Should().BeTrue();
             optionalString.IsNone.Should().BeFalse();
         }
@@ -24,7 +24,7 @@ namespace FluentCodingTest.Optional.Init
         public void Some_IsSome_False_IsNone_True()
         {
             string nullString = null;
-            var optionalString = nullString.Some();
+            var optionalString = nullString.ToOptional();
             optionalString.IsSome.Should().BeFalse();
             optionalString.IsNone.Should().BeTrue();
         }

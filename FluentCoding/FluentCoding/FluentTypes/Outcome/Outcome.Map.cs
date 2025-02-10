@@ -13,7 +13,7 @@ namespace FluentCoding
         {
             OutcomeSuccess<F, S>(var s) => Outcome<F1, S1>.Success(mapOnSuccess(s)),
             OutcomeFailure<F, S>(var f) => Outcome<F1, S1>.Failure(mapOnFailure(f)),
-            _ => throw UnknowImplementation()
+            _ => throw UnknownOutcomeType()
         };
 
 
@@ -21,7 +21,7 @@ namespace FluentCoding
         {
             OutcomeSuccess<F, S>(var s) => Outcome<F, S1>.Success(mapOnSuccess(s)),
             OutcomeFailure<F, S>(var f) => Outcome<F, S1>.Failure(f),
-            _ => throw UnknowImplementation()
+            _ => throw UnknownOutcomeType()
         };
 
 
@@ -29,7 +29,7 @@ namespace FluentCoding
         {
             OutcomeSuccess<F, S>(var s) => Outcome<F1, S>.Success(s),
             OutcomeFailure<F, S>(var f) => Outcome<F1, S>.Failure(mapOnFailure(f)),
-            _ => throw UnknowImplementation()
+            _ => throw UnknownOutcomeType()
         };
     }
 }

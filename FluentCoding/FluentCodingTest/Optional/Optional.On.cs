@@ -35,7 +35,7 @@ namespace FluentCodingTest.Optional.On
         [Test]
         public void Some_OnSome_Func()
         {            
-            var optionalString = "1433".Some();
+            var optionalString = "1433".ToOptional();
             var afterOnSome = optionalString.OnSome(OnFunc);
             afterOnSome.Should().BeOfType<OptionalJust<string>>();
             (afterOnSome as OptionalJust<string>)._value.Should().Be("1433");
@@ -46,7 +46,7 @@ namespace FluentCodingTest.Optional.On
         [Test]
         public void Some_OnSome_Action()
         {
-            var optionalString = "1433".Some();
+            var optionalString = "1433".ToOptional();
             var afterOnSome = optionalString.OnSome(OnAction);
             afterOnSome.Should().BeOfType<OptionalJust<string>>();
             (afterOnSome as OptionalJust<string>)._value.Should().Be("1433");
@@ -79,7 +79,7 @@ namespace FluentCodingTest.Optional.On
         [Test]
         public void Some_OnNone_Func()
         {
-            var optionalString = "1433".Some();
+            var optionalString = "1433".ToOptional();
             var afterOnNone = optionalString.OnNone(OnNoneFunc);
             afterOnNone.Should().BeOfType<OptionalJust<string>>();
             (afterOnNone as OptionalJust<string>)._value.Should().Be("1433");
@@ -89,7 +89,7 @@ namespace FluentCodingTest.Optional.On
         [Test]
         public void Some_OnNone_Action()
         {
-            var optionalString = "1433".Some();
+            var optionalString = "1433".ToOptional();
             var afterOnNone = optionalString.OnNone(OnNoneAction);
             afterOnNone.Should().BeOfType<OptionalJust<string>>();
             (afterOnNone as OptionalJust<string>)._value.Should().Be("1433");

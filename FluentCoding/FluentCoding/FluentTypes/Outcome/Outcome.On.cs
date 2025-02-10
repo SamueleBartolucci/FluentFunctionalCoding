@@ -13,14 +13,14 @@ namespace FluentCoding
         {
             OutcomeSuccess<F, S>(var s) => this.Do(_ => funcAsDoOnSuccess(s)),
             OutcomeFailure<F, S>(var f) => this.Do(_ => funcAsDoOnFailure(f)),
-            _ => throw UnknowImplementation()
+            _ => throw UnknownOutcomeType()
         };
 
         public Outcome<F, S> OnSuccess(Action<S> doOnSuccess) => this switch
         {
             OutcomeSuccess<F, S>(var s) => this.Do(_ => doOnSuccess(s)),
             OutcomeFailure<F, S> o => o,
-            _ => throw UnknowImplementation()
+            _ => throw UnknownOutcomeType()
         };
 
 
@@ -28,7 +28,7 @@ namespace FluentCoding
         {
             OutcomeSuccess<F, S> s => s,
             OutcomeFailure<F, S>(var f) => this.Do(_ => doOnFailure(f)),
-            _ => throw UnknowImplementation()
+            _ => throw UnknownOutcomeType()
         };
 
     }

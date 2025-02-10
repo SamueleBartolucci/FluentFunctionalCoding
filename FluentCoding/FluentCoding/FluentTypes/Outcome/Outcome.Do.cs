@@ -13,14 +13,14 @@ namespace FluentCoding
         {
             OutcomeSuccess<F, S>(var  s) => s.Do(actionsToApplyOnSuccessSubject).Map(Success),
             OutcomeFailure<F, S> f => f,
-            _ => throw UnknowImplementation()
+            _ => throw UnknownOutcomeType()
         };
 
         public Outcome<F, S> Do<T>(params Func<S, T>[] funcsAsactionsToApplyOnSuccessSubject) => this switch
         {
             OutcomeSuccess<F, S>(var s) => s.Do(funcsAsactionsToApplyOnSuccessSubject).Map(Success),
             OutcomeFailure<F, S> f => f,
-            _ => throw UnknowImplementation()
+            _ => throw UnknownOutcomeType()
         };
 
     }

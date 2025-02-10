@@ -20,12 +20,12 @@ namespace FluentCodingTest.Optional.Or
         [Test]
         public void Some_OrOptional_OptnValue_Bool()
         {
-            var orFalse = _testString.Some().Or(_OrString.Some(), false);
+            var orFalse = _testString.ToOptional().Or(_OrString.ToOptional(), false);
             orFalse.Should().BeOfType<OptionalJust<string>>();
             (orFalse as OptionalJust<string>)._value.Should().Be(_testString);
 
 
-            var orTrue = _testString.Some().Or(_OrString.Some(), true);
+            var orTrue = _testString.ToOptional().Or(_OrString.ToOptional(), true);
             orTrue.Should().BeOfType<OptionalJust<string>>();
             (orTrue as OptionalJust<string>)._value.Should().Be(_OrString);
         }
@@ -33,12 +33,12 @@ namespace FluentCodingTest.Optional.Or
         [Test]
         public void Some_OrOptional_OptnValue_FuncBool()
         {
-            var orFalse = _testString.Some().Or(_OrString.Some(), () => false);
+            var orFalse = _testString.ToOptional().Or(_OrString.ToOptional(), () => false);
             orFalse.Should().BeOfType<OptionalJust<string>>();
             (orFalse as OptionalJust<string>)._value.Should().Be(_testString);
 
 
-            var orTrue = _testString.Some().Or(_OrString.Some(), () => true);
+            var orTrue = _testString.ToOptional().Or(_OrString.ToOptional(), () => true);
             orTrue.Should().BeOfType<OptionalJust<string>>();
             (orTrue as OptionalJust<string>)._value.Should().Be(_OrString);
         }
@@ -46,12 +46,12 @@ namespace FluentCodingTest.Optional.Or
         [Test]
         public void Some_OrOptional_OptnValue_FuncVaueBool()
         {
-            var orFalse = _testString.Some().Or(_OrString.Some(), optnValue => optnValue == "NO");
+            var orFalse = _testString.ToOptional().Or(_OrString.ToOptional(), optnValue => optnValue == "NO");
             orFalse.Should().BeOfType<OptionalJust<string>>();
             (orFalse as OptionalJust<string>)._value.Should().Be(_testString);
 
 
-            var orTrue = _testString.Some().Or(_OrString.Some(), optnValue => optnValue == _testString);
+            var orTrue = _testString.ToOptional().Or(_OrString.ToOptional(), optnValue => optnValue == _testString);
             orTrue.Should().BeOfType<OptionalJust<string>>();
             (orTrue as OptionalJust<string>)._value.Should().Be(_OrString);
         }
@@ -59,12 +59,12 @@ namespace FluentCodingTest.Optional.Or
         [Test]
         public void Some_OrOptional_FuncOptnValue_Bool()
         {
-            var orFalse = _testString.Some().Or(FuncOrString, false);
+            var orFalse = _testString.ToOptional().Or(FuncOrString, false);
             orFalse.Should().BeOfType<OptionalJust<string>>();
             (orFalse as OptionalJust<string>)._value.Should().Be(_testString);
 
 
-            var orTrue = _testString.Some().Or(FuncOrString, true);
+            var orTrue = _testString.ToOptional().Or(FuncOrString, true);
             orTrue.Should().BeOfType<OptionalJust<string>>();
             (orTrue as OptionalJust<string>)._value.Should().Be(_OrString);
         }
@@ -72,12 +72,12 @@ namespace FluentCodingTest.Optional.Or
         [Test]
         public void Some_OrOptional_FuncOptnValue_FuncBool()
         {
-            var orFalse = _testString.Some().Or(FuncOrString, () => false);
+            var orFalse = _testString.ToOptional().Or(FuncOrString, () => false);
             orFalse.Should().BeOfType<OptionalJust<string>>();
             (orFalse as OptionalJust<string>)._value.Should().Be(_testString);
 
 
-            var orTrue = _testString.Some().Or(FuncOrString, () => true);
+            var orTrue = _testString.ToOptional().Or(FuncOrString, () => true);
             orTrue.Should().BeOfType<OptionalJust<string>>();
             (orTrue as OptionalJust<string>)._value.Should().Be(_OrString);
         }
@@ -85,12 +85,12 @@ namespace FluentCodingTest.Optional.Or
         [Test]
         public void Some_OrOptional_FuncOptnValue_FuncVaueBool()
         {
-            var orFalse = _testString.Some().Or(FuncOrString, optnValue => optnValue == "NO");
+            var orFalse = _testString.ToOptional().Or(FuncOrString, optnValue => optnValue == "NO");
             orFalse.Should().BeOfType<OptionalJust<string>>();
             (orFalse as OptionalJust<string>)._value.Should().Be(_testString);
 
 
-            var orTrue = _testString.Some().Or(FuncOrString, optnValue => optnValue == _testString);
+            var orTrue = _testString.ToOptional().Or(FuncOrString, optnValue => optnValue == _testString);
             orTrue.Should().BeOfType<OptionalJust<string>>();
             (orTrue as OptionalJust<string>)._value.Should().Be(_OrString);
         }
@@ -100,12 +100,12 @@ namespace FluentCodingTest.Optional.Or
         [Test]
         public void None_OrOptional_OptnValue_Bool()
         {
-            var orFalse = Optional<string>.None().Or(_OrString.Some(), false);
+            var orFalse = Optional<string>.None().Or(_OrString.ToOptional(), false);
             orFalse.Should().BeOfType<OptionalJust<string>>();
             (orFalse as OptionalJust<string>)._value.Should().Be(_OrString);
 
 
-            var orTrue = Optional<string>.None().Or(_OrString.Some(), true);
+            var orTrue = Optional<string>.None().Or(_OrString.ToOptional(), true);
             orTrue.Should().BeOfType<OptionalJust<string>>();
             (orTrue as OptionalJust<string>)._value.Should().Be(_OrString);
         }
@@ -113,12 +113,12 @@ namespace FluentCodingTest.Optional.Or
         [Test]
         public void None_OrOptional_OptnValue_FuncBool()
         {
-            var orFalse = Optional<string>.None().Or(_OrString.Some(), () => false);
+            var orFalse = Optional<string>.None().Or(_OrString.ToOptional(), () => false);
             orFalse.Should().BeOfType<OptionalJust<string>>();
             (orFalse as OptionalJust<string>)._value.Should().Be(_OrString);
 
 
-            var orTrue = Optional<string>.None().Or(_OrString.Some(), () => true);
+            var orTrue = Optional<string>.None().Or(_OrString.ToOptional(), () => true);
             orTrue.Should().BeOfType<OptionalJust<string>>();
             (orTrue as OptionalJust<string>)._value.Should().Be(_OrString);
         }
@@ -126,12 +126,12 @@ namespace FluentCodingTest.Optional.Or
         [Test]
         public void None_OrOptional_OptnValue_FuncVaueBool()
         {
-            var orFalse = Optional<string>.None().Or(_OrString.Some(), optnValue => optnValue == "NO");
+            var orFalse = Optional<string>.None().Or(_OrString.ToOptional(), optnValue => optnValue == "NO");
             orFalse.Should().BeOfType<OptionalJust<string>>();
             (orFalse as OptionalJust<string>)._value.Should().Be(_OrString);
 
 
-            var orTrue = Optional<string>.None().Or(_OrString.Some(), optnValue => optnValue == _testString);
+            var orTrue = Optional<string>.None().Or(_OrString.ToOptional(), optnValue => optnValue == _testString);
             orTrue.Should().BeOfType<OptionalJust<string>>();
             (orTrue as OptionalJust<string>)._value.Should().Be(_OrString);
         }

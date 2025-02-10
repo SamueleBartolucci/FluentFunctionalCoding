@@ -14,7 +14,7 @@ namespace FluentCodingTest.Optional.Preludes
         public void SomeFromValue()
         { 
             string nonNullObject = "test";
-            var someOfObject = nonNullObject.Some();
+            var someOfObject = nonNullObject.ToOptional();
             someOfObject.Should().BeOfType<OptionalJust<string>>();                
             (someOfObject as OptionalJust<string>)._value.Should().Be(nonNullObject);
         }
@@ -23,7 +23,7 @@ namespace FluentCodingTest.Optional.Preludes
         public void SomeFromNull()
         {
             string nullObject = null;
-            nullObject.Some().Should().BeOfType<OptionalNone<string>>();
+            nullObject.ToOptional().Should().BeOfType<OptionalNone<string>>();
         }
     }
 }

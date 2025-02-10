@@ -11,7 +11,7 @@ namespace FluentCoding
             {
                 OptionalNone<O> => Optional<T>.None(),
                 OptionalJust<O> (var v) => bindOnSome(v),
-                _ => throw UnknowImplementation()
+                _ => throw UnknowOptionalType()
             };
 
         [Pure]
@@ -20,7 +20,7 @@ namespace FluentCoding
              {
                  OptionalNone<O> => bindOnNone(),
                  OptionalJust<O>(var v) => Some(v),
-                 _ => throw UnknowImplementation()
+                 _ => throw UnknowOptionalType()
              };       
     }
 }

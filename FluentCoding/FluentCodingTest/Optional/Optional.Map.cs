@@ -19,7 +19,7 @@ namespace FluentCodingTest.Optional.Map
         [Test]
         public void Some_Map_NewType()
         {            
-            var optionalString = "1433".Some();
+            var optionalString = "1433".ToOptional();
             var mappedOptional = optionalString.Map(TestParse);            
             mappedOptional.Should().BeOfType<OptionalJust<int>>();
             (mappedOptional as OptionalJust<int>)._value.Should().Be(1433);
@@ -36,7 +36,7 @@ namespace FluentCodingTest.Optional.Map
         [Test]
         public void Some_MapNone()
         {
-            var optionalString = "1433".Some();
+            var optionalString = "1433".ToOptional();
             var mappedOptional = optionalString.MapNone(TestNoneMap);
             mappedOptional.Should().BeOfType<OptionalJust<string>>();
             (mappedOptional as OptionalJust<string>)._value.Should().Be("1433");

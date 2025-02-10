@@ -29,7 +29,7 @@ namespace FluentCodingTest.Optional.Do
         public void Do_Actions()
         {
             var testString = "test";
-            var optionalString = testString.Some();
+            var optionalString = testString.ToOptional();
             optionalString.Do(DoAction, DoAction);
             doCollector.Should().HaveCount(2);
             doCollector.Contains($"{testString}_0").Should().BeTrue();
@@ -42,7 +42,7 @@ namespace FluentCodingTest.Optional.Do
         public void Do_Funcs()
         {
             var testString = "test";
-            var optionalString = testString.Some();
+            var optionalString = testString.ToOptional();
             optionalString.Do(DoFunc, DoFunc);
             doCollector.Should().HaveCount(2);
             doCollector.Contains($"0_{testString}").Should().BeTrue();

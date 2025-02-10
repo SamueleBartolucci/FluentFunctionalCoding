@@ -3,13 +3,12 @@
     public static partial class Prelude
     {
         /// <summary>
-        /// Return Some of the input value
-        /// If the value is null the return is None
+        /// Wrap the input value in the Optional Context (Just if not null, None otherwise)
         /// </summary>
         /// <typeparam name="O"></typeparam>
         /// <param name="value"></param>
         /// <returns></returns>
-        public static Optional<O> Some<O>(this O value) => Optional<O>.Some(value);     
+        public static Optional<O> ToOptional<O>(this O value) => Optional<O>.Some(value);     
 
     }
 }

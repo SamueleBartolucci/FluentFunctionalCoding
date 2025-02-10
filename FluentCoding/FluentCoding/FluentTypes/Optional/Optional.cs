@@ -4,11 +4,11 @@ namespace FluentCoding
 {
     public abstract partial record Optional<O>
     {
-        internal static NotImplementedException UnknowImplementation() => new NotImplementedException($"Unknown type, expected: {nameof(OptionalJust<O>)} or {nameof(OptionalNone<O>)}");
+        internal static NotImplementedException UnknowOptionalType() => new NotImplementedException($"Unknown type, expected: {nameof(OptionalJust<O>)} or {nameof(OptionalNone<O>)}");
 
-        public static Optional<O> None() => new OptionalNone<O>();
+        internal static Optional<O> None() => new OptionalNone<O>();
 
-        public static Optional<O> Some(O value) => value == null? 
+        internal static Optional<O> Some(O value) => value == null? 
                                                             new OptionalNone<O>() : 
                                                             new OptionalJust<O>(value);
                 
@@ -20,7 +20,7 @@ namespace FluentCoding
         {
             OptionalJust<O> => true,
             OptionalNone<O> => false,
-            _ => throw UnknowImplementation()
+            _ => throw UnknowOptionalType()
         };
 
 
@@ -32,7 +32,7 @@ namespace FluentCoding
         {
             OptionalJust<O> => false,
             OptionalNone<O> => true,
-            _ => throw UnknowImplementation()
+            _ => throw UnknowOptionalType()
         };
 
     }

@@ -13,14 +13,14 @@ namespace FluentCoding
         {
             OutcomeSuccess<F, S>(var s) => onSuccess(s),
             OutcomeFailure<F, S>(var f) => onFailure(f),
-            _ => throw UnknowImplementation()
+            _ => throw UnknownOutcomeType()
         };
 
         public M Match<M>(Func<S, M> onSuccess, M valueOnFailure) => this switch
         {
             OutcomeSuccess<F, S>(var s) => onSuccess(s),
             OutcomeFailure<F, S>(_) => valueOnFailure,
-            _ => throw UnknowImplementation()
+            _ => throw UnknownOutcomeType()
         };
     }
 }

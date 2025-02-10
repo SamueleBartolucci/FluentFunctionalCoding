@@ -11,7 +11,7 @@ namespace FluentCoding
             {
                 OptionalNone<O> => mapOnNone(),
                 OptionalJust<O>(var v) => v,
-                _ => throw UnknowImplementation()
+                _ => throw UnknowOptionalType()
             }; 
 
         [Pure]
@@ -20,7 +20,7 @@ namespace FluentCoding
             {
                 OptionalNone<O> => valueWhenNone,
                 OptionalJust<O>(var v) => v,
-                _ => throw UnknowImplementation()
+                _ => throw UnknowOptionalType()
             }; 
 
         [Pure]
@@ -29,7 +29,7 @@ namespace FluentCoding
              {
                  OptionalNone<O> => mapOnNone(),
                  OptionalJust<O>(var v) => mapOnSome(v),
-                 _ => throw UnknowImplementation()
+                 _ => throw UnknowOptionalType()
              };
 
 
@@ -39,7 +39,7 @@ namespace FluentCoding
              {
                  OptionalNone<O> => valueOnNone,
                  OptionalJust<O>(var v) => mapOnSome(v),
-                 _ => throw UnknowImplementation()
+                 _ => throw UnknowOptionalType()
              };
     }
 
