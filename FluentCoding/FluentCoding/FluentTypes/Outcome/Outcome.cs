@@ -32,11 +32,6 @@ namespace FluentCoding
         /// Check if is a failure outcome
         /// </summary>
         /// <returns></returns>
-        public bool IsFailure => this switch
-        {
-            OutcomeSuccess<F, S> => true,
-            OutcomeFailure<F, S> => false,
-            _ => throw UnknownOutcomeType()
-        };
+        public bool IsFailure => !IsSuccess;
     }
 }

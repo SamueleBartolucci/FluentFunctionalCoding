@@ -21,7 +21,7 @@ namespace FluentCodingTest.Outcome.Preludes
         [Test]
         public void ToOutcome_Failure()
         {
-            var outcome = "test".ToOutcome<string, DateTime>();
+            var outcome = "test".ToOutcomeFailure<string, DateTime>();
             outcome.Should().BeOfType<OutcomeFailure<string, DateTime>>();
             (outcome as OutcomeFailure<string, DateTime>)._failureValue.Should().Be("test");
         }

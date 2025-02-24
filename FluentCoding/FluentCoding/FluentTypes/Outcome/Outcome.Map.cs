@@ -25,7 +25,7 @@ namespace FluentCoding
         };
 
 
-        public Outcome<F1, S> MapFailure<F1, S>(Func<F, F1> mapOnFailure) => this switch
+        public Outcome<F1, S> MapFailure<F1>(Func<F, F1> mapOnFailure) => this switch
         {
             OutcomeSuccess<F, S>(var s) => Outcome<F1, S>.Success(s),
             OutcomeFailure<F, S>(var f) => Outcome<F1, S>.Failure(mapOnFailure(f)),

@@ -9,10 +9,33 @@ namespace FluentCoding
 
     public abstract partial record Outcome<F, S>
     {
-        public Outcome<F, S> On(Func<S, S> funcAsDoOnSuccess, Func<F, F> funcAsDoOnFailure) => this switch
+        public Outcome<F, S> On<X, Y>(Func<S, X> doOnSuccess, Func<F, Y> doOnFailure) => this switch
         {
-            OutcomeSuccess<F, S>(var s) => this.Do(_ => funcAsDoOnSuccess(s)),
-            OutcomeFailure<F, S>(var f) => this.Do(_ => funcAsDoOnFailure(f)),
+            OutcomeSuccess<F, S>(var s) => this.Do(doOnSuccess),
+            OutcomeFailure<F, S>(var f) => f.Do(doOnFailure).Map(Failure),
+            _ => throw UnknownOutcomeType()
+        };
+
+        public Outcome<F, S> OnSuccess<X>(Func<S, X> funcAsDoOnSuccess) => this switch
+        {
+            OutcomeSuccess<F, S>(var s) => this.Do(funcAsDoOnSuccess),
+            OutcomeFailure<F, S> o => o,
+            _ => throw UnknownOutcomeType()
+        };
+
+        public Outcome<F, S> OnFailure<Y>(Func<F, Y> funcAsDoOnFailure) => this switch
+        {
+            OutcomeSuccess<F, S> s => s,
+            OutcomeFailure<F, S>(var f) => f.Do(funcAsDoOnFailure).Map(Failure),
+            _ => throw UnknownOutcomeType()
+        };
+
+
+
+        public Outcome<F, S> On(Action<S> doOnSuccess, Action<F> doOnFailure) => this switch
+        {
+            OutcomeSuccess<F, S>(var s) => this.Do(doOnSuccess),
+            OutcomeFailure<F, S>(var f) => f.Do(doOnFailure).Map(Failure),
             _ => throw UnknownOutcomeType()
         };
 
@@ -24,10 +47,10 @@ namespace FluentCoding
         };
 
 
-        public Outcome<F, S> OnFailure(Action<S> doOnSuccess, Action<F> doOnFailure) => this switch
+        public Outcome<F, S> OnFailure(Action<F> doOnFailure) => this switch
         {
             OutcomeSuccess<F, S> s => s,
-            OutcomeFailure<F, S>(var f) => this.Do(_ => doOnFailure(f)),
+            OutcomeFailure<F, S>(var f) => f.Do(doOnFailure).Map(Failure),
             _ => throw UnknownOutcomeType()
         };
 
