@@ -1,9 +1,5 @@
 ﻿using FluentAssertions;
 using FluentCoding;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 
 namespace FluentCodingTest.Outcome.Map
@@ -12,7 +8,7 @@ namespace FluentCodingTest.Outcome.Map
     {
         public int FuncMapSuccess(string s) => int.Parse(s);
 
-        public string FuncMapFailure(Exception e) => e.Message;  
+        public string FuncMapFailure(Exception e) => e.Message;
 
         public Outcome<string, string> FuncWithOutcomeResultFAilure(Exception e) => e.Message.ToOutcomeFailure<string, string>();
 
@@ -21,8 +17,8 @@ namespace FluentCodingTest.Outcome.Map
         {
 
             var result = "1".ToOutcome<Exception, string>().MapSuccess(FuncMapSuccess);
-            result.Should().BeOfType<OutcomeSuccess<Exception, int>>();
-            (result as OutcomeSuccess<Exception, int>)._successValue.Should().Be(1);
+            result.Should().BeOfType<Right<Exception, int>>();
+            (result as Right<Exception, int>)._successValue.Should().Be(1);
         }
 
         [Test]
@@ -30,8 +26,8 @@ namespace FluentCodingTest.Outcome.Map
         {
 
             var result = "1".ToOutcome<Exception, string>().MapFailure(FuncMapFailure);
-            result.Should().BeOfType<OutcomeSuccess<string, string>>();
-            (result as OutcomeSuccess<string, string>)._successValue.Should().Be("1");
+            result.Should().BeOfType<Right<string, string>>();
+            (result as Right<string, string>)._successValue.Should().Be("1");
         }
 
         [Test]
@@ -39,8 +35,8 @@ namespace FluentCodingTest.Outcome.Map
         {
 
             var result = "1".ToOutcome<Exception, string>().Map(FuncMapSuccess, FuncMapFailure);
-            result.Should().BeOfType<OutcomeSuccess<string, int>>();
-            (result as OutcomeSuccess<string, int>)._successValue.Should().Be(1);
+            result.Should().BeOfType<Right<string, int>>();
+            (result as Right<string, int>)._successValue.Should().Be(1);
         }
 
         [Test]
@@ -48,8 +44,8 @@ namespace FluentCodingTest.Outcome.Map
         {
 
             var result = new Exception("parse failure").ToOutcomeFailure<Exception, string>().MapSuccess(FuncMapSuccess);
-            result.Should().BeOfType<OutcomeFailure<Exception, int>>();
-            (result as OutcomeFailure<Exception, int>)._failureValue.Message.Should().Be("parse failure");
+            result.Should().BeOfType<Left<Exception, int>>();
+            (result as Left<Exception, int>)._failureValue.Message.Should().Be("parse failure");
         }
 
         [Test]
@@ -57,8 +53,8 @@ namespace FluentCodingTest.Outcome.Map
         {
 
             var result = new Exception("parse failure").ToOutcomeFailure<Exception, string>().MapFailure(FuncMapFailure);
-            result.Should().BeOfType<OutcomeFailure<string, string>>();
-            (result as OutcomeFailure<string, string>)._failureValue.Should().Be("parse failure");
+            result.Should().BeOfType<Left<string, string>>();
+            (result as Left<string, string>)._failureValue.Should().Be("parse failure");
         }
 
         [Test]
@@ -66,8 +62,8 @@ namespace FluentCodingTest.Outcome.Map
         {
 
             var result = new Exception("parse failure").ToOutcomeFailure<Exception, string>().Map(FuncMapSuccess, FuncMapFailure);
-            result.Should().BeOfType<OutcomeFailure<string, int>>();
-            (result as OutcomeFailure<string, int>)._failureValue.Should().Be("parse failure");
+            result.Should().BeOfType<Left<string, int>>();
+            (result as Left<string, int>)._failureValue.Should().Be("parse failure");
         }
 
     }

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace FluentCoding
+﻿namespace FluentCoding
 {
     public partial struct SwitchMap<TIn, TOut>
     {
@@ -20,13 +18,13 @@ namespace FluentCoding
         }
         public SwitchMap<TIn, TOut> Case(Func<bool> predicate, Func<TIn, TOut> map)
         {
-            CheckAndSelectMapFunction(predicate(), map);
+            if(_truePredicateNotFound) CheckAndSelectMapFunction(predicate(), map);
             return this;
         }
 
         public SwitchMap<TIn, TOut> Case(Func<TIn, bool> predicate, Func<TIn, TOut> map)
         {
-            CheckAndSelectMapFunction(predicate(_subject), map);
+            if (_truePredicateNotFound) CheckAndSelectMapFunction(predicate(_subject), map);
             return this;
         }
     }

@@ -1,10 +1,9 @@
 using FluentCoding;
-using System.Linq;
 
 
 namespace FluentCodingTest
 {
-    
+
     public class Tests
     {
         [SetUp]
@@ -12,7 +11,7 @@ namespace FluentCodingTest
         {
         }
 
-       
+
         public bool IsHAppyDaySubj(string day) => false;
         public bool IsHAppyDay() => false;
 
@@ -45,10 +44,10 @@ namespace FluentCodingTest
 
             var tr = "test".Try(sb => $"{sb}_done");
             var tr2 = tr.Catch((sb, ex) => $"{sb}_error_{ex.ToString()}");
-            
+
             var mf1 = tr2.MatchFail("brutto");
             var mf2 = tr2.MatchFail(_ => "meno brutto");
-                        
+
             tr2.OnSuccess(_ => today = _);
             tr2.OnFail(_ => today = _);
 

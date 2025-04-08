@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FluentCoding.FluentExtensions.While
+﻿namespace FluentCoding.FluentExtensions.While
 {
     public static partial class FluentExtension
     {
@@ -14,6 +8,6 @@ namespace FluentCoding.FluentExtensions.While
             while (valueIsTrueWhen(whileValue))
                 whileValue = funcOnValueWhileTrue(whileValue);
             return whileValue;
-        }       
+        }
     }
 }

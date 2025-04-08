@@ -1,9 +1,5 @@
 ﻿using FluentAssertions;
 using FluentCoding;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 
 namespace FluentCodingTest.Outcome.Bind
@@ -21,9 +17,9 @@ namespace FluentCodingTest.Outcome.Bind
         public void Success_Bind()
         {
 
-            var result = "1".ToOutcome<Exception,string>().Bind<Exception, int>(FuncWithOutcomeResult);
-            result.Should().BeOfType<OutcomeSuccess<Exception, int>>();
-            (result as OutcomeSuccess<Exception, int>)._successValue.Should().Be(1);
+            var result = "1".ToOutcome<Exception, string>().Bind<Exception, int>(FuncWithOutcomeResult);
+            result.Should().BeOfType<Right<Exception, int>>();
+            (result as Right<Exception, int>)._successValue.Should().Be(1);
         }
 
         [Test]
@@ -31,8 +27,8 @@ namespace FluentCodingTest.Outcome.Bind
         {
 
             var result = "1".ToOutcome<Exception, string>().BindFailure<string, string>(FuncWithOutcomeResultFAilure);
-            result.Should().BeOfType<OutcomeSuccess<string, string>>();
-            (result as OutcomeSuccess<string, string>)._successValue.Should().Be("1");
+            result.Should().BeOfType<Right<string, string>>();
+            (result as Right<string, string>)._successValue.Should().Be("1");
         }
 
         [Test]
@@ -40,8 +36,8 @@ namespace FluentCodingTest.Outcome.Bind
         {
 
             var result = "1".ToOutcome<string, string>().BindFull(FuncWithOutcomeResult, FuncWithOutcomeResultFailure);
-            result.Should().BeOfType<OutcomeSuccess<Exception, int>>();
-            (result as OutcomeSuccess<Exception, int>)._successValue.Should().Be(1);
+            result.Should().BeOfType<Right<Exception, int>>();
+            (result as Right<Exception, int>)._successValue.Should().Be(1);
         }
 
         [Test]
@@ -49,8 +45,8 @@ namespace FluentCodingTest.Outcome.Bind
         {
 
             var result = new Exception("parse failure").ToOutcomeFailure<Exception, string>().Bind<Exception, int>(FuncWithOutcomeResult);
-            result.Should().BeOfType<OutcomeFailure<Exception, int>>();
-            (result as OutcomeFailure<Exception, int>)._failureValue.Message.Should().Be("parse failure");
+            result.Should().BeOfType<Left<Exception, int>>();
+            (result as Left<Exception, int>)._failureValue.Message.Should().Be("parse failure");
         }
 
         [Test]
@@ -58,8 +54,8 @@ namespace FluentCodingTest.Outcome.Bind
         {
 
             var result = new Exception("parse failure").ToOutcomeFailure<Exception, string>().BindFailure<string, string>(FuncWithOutcomeResultFAilure);
-            result.Should().BeOfType<OutcomeFailure<string, string>>();
-            (result as OutcomeFailure<string, string>)._failureValue.Should().Be("parse failure");
+            result.Should().BeOfType<Left<string, string>>();
+            (result as Left<string, string>)._failureValue.Should().Be("parse failure");
         }
 
         [Test]
@@ -67,8 +63,8 @@ namespace FluentCodingTest.Outcome.Bind
         {
 
             var result = "parse failure".ToOutcomeFailure<string, string>().BindFull(FuncWithOutcomeResult, FuncWithOutcomeResultFailure);
-            result.Should().BeOfType<OutcomeFailure<Exception, int>>();
-            (result as OutcomeFailure<Exception, int>)._failureValue.Message.Should().Be("parse failure");
+            result.Should().BeOfType<Left<Exception, int>>();
+            (result as Left<Exception, int>)._failureValue.Message.Should().Be("parse failure");
         }
 
     }

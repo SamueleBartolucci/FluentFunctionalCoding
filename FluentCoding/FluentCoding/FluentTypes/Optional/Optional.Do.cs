@@ -1,6 +1,4 @@
-﻿using System.Diagnostics.Contracts;
-
-namespace FluentCoding
+﻿namespace FluentCoding
 {
 
     public abstract partial record Optional<O>
@@ -15,7 +13,7 @@ namespace FluentCoding
         /// <returns></returns>
         public Optional<O> Do(params Action<O>[] actionsToApplyOnSubject)
         {
-            if (this is OptionalJust<O>(var v))
+            if (this is Some<O>(var v))
                 v.Do(actionsToApplyOnSubject);
 
             return this;
@@ -33,7 +31,7 @@ namespace FluentCoding
         /// <returns></returns>
         public Optional<O> Do<K>(params Func<O, K>[] functionsToApplyOnSubject)
         {
-            if (this is OptionalJust<O>(var v))
+            if (this is Some<O>(var v))
                 v.Do(functionsToApplyOnSubject);
 
             return this;

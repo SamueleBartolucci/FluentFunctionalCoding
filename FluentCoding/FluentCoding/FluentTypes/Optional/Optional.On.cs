@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics.Contracts;
+﻿using System.Diagnostics.Contracts;
 
 namespace FluentCoding
 {
@@ -15,9 +14,9 @@ namespace FluentCoding
         public Optional<O> OnSome(Action<O> action)
         {
 
-            if (this is OptionalJust<O>(var v))
+            if (this is Some<O>(var v))
                 action(v);
-                
+
 
             return this;
         }
@@ -32,7 +31,7 @@ namespace FluentCoding
         [Pure]
         public Optional<O> OnSome<T>(Func<O, T> funcAsAction)
         {
-            if (this is OptionalJust<O>(var v))
+            if (this is Some<O>(var v))
                 funcAsAction(v);
 
             return this;
@@ -47,7 +46,7 @@ namespace FluentCoding
         [Pure]
         public Optional<O> OnNone(Action action)
         {
-            if (this is OptionalNone<O>)
+            if (this is None<O>)
                 action();
 
             return this;
@@ -63,7 +62,7 @@ namespace FluentCoding
         [Pure]
         public Optional<O> OnNone<T>(Func<T> funcAsAction)
         {
-            if (this is OptionalNone<O>)
+            if (this is None<O>)
                 funcAsAction();
 
             return this;

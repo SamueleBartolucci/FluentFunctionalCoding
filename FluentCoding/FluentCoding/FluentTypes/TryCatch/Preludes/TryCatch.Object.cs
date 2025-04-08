@@ -3,7 +3,7 @@ namespace FluentCoding
 {
     public static partial class Prelude
     {
-        
+
         //TRY with custom CATCH
         public static Try<S, R, E> Try<S, R, E>(this S subject, Func<S, R> funcToTry, Func<S, Exception, E> onCatchFunc)
             => FluentCoding.Try<S, R, E>.Wrap(subject, funcToTry, onCatchFunc);

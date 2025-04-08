@@ -1,17 +1,16 @@
-﻿using System;
-using System.Diagnostics.Contracts;
+﻿using System.Diagnostics.Contracts;
 
 namespace FluentCoding
 {
     public abstract partial record Optional<O>
     {
-        
+
         [Pure]
         public async Task<Optional<T>> BindAsync<T>(Func<O, Task<Optional<T>>> bindAsyncOnSome)
              => this switch
              {
-                 OptionalNone<O> => Optional<T>.None(),
-                 OptionalJust<O>(var v) => await bindAsyncOnSome(v),
+                 None<O> => Optional<T>.None(),
+                 Some<O>(var v) => await bindAsyncOnSome(v),
                  _ => throw UnknowOptionalType()
              };
 
@@ -19,8 +18,8 @@ namespace FluentCoding
         public async Task<Optional<O>> BindNoneAsync(Func<Task<Optional<O>>> bindAsyncOnNone)
             => this switch
             {
-                OptionalNone<O> => await bindAsyncOnNone(),
-                OptionalJust<O>(var v) => Some(v),
+                None<O> => await bindAsyncOnNone(),
+                Some<O>(var v) => Some(v),
                 _ => throw UnknowOptionalType()
             };
     }

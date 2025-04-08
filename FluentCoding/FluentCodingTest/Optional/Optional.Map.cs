@@ -1,10 +1,5 @@
 ﻿using FluentAssertions;
 using FluentCoding;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FluentCodingTest.Optional.Map
 {
@@ -14,23 +9,23 @@ namespace FluentCodingTest.Optional.Map
         public string TestNoneMap() => "none-test";
 
 
-       
+
 
         [Test]
         public void Some_Map_NewType()
-        {            
+        {
             var optionalString = "1433".ToOptional();
-            var mappedOptional = optionalString.Map(TestParse);            
-            mappedOptional.Should().BeOfType<OptionalJust<int>>();
-            (mappedOptional as OptionalJust<int>)._value.Should().Be(1433);
+            var mappedOptional = optionalString.Map(TestParse);
+            mappedOptional.Should().BeOfType<Some<int>>();
+            (mappedOptional as Some<int>)._value.Should().Be(1433);
         }
 
         [Test]
         public void None_Map_NewType()
         {
             var optionalString = Optional<string>.None();
-            var mappedOptional = optionalString.Map(TestParse);            
-            mappedOptional.Should().BeOfType<OptionalNone<int>>();
+            var mappedOptional = optionalString.Map(TestParse);
+            mappedOptional.Should().BeOfType<None<int>>();
         }
 
         [Test]
@@ -38,8 +33,8 @@ namespace FluentCodingTest.Optional.Map
         {
             var optionalString = "1433".ToOptional();
             var mappedOptional = optionalString.MapNone(TestNoneMap);
-            mappedOptional.Should().BeOfType<OptionalJust<string>>();
-            (mappedOptional as OptionalJust<string>)._value.Should().Be("1433");
+            mappedOptional.Should().BeOfType<Some<string>>();
+            (mappedOptional as Some<string>)._value.Should().Be("1433");
         }
 
         [Test]
@@ -47,8 +42,8 @@ namespace FluentCodingTest.Optional.Map
         {
             var optionalString = Optional<string>.None();
             var mappedOptional = optionalString.MapNone(TestNoneMap);
-            mappedOptional.Should().BeOfType<OptionalJust<string>>();
-            (mappedOptional as OptionalJust<string>)._value.Should().Be("none-test");
+            mappedOptional.Should().BeOfType<Some<string>>();
+            (mappedOptional as Some<string>)._value.Should().Be("none-test");
         }
     }
 }

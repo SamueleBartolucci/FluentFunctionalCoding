@@ -1,10 +1,5 @@
 ﻿using FluentAssertions;
 using FluentCoding;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FluentCodingTest.Optional.Match
 {
@@ -14,11 +9,11 @@ namespace FluentCodingTest.Optional.Match
         public string TestNoneMap() => "none-test";
 
 
-       
+
 
         [Test]
         public void Some_MatchNone_Func()
-        {            
+        {
             var optionalString = "1433".ToOptional();
             var matchedValue = optionalString.MatchNone(TestNoneMap);
             matchedValue.Should().BeOfType<string>();

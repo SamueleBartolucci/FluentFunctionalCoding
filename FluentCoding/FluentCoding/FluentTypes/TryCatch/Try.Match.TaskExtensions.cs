@@ -4,7 +4,7 @@ namespace FluentCoding
     public static partial class TryExtension
     {
 
-        public static async Task<R> MatchFailAsync<S,R,E>(this Task<Try<S,R,E>> tried, Func<E, R> onError)
+        public static async Task<R> MatchFailAsync<S, R, E>(this Task<Try<S, R, E>> tried, Func<E, R> onError)
              => (await tried).MatchFail(onError);
 
         public static async Task<R> MatchFailAsync<S, R, E>(this Task<Try<S, R, E>> tried, R valueOnFail)

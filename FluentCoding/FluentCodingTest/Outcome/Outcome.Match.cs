@@ -1,9 +1,5 @@
 ﻿using FluentAssertions;
 using FluentCoding;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 
 namespace FluentCodingTest.Outcome.Match
@@ -12,7 +8,7 @@ namespace FluentCodingTest.Outcome.Match
     {
         public int FuncMatchSuccess(string s) => int.Parse(s);
 
-        public int FuncMatchFailure(Exception e) => -99;  
+        public int FuncMatchFailure(Exception e) => -99;
 
         public Outcome<string, string> FuncWithOutcomeResultFAilure(Exception e) => e.Message.ToOutcomeFailure<string, string>();
 

@@ -1,11 +1,5 @@
 ﻿using FluentAssertions;
 using FluentCoding;
-using Microsoft.VisualStudio.TestPlatform.Utilities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FluentCodingTest.Optional.On
 {
@@ -34,11 +28,11 @@ namespace FluentCodingTest.Optional.On
 
         [Test]
         public void Some_OnSome_Func()
-        {            
+        {
             var optionalString = "1433".ToOptional();
             var afterOnSome = optionalString.OnSome(OnFunc);
-            afterOnSome.Should().BeOfType<OptionalJust<string>>();
-            (afterOnSome as OptionalJust<string>)._value.Should().Be("1433");
+            afterOnSome.Should().BeOfType<Some<string>>();
+            (afterOnSome as Some<string>)._value.Should().Be("1433");
             doCollector.Should().HaveCount(1);
             doCollector.Contains($"0_1433").Should().BeTrue();
         }
@@ -48,8 +42,8 @@ namespace FluentCodingTest.Optional.On
         {
             var optionalString = "1433".ToOptional();
             var afterOnSome = optionalString.OnSome(OnAction);
-            afterOnSome.Should().BeOfType<OptionalJust<string>>();
-            (afterOnSome as OptionalJust<string>)._value.Should().Be("1433");
+            afterOnSome.Should().BeOfType<Some<string>>();
+            (afterOnSome as Some<string>)._value.Should().Be("1433");
             doCollector.Should().HaveCount(1);
             doCollector.Contains($"1433_0").Should().BeTrue();
         }
@@ -59,8 +53,8 @@ namespace FluentCodingTest.Optional.On
         {
             var optionalString = Optional<string>.None();
             var afterOnSome = optionalString.OnSome(OnFunc);
-            afterOnSome.Should().BeOfType<OptionalNone<string>>();            
-            doCollector.Should().HaveCount(0);            
+            afterOnSome.Should().BeOfType<None<string>>();
+            doCollector.Should().HaveCount(0);
         }
 
         [Test]
@@ -68,8 +62,8 @@ namespace FluentCodingTest.Optional.On
         {
             var optionalString = Optional<string>.None();
             var afterOnSome = optionalString.OnSome(OnAction);
-            afterOnSome.Should().BeOfType<OptionalNone<string>>();
-            doCollector.Should().HaveCount(0);            
+            afterOnSome.Should().BeOfType<None<string>>();
+            doCollector.Should().HaveCount(0);
         }
 
 
@@ -81,9 +75,9 @@ namespace FluentCodingTest.Optional.On
         {
             var optionalString = "1433".ToOptional();
             var afterOnNone = optionalString.OnNone(OnNoneFunc);
-            afterOnNone.Should().BeOfType<OptionalJust<string>>();
-            (afterOnNone as OptionalJust<string>)._value.Should().Be("1433");
-            doCollector.Should().HaveCount(0);            
+            afterOnNone.Should().BeOfType<Some<string>>();
+            (afterOnNone as Some<string>)._value.Should().Be("1433");
+            doCollector.Should().HaveCount(0);
         }
 
         [Test]
@@ -91,8 +85,8 @@ namespace FluentCodingTest.Optional.On
         {
             var optionalString = "1433".ToOptional();
             var afterOnNone = optionalString.OnNone(OnNoneAction);
-            afterOnNone.Should().BeOfType<OptionalJust<string>>();
-            (afterOnNone as OptionalJust<string>)._value.Should().Be("1433");
+            afterOnNone.Should().BeOfType<Some<string>>();
+            (afterOnNone as Some<string>)._value.Should().Be("1433");
             doCollector.Should().HaveCount(0);
         }
 
@@ -101,9 +95,9 @@ namespace FluentCodingTest.Optional.On
         {
             var optionalString = Optional<string>.None();
             var afterOnSome = optionalString.OnNone(OnNoneFunc);
-            afterOnSome.Should().BeOfType<OptionalNone<string>>();
+            afterOnSome.Should().BeOfType<None<string>>();
             doCollector.Should().HaveCount(1);
-            doCollector.Contains("NONE-FUNC").Should().BeTrue();    
+            doCollector.Contains("NONE-FUNC").Should().BeTrue();
         }
 
         [Test]
@@ -111,7 +105,7 @@ namespace FluentCodingTest.Optional.On
         {
             var optionalString = Optional<string>.None();
             var afterOnSome = optionalString.OnNone(OnNoneAction);
-            afterOnSome.Should().BeOfType<OptionalNone<string>>();
+            afterOnSome.Should().BeOfType<None<string>>();
             doCollector.Should().HaveCount(1);
             doCollector.Contains("NONE-ACT").Should().BeTrue();
         }

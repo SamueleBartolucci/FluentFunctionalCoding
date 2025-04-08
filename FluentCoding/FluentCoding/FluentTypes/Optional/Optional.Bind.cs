@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics.Contracts;
+﻿using System.Diagnostics.Contracts;
 
 namespace FluentCoding
 {
@@ -9,8 +8,8 @@ namespace FluentCoding
         public Optional<T> Bind<T>(Func<O, Optional<T>> bindOnSome)
             => this switch
             {
-                OptionalNone<O> => Optional<T>.None(),
-                OptionalJust<O> (var v) => bindOnSome(v),
+                None<O> => Optional<T>.None(),
+                Some<O>(var v) => bindOnSome(v),
                 _ => throw UnknowOptionalType()
             };
 
@@ -18,9 +17,9 @@ namespace FluentCoding
         public Optional<O> BindNone(Func<Optional<O>> bindOnNone)
              => this switch
              {
-                 OptionalNone<O> => bindOnNone(),
-                 OptionalJust<O>(var v) => Some(v),
+                 None<O> => bindOnNone(),
+                 Some<O>(var v) => Some(v),
                  _ => throw UnknowOptionalType()
-             };       
+             };
     }
 }

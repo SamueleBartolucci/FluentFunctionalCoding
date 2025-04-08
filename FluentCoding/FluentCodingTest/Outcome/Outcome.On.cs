@@ -1,10 +1,5 @@
 ﻿using FluentAssertions;
 using FluentCoding;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
 
 
 namespace FluentCodingTest.Outcome.On
@@ -18,7 +13,7 @@ namespace FluentCodingTest.Outcome.On
 
         public void OoFailureAction(Exception e) => onCollector.Add($"{e.Message}_{onCollector.Count}");
         public DateTime OoFailureFunc(Exception e) { onCollector.Add($"{e.Message}_{onCollector.Count}"); return DateTime.Now; }
-                
+
 
         [SetUp]
         public void CleanStatus()
@@ -31,8 +26,8 @@ namespace FluentCodingTest.Outcome.On
         public void Success_OnSuccess_Action()
         {
             var result = "succ".ToOutcome<Exception, string>().OnSuccess(OoSuccessAction);
-            result.Should().BeOfType<OutcomeSuccess<Exception, string>>();
-            (result as OutcomeSuccess<Exception, string>)._successValue.Should().Be("succ");
+            result.Should().BeOfType<Right<Exception, string>>();
+            (result as Right<Exception, string>)._successValue.Should().Be("succ");
             onCollector.Should().HaveCount(1);
             onCollector.Contains("succ_0").Should().BeTrue();
         }
@@ -41,8 +36,8 @@ namespace FluentCodingTest.Outcome.On
         public void Success_OnFailure_Action()
         {
             var result = "succ".ToOutcome<Exception, string>().OnFailure(OoFailureAction);
-            result.Should().BeOfType<OutcomeSuccess<Exception, string>>();
-            (result as OutcomeSuccess<Exception, string>)._successValue.Should().Be("succ");
+            result.Should().BeOfType<Right<Exception, string>>();
+            (result as Right<Exception, string>)._successValue.Should().Be("succ");
             onCollector.Should().HaveCount(0);
         }
 
@@ -50,8 +45,8 @@ namespace FluentCodingTest.Outcome.On
         public void Success_On_Action()
         {
             var result = "succ".ToOutcome<Exception, string>().On(OoSuccessAction, OoFailureAction);
-            result.Should().BeOfType<OutcomeSuccess<Exception, string>>();
-            (result as OutcomeSuccess<Exception, string>)._successValue.Should().Be("succ");
+            result.Should().BeOfType<Right<Exception, string>>();
+            (result as Right<Exception, string>)._successValue.Should().Be("succ");
             onCollector.Should().HaveCount(1);
             onCollector.Contains("succ_0").Should().BeTrue();
         }
@@ -62,8 +57,8 @@ namespace FluentCodingTest.Outcome.On
         public void Success_OnSuccess_Func()
         {
             var result = "succ".ToOutcome<Exception, string>().OnSuccess(OoSuccessFunc);
-            result.Should().BeOfType<OutcomeSuccess<Exception, string>>();
-            (result as OutcomeSuccess<Exception, string>)._successValue.Should().Be("succ");
+            result.Should().BeOfType<Right<Exception, string>>();
+            (result as Right<Exception, string>)._successValue.Should().Be("succ");
             onCollector.Should().HaveCount(1);
             onCollector.Contains("succ_0").Should().BeTrue();
         }
@@ -72,9 +67,9 @@ namespace FluentCodingTest.Outcome.On
         public void Success_OnFailure_Func()
         {
             var result = "succ".ToOutcome<Exception, string>().OnFailure(OoFailureFunc);
-            result.Should().BeOfType<OutcomeSuccess<Exception, string>>();
-            (result as OutcomeSuccess<Exception, string>)._successValue.Should().Be("succ");
-            onCollector.Should().HaveCount(0);        
+            result.Should().BeOfType<Right<Exception, string>>();
+            (result as Right<Exception, string>)._successValue.Should().Be("succ");
+            onCollector.Should().HaveCount(0);
         }
 
 
@@ -82,28 +77,28 @@ namespace FluentCodingTest.Outcome.On
         public void Success_On_Func()
         {
             var result = "succ".ToOutcome<Exception, string>().On(OoSuccessFunc, OoFailureFunc);
-            result.Should().BeOfType<OutcomeSuccess<Exception, string>>();
-            (result as OutcomeSuccess<Exception, string>)._successValue.Should().Be("succ");
+            result.Should().BeOfType<Right<Exception, string>>();
+            (result as Right<Exception, string>)._successValue.Should().Be("succ");
             onCollector.Should().HaveCount(1);
             onCollector.Contains("succ_0").Should().BeTrue();
         }
 
-        
+
         [Test]
         public void Failure_OnSuccess_Action()
         {
             var result = (new Exception("fail")).ToOutcomeFailure<Exception, string>().OnSuccess(OoSuccessAction);
-            result.Should().BeOfType<OutcomeFailure<Exception, string>>();
-            (result as OutcomeFailure<Exception, string>)._failureValue.Message.Should().Be("fail");
-            onCollector.Should().HaveCount(0);            
+            result.Should().BeOfType<Left<Exception, string>>();
+            (result as Left<Exception, string>)._failureValue.Message.Should().Be("fail");
+            onCollector.Should().HaveCount(0);
         }
 
         [Test]
         public void Failure_OnFailure_Action()
         {
             var result = (new Exception("fail")).ToOutcomeFailure<Exception, string>().OnFailure(OoFailureAction);
-            result.Should().BeOfType<OutcomeFailure<Exception, string>>();
-            (result as OutcomeFailure<Exception, string>)._failureValue.Message.Should().Be("fail");
+            result.Should().BeOfType<Left<Exception, string>>();
+            (result as Left<Exception, string>)._failureValue.Message.Should().Be("fail");
             onCollector.Should().HaveCount(1);
             onCollector.Contains("fail_0").Should().BeTrue();
         }
@@ -112,8 +107,8 @@ namespace FluentCodingTest.Outcome.On
         public void Failure_On_Action()
         {
             var result = (new Exception("fail")).ToOutcomeFailure<Exception, string>().On(OoSuccessAction, OoFailureAction);
-            result.Should().BeOfType<OutcomeFailure<Exception, string>>();
-            (result as OutcomeFailure<Exception, string>)._failureValue.Message.Should().Be("fail");
+            result.Should().BeOfType<Left<Exception, string>>();
+            (result as Left<Exception, string>)._failureValue.Message.Should().Be("fail");
             onCollector.Should().HaveCount(1);
             onCollector.Contains("fail_0").Should().BeTrue();
         }
@@ -122,17 +117,17 @@ namespace FluentCodingTest.Outcome.On
         public void Failure_OnSuccess_Func()
         {
             var result = (new Exception("fail")).ToOutcomeFailure<Exception, string>().OnSuccess(OoSuccessFunc);
-            result.Should().BeOfType<OutcomeFailure<Exception, string>>();
-            (result as OutcomeFailure<Exception, string>)._failureValue.Message.Should().Be("fail");
-            onCollector.Should().HaveCount(0);            
+            result.Should().BeOfType<Left<Exception, string>>();
+            (result as Left<Exception, string>)._failureValue.Message.Should().Be("fail");
+            onCollector.Should().HaveCount(0);
         }
 
         [Test]
         public void Failure_OnFailure_Func()
         {
             var result = (new Exception("fail")).ToOutcomeFailure<Exception, string>().OnFailure(OoFailureFunc);
-            result.Should().BeOfType<OutcomeFailure<Exception, string>>();
-            (result as OutcomeFailure<Exception, string>)._failureValue.Message.Should().Be("fail");
+            result.Should().BeOfType<Left<Exception, string>>();
+            (result as Left<Exception, string>)._failureValue.Message.Should().Be("fail");
             onCollector.Should().HaveCount(1);
             onCollector.Contains("fail_0").Should().BeTrue();
         }
@@ -142,8 +137,8 @@ namespace FluentCodingTest.Outcome.On
         public void Failure_On_Func()
         {
             var result = (new Exception("fail")).ToOutcomeFailure<Exception, string>().On(OoSuccessFunc, OoFailureFunc);
-            result.Should().BeOfType<OutcomeFailure<Exception, string>>();
-            (result as OutcomeFailure<Exception, string>)._failureValue.Message.Should().Be("fail");
+            result.Should().BeOfType<Left<Exception, string>>();
+            (result as Left<Exception, string>)._failureValue.Message.Should().Be("fail");
             onCollector.Should().HaveCount(1);
             onCollector.Contains("fail_0").Should().BeTrue();
         }

@@ -1,10 +1,5 @@
 ﻿using FluentAssertions;
 using FluentCoding;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FluentCodingTest.Optional.Init
 {
@@ -31,7 +26,7 @@ namespace FluentCodingTest.Optional.Init
 
         [Test]
         public void None_IsSome_False_IsNone_True()
-        {            
+        {
             var optionalString = Optional<string>.None();
             optionalString.IsSome.Should().BeFalse();
             optionalString.IsNone.Should().BeTrue();

@@ -1,9 +1,5 @@
 ﻿using FluentAssertions;
 using FluentCoding;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 
 namespace FluentCodingTest.Optional.Bind
@@ -22,8 +18,8 @@ namespace FluentCodingTest.Optional.Bind
         {
 
             var result = "1".ToOptional().Bind(FuncWithOptionalResult);
-            result.Should().BeOfType<OptionalJust<int>>();
-            (result as OptionalJust<int>)._value.Should().Be(1);
+            result.Should().BeOfType<Some<int>>();
+            (result as Some<int>)._value.Should().Be(1);
         }
 
         [Test]
@@ -31,8 +27,8 @@ namespace FluentCodingTest.Optional.Bind
         {
 
             var result = "1".ToOptional().BindNone(FuncOnNone);
-            result.Should().BeOfType<OptionalJust<string>>();
-            (result as OptionalJust<string>)._value.Should().Be("1");
+            result.Should().BeOfType<Some<string>>();
+            (result as Some<string>)._value.Should().Be("1");
         }
 
 
@@ -41,15 +37,15 @@ namespace FluentCodingTest.Optional.Bind
         public void None_Bind()
         {
             var result = Optional<string>.None().Bind(FuncWithOptionalResult);
-            result.Should().BeOfType<OptionalNone<int>>();            
+            result.Should().BeOfType<None<int>>();
         }
 
         [Test]
         public void None_BindNone()
         {
             var result = Optional<string>.None().BindNone(FuncOnNone);
-            result.Should().BeOfType<OptionalJust<string>>();
-            (result as OptionalJust<string>)._value.Should().Be("none");
+            result.Should().BeOfType<Some<string>>();
+            (result as Some<string>)._value.Should().Be("none");
         }
     }
 }

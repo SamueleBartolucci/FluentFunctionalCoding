@@ -2,8 +2,8 @@
 {
     public partial struct SwitchMap<TIn, TOut>
     {
-        internal readonly TIn _subject;        
-        internal bool _truePredicateNotFound = true;        
+        internal readonly TIn _subject;
+        internal bool _truePredicateNotFound = true;
         internal Func<TIn, TOut> _defaultOrSelectedMapFunction = null;
 
 

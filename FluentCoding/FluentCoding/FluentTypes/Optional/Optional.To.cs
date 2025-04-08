@@ -7,14 +7,14 @@ namespace FluentCoding
         [Pure]
         public Outcome<F, O> ToOutcome<F>(Func<F> onNone) => this switch
         {
-                OptionalJust<O> (var x) => Outcome<F, O>.Success(x),
-                _ => Outcome<F, O>.Failure(onNone()),
+            Some<O>(var x) => Outcome<F, O>.Success(x),
+            _ => Outcome<F, O>.Failure(onNone()),
         };
 
         [Pure]
         public Outcome<F, O> ToOutcome<F>(F valueOnNone) => this switch
         {
-            OptionalJust<O>(var x) => Outcome<F, O>.Success(x),
+            Some<O>(var x) => Outcome<F, O>.Success(x),
             _ => Outcome<F, O>.Failure(valueOnNone),
         };
     }
