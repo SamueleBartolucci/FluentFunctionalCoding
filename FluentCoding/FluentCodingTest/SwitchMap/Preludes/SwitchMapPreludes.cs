@@ -22,8 +22,8 @@ namespace FluentCodingTest.SwitchMap.Preludes
             var switchFunc = subject.Switch(sbj => sbj.Length);
 
             switchFunc.Should().BeOfType<SwitchMap<string, int>>();
-            switchFunc._subject.Should().Be(subject);
-            switchFunc._defaultOrSelectedMapFunction(switchFunc._subject).Should().Be(4);
+            (switchFunc as SwitchMap<string, int>)._subject.Should().Be(subject);
+            (switchFunc as SwitchMap<string, int>)._defaultOrSelectedMapFunction((switchFunc as SwitchMap<string, int>)._subject).Should().Be(4);
         }
 
 
@@ -34,8 +34,8 @@ namespace FluentCodingTest.SwitchMap.Preludes
             var switchFunc = subject.Switch(0);
 
             switchFunc.Should().BeOfType<SwitchMap<string, int>>();
-            switchFunc._subject.Should().Be(subject);
-            switchFunc._defaultOrSelectedMapFunction(switchFunc._subject).Should().Be(0);
+            (switchFunc as SwitchMap<string, int>)._subject.Should().Be(subject);
+            (switchFunc as SwitchMap<string, int>)._defaultOrSelectedMapFunction((switchFunc as SwitchMap<string, int>)._subject).Should().Be(0);
         }
     }
 }

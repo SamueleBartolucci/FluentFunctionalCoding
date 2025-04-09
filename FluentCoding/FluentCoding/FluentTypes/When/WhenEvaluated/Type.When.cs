@@ -1,6 +1,6 @@
 ﻿namespace FluentCoding
 {
-    public readonly partial struct When<T>
+    public partial record When<T>
     {
         internal readonly T _subject;
         internal readonly bool _isTrue = false;

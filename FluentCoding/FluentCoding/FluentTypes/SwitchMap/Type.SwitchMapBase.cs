@@ -9,7 +9,7 @@
 
         private SwitchMapBase(TIn switchSubject) => (this._subject) = (switchSubject);
 
-        public SwitchMap<TIn, TOut> Default(Func<TIn, TOut> defaultCase) => SwitchMap<TIn, TOut>.Switch(_subject, defaultCase);
+        public ISwitchMap<TIn, TOut> Default(Func<TIn, TOut> defaultCase) => SwitchMap<TIn, TOut>.Switch(_subject, defaultCase);
 
     }
 }

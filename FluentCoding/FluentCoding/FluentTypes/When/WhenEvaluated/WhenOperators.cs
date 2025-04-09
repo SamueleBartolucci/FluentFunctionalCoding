@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 
 namespace FluentCoding
 {
-    public readonly partial struct When<T>
+    public partial record When<T>
     {
 
         [Pure]
