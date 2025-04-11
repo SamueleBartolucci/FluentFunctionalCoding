@@ -1,12 +1,12 @@
 ﻿namespace FluentCoding
 {
-    public abstract partial record Optional<O>
+    public abstract partial record Optional<O> : IOptional<O>
     {
         internal static NotImplementedException UnknowOptionalType() => new NotImplementedException($"Unknown type, expected: {nameof(Some<O>)} or {nameof(None<O>)}");
 
-        internal static Optional<O> None() => new None<O>();
+        internal static IOptional<O> None() => new None<O>();
 
-        internal static Optional<O> Some(O value) => value == null ?
+        internal static IOptional<O> Some(O value) => value == null ?
                                                             new None<O>() :
                                                             new Some<O>(value);
 

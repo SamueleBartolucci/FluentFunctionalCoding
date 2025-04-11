@@ -2,14 +2,14 @@
 {
     public static partial class WhenIsExtension
     {
-        public static When<string> IsNullOrEmpty(this WhenIs<string> whenIs)
-            => When<string>.WhenMatch(whenIs._whenSubject, string.IsNullOrEmpty(whenIs._whenSubject));
+        public static IWhen<string> IsNullOrEmpty(this IWhenIs<string> whenIs)
+            => whenIs.ToWhen(string.IsNullOrEmpty);
 
-        public static When<string> IsNotNullOrEmpty(this WhenIs<string> whenIs)
-            => When<string>.WhenMatch(whenIs._whenSubject, !string.IsNullOrEmpty(whenIs._whenSubject));
+        public static IWhen<string> IsNotNullOrEmpty(this IWhenIs<string> whenIs)
+            => whenIs.ToWhen(sbj => !string.IsNullOrEmpty(sbj));
 
-        public static When<string> IsEqualsTo(this WhenIs<string> whenIs, string compare, StringComparison options = StringComparison.InvariantCultureIgnoreCase)
-            => When<string>.WhenMatch(whenIs._whenSubject, whenIs._whenSubject?.Equals(compare, options) ?? false);
+        public static IWhen<string> IsEqualsTo(this IWhenIs<string> whenIs, string compare, StringComparison options = StringComparison.InvariantCultureIgnoreCase)
+            => whenIs.ToWhen(sbj => sbj?.Equals(compare, options) ?? false);
 
     }
 }

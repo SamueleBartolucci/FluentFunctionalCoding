@@ -2,34 +2,25 @@
 {
 
     public partial record SwitchMap<TIn, TOut> : ISwitchMap<TIn, TOut>
-    {
-        
-        private void CheckAndSelectMapFunction(bool predicateValue, Func<TIn, TOut> mapFunc)
-        {
+    {        
+        private SwitchMap<TIn, TOut> CheckAndSelectMapFunction(bool predicateValue, Func<TIn, TOut> mapFunc)
+        {            
             if (!_validPredicatFound && predicateValue)
             {
+                //newMap = this with { _validPredicatFound = true, _defaultOrSelectedMapFunction = mapFunc };
                 _defaultOrSelectedMapFunction = mapFunc;
                 _validPredicatFound = true;
             }
+            return this;
         }
 
         public ISwitchMap<TIn, TOut> Case(bool predicate, Func<TIn, TOut> map)
-        {
-            CheckAndSelectMapFunction(predicate, map);
-            return this;
-        }
-        public ISwitchMap<TIn, TOut> Case(Func<bool> predicate, Func<TIn, TOut> map)
-        {
-            if(!_validPredicatFound)
-                CheckAndSelectMapFunction(predicate(), map);
-            return this;
-        }
+            => CheckAndSelectMapFunction(predicate, map);
 
-        public ISwitchMap<TIn, TOut> Case(Func<TIn, bool> predicate, Func<TIn, TOut> map)
-        {
-            if (!_validPredicatFound)
-                CheckAndSelectMapFunction(predicate(_subject), map);
-            return this;
-        }
+        public ISwitchMap<TIn, TOut> Case(Func<bool> predicate, Func<TIn, TOut> map)
+            => (!_validPredicatFound)? CheckAndSelectMapFunction(predicate(), map) : this;
+
+        public ISwitchMap<TIn, TOut> Case(Func<TIn, bool> predicate, Func<TIn, TOut> map) 
+            => (!_validPredicatFound) ? CheckAndSelectMapFunction(predicate(_subject), map) : this;
     }
 }

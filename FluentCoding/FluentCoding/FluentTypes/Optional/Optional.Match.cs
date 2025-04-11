@@ -3,7 +3,7 @@
 namespace FluentCoding
 {
 
-    public abstract partial record Optional<O>
+    public abstract partial record Optional<O> : IOptional<O>
     {
         [Pure]
         public O MatchNone(Func<O> mapOnNone)

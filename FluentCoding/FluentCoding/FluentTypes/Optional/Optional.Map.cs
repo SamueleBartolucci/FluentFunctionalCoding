@@ -4,10 +4,10 @@
 namespace FluentCoding
 {
 
-    public abstract partial record Optional<O>
+    public abstract partial record Optional<O> : IOptional<O>
     {
         [Pure]
-        public Optional<B> Map<B>(Func<O, B> mapOnSome) =>
+        public IOptional<B> Map<B>(Func<O, B> mapOnSome) =>
             this switch
             {
                 None<O> => Optional<B>.None(),
@@ -16,7 +16,7 @@ namespace FluentCoding
             };
 
         [Pure]
-        public Optional<O> MapNone(Func<O> mapOnNone) =>
+        public IOptional<O> MapNone(Func<O> mapOnNone) =>
             this switch
             {
                 None<O> => Some(mapOnNone()),

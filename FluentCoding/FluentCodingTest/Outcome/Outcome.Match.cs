@@ -10,7 +10,7 @@ namespace FluentCodingTest.Outcome.Match
 
         public int FuncMatchFailure(Exception e) => -99;
 
-        public Outcome<string, string> FuncWithOutcomeResultFAilure(Exception e) => e.Message.ToOutcomeFailure<string, string>();
+        public IOutcome<string, string> FuncWithOutcomeResultFAilure(Exception e) => e.Message.ToOutcomeFailure<string, string>();
 
         [Test]
         public void Success_Match_Func()

@@ -3,8 +3,6 @@
 
     public static partial class SwitchMapExtension
     {
-
-
         public static async Task<ISwitchMap<TIn, TOut>> CaseAsync<TIn, TOut>(this Task<ISwitchMap<TIn, TOut>> switchCase, bool casePredicate, Func<TIn, TOut> caseMap)
             => (await switchCase).Case(casePredicate, caseMap);
 

@@ -1,3 +1,4 @@
+using FluentAssertions;
 using FluentCoding;
 
 
@@ -53,6 +54,9 @@ namespace FluentCodingTest
 
             time.When();
 
+            Dictionary<string, string> test = new();
+
+            test.When().ContainsKey("test");
 
         }
     }

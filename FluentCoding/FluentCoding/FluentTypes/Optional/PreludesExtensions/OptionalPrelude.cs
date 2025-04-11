@@ -8,7 +8,7 @@
         /// <typeparam name="O"></typeparam>
         /// <param name="value"></param>
         /// <returns></returns>
-        public static Optional<O> ToOptional<O>(this O value) => Optional<O>.Some(value);
+        public static IOptional<O> ToOptional<O>(this O value) => Optional<O>.Some(value);
 
     }
 }

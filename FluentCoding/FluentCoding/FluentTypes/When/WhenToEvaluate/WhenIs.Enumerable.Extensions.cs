@@ -1,11 +1,29 @@
-﻿namespace FluentCoding
+﻿using FluentCoding;
+
+namespace FluentCoding
 {
     public static partial class WhenIsExtension
     {
-        public static When<IEnumerable<T>> Any<T>(this WhenIs<IEnumerable<T>> whenIs, Func<T, bool> orPredicatesOnItems)
-            => When<IEnumerable<T>>.WhenMatch(whenIs._whenSubject, whenIs._whenSubject.Any(orPredicatesOnItems));
+        public static IWhen<IEnumerable<T>> Any<T>(this IWhenIs<IEnumerable<T>> whenIs, Func<T, bool> orPredicatesOnItems)
+            => whenIs.ToWhen(sbj => sbj.Any(orPredicatesOnItems));
 
-        public static When<IEnumerable<T>> All<T>(this WhenIs<IEnumerable<T>> whenIs, Func<T, bool> andPredicatesOnItems)
-            => When<IEnumerable<T>>.WhenMatch(whenIs._whenSubject, whenIs._whenSubject.All(andPredicatesOnItems));
+        public static IWhen<IEnumerable<T>> All<T>(this IWhenIs<IEnumerable<T>> whenIs, Func<T, bool> andPredicatesOnItems)
+            => whenIs.ToWhen(sbj => sbj.All(andPredicatesOnItems));
+
+
+        public static IWhen<List<T>> Any<T>(this IWhenIs<List<T>> whenIs, Func<T, bool> orPredicatesOnItems)
+            => whenIs.ToWhen(sbj => sbj.Any(orPredicatesOnItems));
+
+        public static IWhen<List<T>> All<T>(this IWhenIs<List<T>> whenIs, Func<T, bool> andPredicatesOnItems)
+            => whenIs.ToWhen(sbj => sbj.All(andPredicatesOnItems));
+    
+
+        public static IWhen<IList<T>> Any<T>(this IWhenIs<IList<T>> whenIs, Func<T, bool> orPredicatesOnItems)
+            => whenIs.ToWhen(sbj => sbj.Any(orPredicatesOnItems));
+
+        public static IWhen<IList<T>> All<T>(this IWhenIs<IList<T>> whenIs, Func<T, bool> andPredicatesOnItems)
+            => whenIs.ToWhen(sbj => sbj.All(andPredicatesOnItems));
     }
 }
+
+

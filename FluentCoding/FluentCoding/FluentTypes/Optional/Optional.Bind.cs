@@ -2,10 +2,10 @@
 
 namespace FluentCoding
 {
-    public abstract partial record Optional<O>
+    public abstract partial record Optional<O> : IOptional<O>
     {
         [Pure]
-        public Optional<T> Bind<T>(Func<O, Optional<T>> bindOnSome)
+        public IOptional<T> Bind<T>(Func<O, IOptional<T>> bindOnSome)
             => this switch
             {
                 None<O> => Optional<T>.None(),
@@ -14,7 +14,7 @@ namespace FluentCoding
             };
 
         [Pure]
-        public Optional<O> BindNone(Func<Optional<O>> bindOnNone)
+        public IOptional<O> BindNone(Func<IOptional<O>> bindOnNone)
              => this switch
              {
                  None<O> => bindOnNone(),

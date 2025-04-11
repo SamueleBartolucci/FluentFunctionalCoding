@@ -10,7 +10,7 @@ namespace FluentCodingTest.Outcome.Map
 
         public string FuncMapFailure(Exception e) => e.Message;
 
-        public Outcome<string, string> FuncWithOutcomeResultFAilure(Exception e) => e.Message.ToOutcomeFailure<string, string>();
+        public IOutcome<string, string> FuncWithOutcomeResultFAilure(Exception e) => e.Message.ToOutcomeFailure<string, string>();
 
         [Test]
         public void Success_MapSuccess()

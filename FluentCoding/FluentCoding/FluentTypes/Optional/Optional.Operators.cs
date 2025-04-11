@@ -3,11 +3,11 @@ using System.Runtime.CompilerServices;
 
 namespace FluentCoding
 {
-    public abstract partial record Optional<O>
+    public abstract partial record Optional<O> : IOptional<O>
     {
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static implicit operator Optional<O>(O input) => input == null ? None() : Some(input);
+        public static implicit operator Optional<O>(O input) => (input == null ? None() : Some(input)) as Optional<O>;
 
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

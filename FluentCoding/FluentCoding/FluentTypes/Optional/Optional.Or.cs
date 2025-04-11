@@ -1,9 +1,9 @@
 ﻿
 namespace FluentCoding
 {
-    public abstract partial record Optional<O>
+    public abstract partial record Optional<O> : IOptional<O>
     {
-        public Optional<O> Or(Optional<O> orRightValue, bool chooseRight = false)
+        public IOptional<O> Or(IOptional<O> orRightValue, bool chooseRight = false)
                => this switch
                {
                    None<O> => orRightValue,
@@ -11,7 +11,7 @@ namespace FluentCoding
                    _ => throw UnknowOptionalType()
                };
 
-        public Optional<O> Or(Optional<O> orRightValue, Func<bool> chooseRightWhen)
+        public IOptional<O> Or(IOptional<O> orRightValue, Func<bool> chooseRightWhen)
             => this switch
             {
                 None<O> => orRightValue,
@@ -19,7 +19,7 @@ namespace FluentCoding
                 _ => throw UnknowOptionalType()
             };
 
-        public Optional<O> Or(Optional<O> orRightValue, Func<O, bool> chooseRightWhen)
+        public IOptional<O> Or(IOptional<O> orRightValue, Func<O, bool> chooseRightWhen)
           => this switch
           {
               None<O> => orRightValue,
@@ -27,7 +27,7 @@ namespace FluentCoding
               _ => throw UnknowOptionalType()
           };
 
-        public Optional<O> Or(Func<O> orRightValueFunc, bool chooseRight = false)
+        public IOptional<O> Or(Func<O> orRightValueFunc, bool chooseRight = false)
               => this switch
               {
                   None<O> => orRightValueFunc().ToOptional(),
@@ -35,7 +35,7 @@ namespace FluentCoding
                   _ => throw UnknowOptionalType()
               };
 
-        public Optional<O> Or(Func<O> orRightValueFunc, Func<bool> chooseRightWhen)
+        public IOptional<O> Or(Func<O> orRightValueFunc, Func<bool> chooseRightWhen)
             => this switch
             {
                 None<O> => orRightValueFunc().ToOptional(),
@@ -43,7 +43,7 @@ namespace FluentCoding
                 _ => throw UnknowOptionalType()
             };
 
-        public Optional<O> Or(Func<O> orRightValueFunc, Func<O, bool> chooseRightWhen)
+        public IOptional<O> Or(Func<O> orRightValueFunc, Func<O, bool> chooseRightWhen)
            => this switch
            {
                None<O> => orRightValueFunc().ToOptional(),

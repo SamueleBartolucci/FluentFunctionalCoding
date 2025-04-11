@@ -1,7 +1,7 @@
 ﻿namespace FluentCoding
 {
 
-    internal record None<O> : Optional<O>
+    sealed internal record None<O> : Optional<O>
     {
     }
 }

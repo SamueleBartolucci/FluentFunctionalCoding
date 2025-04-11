@@ -1,11 +1,11 @@
 ﻿namespace FluentCoding
 {
-    public partial record When<T>
+    public partial record When<T> : IWhen<T>
     {
         internal readonly T _subject;
         internal readonly bool _isTrue = false;
 
-        internal static When<T> WhenMatch(T whenSubject, bool isTrue) => new(whenSubject, isTrue);
+        internal static IWhen<T> WhenMatch(T whenSubject, bool isTrue) => new When<T>(whenSubject, isTrue);
 
         public bool IsTrue => _isTrue;
         public bool IsFalse => !_isTrue;

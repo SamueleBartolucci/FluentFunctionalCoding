@@ -1,8 +1,8 @@
 ﻿namespace FluentCoding
 {
-    public partial record When<T>
+    public partial record When<T> : IWhen<T>
     {
-        public When<T> OnTrue(Action<T> funcAsActionToCallOnSubject)
+        public IWhen<T> OnTrue(Action<T> funcAsActionToCallOnSubject)
         {
             if (_isTrue)
                 funcAsActionToCallOnSubject(_subject);
@@ -10,7 +10,7 @@
             return this;
         }
 
-        public When<T> OnFalse(Action<T> funcAsActionToCallOnSubject)
+        public IWhen<T> OnFalse(Action<T> funcAsActionToCallOnSubject)
         {
             if (!_isTrue)
                 funcAsActionToCallOnSubject(_subject);
@@ -18,7 +18,7 @@
             return this;
         }
 
-        public When<T> OnTrue<X>(Func<T, X> funcAsActionToCallOnSubject)
+        public IWhen<T> OnTrue<X>(Func<T, X> funcAsActionToCallOnSubject)
         {
             if (_isTrue)
                 funcAsActionToCallOnSubject(_subject);
@@ -26,7 +26,7 @@
             return this;
         }
 
-        public When<T> OnFalse<X>(Func<T, X> funcAsActionToCallOnSubject)
+        public IWhen<T> OnFalse<X>(Func<T, X> funcAsActionToCallOnSubject)
         {
             if (!_isTrue)
                 funcAsActionToCallOnSubject(_subject);

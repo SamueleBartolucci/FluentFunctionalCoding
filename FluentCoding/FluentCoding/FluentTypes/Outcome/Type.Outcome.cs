@@ -1,13 +1,13 @@
 ﻿namespace FluentCoding
 {
 
-    public abstract partial record Outcome<F, S>()
+    public abstract partial record Outcome<F, S>() : IOutcome<F, S>    
     {
         internal static NotImplementedException UnknownOutcomeType() => new NotImplementedException($"Unknown type, expected: {nameof(Right<F, S>)} or {nameof(Left<F, S>)}");
 
-        internal static Outcome<F, S> Success(S successValue) => new Right<F, S>(successValue);
+        internal static IOutcome<F, S> Success(S successValue) => new Right<F, S>(successValue);
 
-        internal static Outcome<F, S> Failure(F failureValue) => new Left<F, S>(failureValue);
+        internal static IOutcome<F, S> Failure(F failureValue) => new Left<F, S>(failureValue);
 
 
         /// <summary>

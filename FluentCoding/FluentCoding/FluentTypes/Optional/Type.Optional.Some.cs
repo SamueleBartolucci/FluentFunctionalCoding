@@ -1,6 +1,6 @@
 ﻿namespace FluentCoding
 {
-    internal record Some<O> : Optional<O>
+    sealed internal record Some<O> : Optional<O>
     {
         internal O _value;
         internal Some(O Value) => _value = Value;

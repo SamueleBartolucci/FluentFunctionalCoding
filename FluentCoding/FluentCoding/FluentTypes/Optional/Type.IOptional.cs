@@ -11,6 +11,12 @@ namespace FluentCoding
         [Pure]
         IOptional<O> BindNone(Func<IOptional<O>> bindOnNone);
 
+        [Pure]
+        Task<IOptional<T>> BindAsync<T>(Func<O, Task<IOptional<T>>> bindAsyncOnSome);
+
+        [Pure] 
+        Task<IOptional<O>> BindNoneAsync(Func<Task<IOptional<O>>> bindAsyncOnNone);
+
         // OnSome methods
         [Pure]
         IOptional<O> OnSome(Action<O> action);
@@ -65,10 +71,10 @@ namespace FluentCoding
 
         // ToOutcome methods
         [Pure]
-        Outcome<F, O> ToOutcome<F>(Func<F> onNone);
+        IOutcome<F, O> ToOutcome<F>(Func<F> onNone);
 
         [Pure]
-        Outcome<F, O> ToOutcome<F>(F valueOnNone);
+        IOutcome<F, O> ToOutcome<F>(F valueOnNone);
 
         // Properties
         bool IsSome { get; }
