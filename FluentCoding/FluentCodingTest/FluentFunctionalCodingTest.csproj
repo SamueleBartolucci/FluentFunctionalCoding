@@ -25,7 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FluentCoding\FluentCoding.csproj" />
+    <ProjectReference Include="..\FluentCoding\FluentFunctionalCoding.csproj" />
   </ItemGroup>
 
   <ItemGroup>

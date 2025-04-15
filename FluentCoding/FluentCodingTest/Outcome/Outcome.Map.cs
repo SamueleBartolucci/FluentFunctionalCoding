@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using FluentCoding;
+using FluentFunctionalCoding;
 
 
 namespace FluentCodingTest.Outcome.Map
@@ -10,7 +10,7 @@ namespace FluentCodingTest.Outcome.Map
 
         public string FuncMapFailure(Exception e) => e.Message;
 
-        public IOutcome<string, string> FuncWithOutcomeResultFAilure(Exception e) => e.Message.ToOutcomeFailure<string, string>();
+        public Outcome<string, string> FuncWithOutcomeResultFAilure(Exception e) => e.Message.ToOutcomeFailure<string, string>();
 
         [Test]
         public void Success_MapSuccess()

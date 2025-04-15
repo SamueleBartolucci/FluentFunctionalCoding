@@ -1,12 +1,13 @@
 ﻿using FluentAssertions;
 using FluentFunctionalCoding;
 
-namespace FluentCodingTest.SwitchMap.Case.Enumerable.Extensions
+namespace FluentCodingTest.SwitchMap.Case.Extensions.IList
 {
+
     internal class SwitchMap
     {
-        IEnumerable<int> defaultSubject = new List<int>() { 0, 1, 2, 3, 4, 5, 6 };
-        public SwitchMap<IEnumerable<int>, string> GetSwitch() => defaultSubject.Switch("default");
+        IList<int> defaultSubject = new List<int>() { 0, 1, 2, 3, 4, 5, 6 };
+        public SwitchMap<IList<int>, string> GetSwitch() => defaultSubject.Switch("default");
 
 
 

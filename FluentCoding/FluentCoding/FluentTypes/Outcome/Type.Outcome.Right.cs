@@ -1,4 +1,4 @@
-﻿namespace FluentCoding
+﻿namespace FluentFunctionalCoding
 {
     sealed internal record Right<F, S> : Outcome<F, S>
     {

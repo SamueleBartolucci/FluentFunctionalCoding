@@ -1,6 +1,6 @@
-﻿using FluentCoding;
+﻿using FluentFunctionalCoding;
 
-namespace FluentCoding
+namespace FluentFunctionalCoding
 {
     public static partial class WhenIsExtension
     {

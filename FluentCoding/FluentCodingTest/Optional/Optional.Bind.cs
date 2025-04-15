@@ -1,17 +1,17 @@
 ﻿using FluentAssertions;
-using FluentCoding;
+using FluentFunctionalCoding;
 
 
 namespace FluentCodingTest.Optional.Bind
 {
     internal class Optional
     {
-        public IOptional<int> FuncWithOptionalResult(string s) => int.TryParse(s, out var result)
+        public Optional<int> FuncWithOptionalResult(string s) => int.TryParse(s, out var result)
                                                                     .When()
                                                                     .IsTrue()
                                                                     .Match(@true => result.ToOptional(), @false => Optional<int>.None());
 
-        public IOptional<string> FuncOnNone() => "none".ToOptional();
+        public Optional<string> FuncOnNone() => "none".ToOptional();
 
         [Test]
         public void Some_Bind()

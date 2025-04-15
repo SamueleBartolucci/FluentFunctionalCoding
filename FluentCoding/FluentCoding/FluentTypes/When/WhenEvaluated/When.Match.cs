@@ -1,4 +1,4 @@
-﻿namespace FluentCoding
+﻿namespace FluentFunctionalCoding
 {
     public partial record When<T> : IWhen<T>
     {

@@ -9,7 +9,7 @@
 
 	
 	<ItemGroup>
-		<InternalsVisibleTo Include="FluentCodingTest" />
+		<InternalsVisibleTo Include="FluentFunctionalCodingTest" />
 	</ItemGroup>
 	
 	<ItemGroup Condition="'$(TargetFramework)' == 'net461'">

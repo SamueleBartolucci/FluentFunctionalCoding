@@ -1,4 +1,4 @@
-﻿namespace FluentCoding
+﻿namespace FluentFunctionalCoding
 {
     public static partial class Prelude
     {
@@ -8,7 +8,9 @@
         /// <typeparam name="O"></typeparam>
         /// <param name="value"></param>
         /// <returns></returns>
-        public static IOptional<O> ToOptional<O>(this O value) => Optional<O>.Some(value);
+        public static Optional<O> ToOptional<O>(this O value) => Optional<O>.Some(value);
+
+        public static Optional<O> ToOptionalNone<O>(this O value) => Optional<O>.None();
 
     }
 }

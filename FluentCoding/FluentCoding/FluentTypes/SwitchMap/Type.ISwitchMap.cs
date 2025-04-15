@@ -1,4 +1,4 @@
-﻿namespace FluentCoding
+﻿namespace FluentFunctionalCoding
 {
     public interface ISwitchMap<out TIn, TOut>
     {

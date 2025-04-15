@@ -1,4 +1,4 @@
-﻿namespace FluentCoding.FluentExtensions.While
+﻿namespace FluentFunctionalCoding.FluentExtensions.While
 {
     public static partial class FluentExtension
     {

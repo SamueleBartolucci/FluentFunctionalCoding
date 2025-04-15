@@ -1,12 +1,12 @@
 ﻿using FluentAssertions;
-using FluentCoding;
+using FluentFunctionalCoding;
 
 
 namespace FluentCodingTest.Outcome.To
 {
     internal class Outcome
     {
-       
+
         [Test]
         public void Success_ToOptional()
         {
@@ -26,7 +26,7 @@ namespace FluentCodingTest.Outcome.To
         public void Failure_ToOptional()
         {
             var result = (new Exception("fail")).ToOutcomeFailure<Exception, string>().ToOptional();
-            result.Should().BeOfType<None<string>>();            
+            result.Should().BeOfType<None<string>>();
         }
 
         [Test]

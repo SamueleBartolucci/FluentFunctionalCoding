@@ -1,17 +1,17 @@
 ﻿using FluentAssertions;
-using FluentCoding;
+using FluentFunctionalCoding;
 
 
 namespace FluentCodingTest.Outcome.Bind
 {
     internal class Outcome
     {
-        public IOutcome<Exception, int> FuncWithOutcomeResult(string s) => int.TryParse(s, out var result)
+        public Outcome<Exception, int> FuncWithOutcomeResult(string s) => int.TryParse(s, out var result)
                                                                              .Map(parsed => result.ToOutcome(_ => !parsed, new Exception("parse failure")));
 
-        public IOutcome<Exception, int> FuncWithOutcomeResultFailure(string s) => new Exception(s).ToOutcomeFailure<Exception, int>();
+        public Outcome<Exception, int> FuncWithOutcomeResultFailure(string s) => new Exception(s).ToOutcomeFailure<Exception, int>();
 
-        public IOutcome<string, string> FuncWithOutcomeResultFAilure(Exception e) => e.Message.ToOutcomeFailure<string, string>();
+        public Outcome<string, string> FuncWithOutcomeResultFAilure(Exception e) => e.Message.ToOutcomeFailure<string, string>();
 
         [Test]
         public void Success_Bind()

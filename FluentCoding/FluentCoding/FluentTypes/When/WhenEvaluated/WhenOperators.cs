@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 
-namespace FluentCoding
+namespace FluentFunctionalCoding
 {
     public partial record When<T>
     {

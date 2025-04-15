@@ -1,4 +1,4 @@
-﻿namespace FluentCoding
+﻿namespace FluentFunctionalCoding
 {
     public partial record SwitchMapBase<TIn, TOut>
     {
@@ -9,7 +9,7 @@
 
         private SwitchMapBase(TIn switchSubject) => (this._subject) = (switchSubject);
 
-        public ISwitchMap<TIn, TOut> Default(Func<TIn, TOut> defaultCase) => SwitchMap<TIn, TOut>.Switch(_subject, defaultCase);
+        public SwitchMap<TIn, TOut> Default(Func<TIn, TOut> defaultCase) => SwitchMap<TIn, TOut>.Switch(_subject, defaultCase);
 
     }
 }

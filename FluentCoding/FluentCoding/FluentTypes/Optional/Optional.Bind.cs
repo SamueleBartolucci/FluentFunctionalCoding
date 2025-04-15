@@ -1,11 +1,11 @@
 ﻿using System.Diagnostics.Contracts;
 
-namespace FluentCoding
+namespace FluentFunctionalCoding
 {
-    public abstract partial record Optional<O> : IOptional<O>
+    public abstract partial record Optional<O>// : Optional<O>
     {
         [Pure]
-        public IOptional<T> Bind<T>(Func<O, IOptional<T>> bindOnSome)
+        public Optional<T> Bind<T>(Func<O, Optional<T>> bindOnSome)
             => this switch
             {
                 None<O> => Optional<T>.None(),
@@ -14,7 +14,7 @@ namespace FluentCoding
             };
 
         [Pure]
-        public IOptional<O> BindNone(Func<IOptional<O>> bindOnNone)
+        public Optional<O> BindNone(Func<Optional<O>> bindOnNone)
              => this switch
              {
                  None<O> => bindOnNone(),

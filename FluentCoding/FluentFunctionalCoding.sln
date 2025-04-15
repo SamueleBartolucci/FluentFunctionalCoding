@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35527.113 d17.12
+VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentCoding", "FluentCoding\FluentCoding.csproj", "{8BACF8F6-CDEE-43F8-941C-D88F8D79C235}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentFunctionalCoding", "FluentCoding\FluentFunctionalCoding.csproj", "{8BACF8F6-CDEE-43F8-941C-D88F8D79C235}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentCodingTest", "FluentCodingTest\FluentCodingTest.csproj", "{ADB40031-0C33-4897-B406-AA15AC27EB31}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentFunctionalCodingTest", "FluentCodingTest\FluentFunctionalCodingTest.csproj", "{ADB40031-0C33-4897-B406-AA15AC27EB31}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,5 +24,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {415FB614-AE43-43CB-B292-F71472A16D20}
 	EndGlobalSection
 EndGlobal

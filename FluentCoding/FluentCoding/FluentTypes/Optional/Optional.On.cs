@@ -1,8 +1,8 @@
 ﻿using System.Diagnostics.Contracts;
 
-namespace FluentCoding
+namespace FluentFunctionalCoding
 {
-    public abstract partial record Optional<O> : IOptional<O>
+    public abstract partial record Optional<O>// : Optional<O>
     {
         /// <summary>
         /// Apply an action on the Subject when IsSome    
@@ -11,7 +11,7 @@ namespace FluentCoding
         /// <param name="action"></param>
         /// <returns></returns>
         [Pure]
-        public IOptional<O> OnSome(Action<O> action)
+        public Optional<O> OnSome(Action<O> action)
         {
 
             if (this is Some<O>(var v))
@@ -29,7 +29,7 @@ namespace FluentCoding
         /// <param name="action"></param>
         /// <returns></returns>
         [Pure]
-        public IOptional<O> OnSome<T>(Func<O, T> funcAsAction)
+        public Optional<O> OnSome<T>(Func<O, T> funcAsAction)
         {
             if (this is Some<O>(var v))
                 funcAsAction(v);
@@ -44,7 +44,7 @@ namespace FluentCoding
         /// <param name="action"></param>
         /// <returns></returns>
         [Pure]
-        public IOptional<O> OnNone(Action action)
+        public Optional<O> OnNone(Action action)
         {
             if (this is None<O>)
                 action();
@@ -60,7 +60,7 @@ namespace FluentCoding
         /// <param name="funcAsAction"></param>
         /// <returns></returns>
         [Pure]
-        public IOptional<O> OnNone<T>(Func<T> funcAsAction)
+        public Optional<O> OnNone<T>(Func<T> funcAsAction)
         {
             if (this is None<O>)
                 funcAsAction();

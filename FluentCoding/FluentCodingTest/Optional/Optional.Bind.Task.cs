@@ -1,18 +1,18 @@
 ﻿using FluentAssertions;
-using FluentCoding;
+using FluentFunctionalCoding;
 
 
 namespace FluentCodingTest.Optional.BindTask
 {
     internal class Optional
     {
-        public Task<IOptional<int>> FuncWithTaskOptionalResult(string s) => int.TryParse(s, out var result)
+        public Task<Optional<int>> FuncWithTaskOptionalResult(string s) => int.TryParse(s, out var result)
                                                                     .When()
                                                                     .IsTrue()
-                                                                    .Match(@true => result.ToOptional(), @false => Optional<int>.None())                                                                    
+                                                                    .Match(@true => result.ToOptional(), @false => Optional<int>.None())
                                                                     .ToTask();
 
-        public Task<IOptional<string>> FuncTaskOptionalOnNone() => "none".ToOptional().ToTask();
+        public Task<Optional<string>> FuncTaskOptionalOnNone() => "none".ToOptional().ToTask();
 
 
 
@@ -23,7 +23,7 @@ namespace FluentCodingTest.Optional.BindTask
         {
 
             var result = "1".ToOptional().BindAsync<int>(FuncWithTaskOptionalResult);
-            result.Should().BeOfType<Task<IOptional<int>>>();
+            result.Should().BeOfType<Task<Optional<int>>>();
             result.Result.Should().BeOfType<Some<int>>();
             (result.Result as Some<int>)._value.Should().Be(1);
         }
@@ -33,7 +33,7 @@ namespace FluentCodingTest.Optional.BindTask
         {
 
             var result = "1".ToOptional().BindNoneAsync(FuncTaskOptionalOnNone);
-            result.Should().BeOfType<Task<IOptional<string>>>();
+            result.Should().BeOfType<Task<Optional<string>>>();
             result.Result.Should().BeOfType<Some<string>>();
         }
 
@@ -42,7 +42,7 @@ namespace FluentCodingTest.Optional.BindTask
         public void None_Bind_TaskOptional()
         {
             var result = Optional<string>.None().BindAsync(FuncWithTaskOptionalResult);
-            result.Should().BeOfType<Task<IOptional<int>>>();
+            result.Should().BeOfType<Task<Optional<int>>>();
             result.Result.Should().BeOfType<None<int>>();
         }
 
@@ -51,7 +51,7 @@ namespace FluentCodingTest.Optional.BindTask
         public void None_BindNone_TaskOptional()
         {
             var result = Optional<string>.None().BindNoneAsync(FuncTaskOptionalOnNone);
-            result.Should().BeOfType<Task<IOptional<string>>>();
+            result.Should().BeOfType<Task<Optional<string>>>();
             result.Result.Should().BeOfType<Some<string>>();
             (result.Result as Some<string>)._value.Should().Be("none");
         }

@@ -1,9 +1,9 @@
 ﻿using System.Diagnostics.Contracts;
 
-namespace FluentCoding
+namespace FluentFunctionalCoding
 {
 
-    public abstract partial record Optional<O> : IOptional<O>
+    public abstract partial record Optional<O>// : Optional<O>
     {
         [Pure]
         public O MatchNone(Func<O> mapOnNone)

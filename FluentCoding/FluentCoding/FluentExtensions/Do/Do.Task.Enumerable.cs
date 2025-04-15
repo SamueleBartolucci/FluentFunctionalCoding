@@ -1,6 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 
-namespace FluentCoding
+namespace FluentFunctionalCoding
 {
     public static partial class FluentExtension
     {

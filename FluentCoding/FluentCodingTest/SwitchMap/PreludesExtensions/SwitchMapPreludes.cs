@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using FluentCoding;
+using FluentFunctionalCoding;
 
 namespace FluentCodingTest.SwitchMap.Preludes
 {
@@ -10,7 +10,7 @@ namespace FluentCodingTest.SwitchMap.Preludes
         {
             string subject = "test";
             var switchBase = subject.Switch<string, int>();
-            
+
             switchBase.Should().BeOfType<SwitchMapBase<string, int>>();
             switchBase._subject.Should().Be(subject);
         }

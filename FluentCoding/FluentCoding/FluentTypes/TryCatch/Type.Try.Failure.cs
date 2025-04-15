@@ -1,4 +1,4 @@
-﻿namespace FluentCoding
+﻿namespace FluentFunctionalCoding
 {
     public record Failure<S, R, E> : Try<S, R, E>
     {

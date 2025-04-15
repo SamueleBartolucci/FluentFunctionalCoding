@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FluentCoding
+namespace FluentFunctionalCoding
 {
 	public static partial class WhenIsExtension
 	{

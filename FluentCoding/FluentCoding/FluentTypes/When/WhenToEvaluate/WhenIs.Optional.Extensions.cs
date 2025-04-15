@@ -1,11 +1,11 @@
 ﻿using System;
 
-namespace FluentCoding
+namespace FluentFunctionalCoding
 {
     public static partial class WhenIsExtension
     {       
 
-        public static IWhen<IOptional<T>> Is<T>(this IWhenIs<IOptional<T>> whenIs, params Func<T, bool>[] predicates)
+        public static IWhen<Optional<T>> Is<T>(this IWhenIs<Optional<T>> whenIs, params Func<T, bool>[] predicates)
             => whenIs switch
             {
                 WhenIs<None<T>> => whenIs.ToWhen(_ => false),

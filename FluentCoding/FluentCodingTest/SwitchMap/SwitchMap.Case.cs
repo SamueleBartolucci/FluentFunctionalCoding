@@ -1,6 +1,5 @@
 ﻿using FluentAssertions;
-using FluentCoding;
-using System.Linq.Expressions;
+using FluentFunctionalCoding;
 
 namespace FluentCodingTest.SwitchMap.Case
 {

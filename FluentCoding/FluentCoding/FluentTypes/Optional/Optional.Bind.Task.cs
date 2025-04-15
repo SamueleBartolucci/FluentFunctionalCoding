@@ -1,12 +1,12 @@
 ﻿using System.Diagnostics.Contracts;
 
-namespace FluentCoding
+namespace FluentFunctionalCoding
 {
-    public abstract partial record Optional<O> : IOptional<O>
+    public abstract partial record Optional<O>// : Optional<O>
     {
 
         [Pure]
-        public async Task<IOptional<T>> BindAsync<T>(Func<O, Task<IOptional<T>>> bindAsyncOnSome)
+        public async Task<Optional<T>> BindAsync<T>(Func<O, Task<Optional<T>>> bindAsyncOnSome)
              => this switch
              {
                  None<O> => Optional<T>.None(),
@@ -15,7 +15,7 @@ namespace FluentCoding
              };
 
         [Pure]
-        public async Task<IOptional<O>> BindNoneAsync(Func<Task<IOptional<O>>> bindAsyncOnNone)
+        public async Task<Optional<O>> BindNoneAsync(Func<Task<Optional<O>>> bindAsyncOnNone)
             => this switch
             {
                 None<O> => await bindAsyncOnNone(),

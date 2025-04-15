@@ -1,9 +1,9 @@
 ﻿using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 
-namespace FluentCoding
+namespace FluentFunctionalCoding
 {
-    public abstract partial record Optional<O> : IOptional<O>
+    public abstract partial record Optional<O>// : Optional<O>
     {
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

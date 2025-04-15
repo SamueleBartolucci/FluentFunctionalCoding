@@ -1,60 +1,60 @@
 ﻿using System.Diagnostics.Contracts;
 
-namespace FluentCoding
+namespace FluentFunctionalCoding
 {
     public interface IOptional<O>
     {
         // Bind methods
         [Pure]
-        IOptional<T> Bind<T>(Func<O, IOptional<T>> bindOnSome);
+        Optional<T> Bind<T>(Func<O, Optional<T>> bindOnSome);
 
         [Pure]
-        IOptional<O> BindNone(Func<IOptional<O>> bindOnNone);
+        Optional<O> BindNone(Func<Optional<O>> bindOnNone);
 
         [Pure]
-        Task<IOptional<T>> BindAsync<T>(Func<O, Task<IOptional<T>>> bindAsyncOnSome);
+        Task<Optional<T>> BindAsync<T>(Func<O, Task<Optional<T>>> bindAsyncOnSome);
 
         [Pure] 
-        Task<IOptional<O>> BindNoneAsync(Func<Task<IOptional<O>>> bindAsyncOnNone);
+        Task<Optional<O>> BindNoneAsync(Func<Task<Optional<O>>> bindAsyncOnNone);
 
         // OnSome methods
         [Pure]
-        IOptional<O> OnSome(Action<O> action);
+        Optional<O> OnSome(Action<O> action);
 
         [Pure]
-        IOptional<O> OnSome<T>(Func<O, T> funcAsAction);
+        Optional<O> OnSome<T>(Func<O, T> funcAsAction);
 
         // OnNone methods
         [Pure]
-        IOptional<O> OnNone(Action action);
+        Optional<O> OnNone(Action action);
 
         [Pure]
-        IOptional<O> OnNone<T>(Func<T> funcAsAction);
+        Optional<O> OnNone<T>(Func<T> funcAsAction);
 
         // Do methods
-        IOptional<O> Do(params Action<O>[] actionsToApplyOnSubject);
+        Optional<O> Do(params Action<O>[] actionsToApplyOnSubject);
 
-        IOptional<O> Do<K>(params Func<O, K>[] functionsToApplyOnSubject);
+        Optional<O> Do<K>(params Func<O, K>[] functionsToApplyOnSubject);
 
         // Or methods
-        IOptional<O> Or(IOptional<O> orRightValue, bool chooseRight = false);
+        Optional<O> Or(Optional<O> orRightValue, bool chooseRight = false);
 
-        IOptional<O> Or(IOptional<O> orRightValue, Func<bool> chooseRightWhen);
+        Optional<O> Or(Optional<O> orRightValue, Func<bool> chooseRightWhen);
 
-        IOptional<O> Or(IOptional<O> orRightValue, Func<O, bool> chooseRightWhen);
+        Optional<O> Or(Optional<O> orRightValue, Func<O, bool> chooseRightWhen);
 
-        IOptional<O> Or(Func<O> orRightValueFunc, bool chooseRight = false);
+        Optional<O> Or(Func<O> orRightValueFunc, bool chooseRight = false);
 
-        IOptional<O> Or(Func<O> orRightValueFunc, Func<bool> chooseRightWhen);
+        Optional<O> Or(Func<O> orRightValueFunc, Func<bool> chooseRightWhen);
 
-        IOptional<O> Or(Func<O> orRightValueFunc, Func<O, bool> chooseRightWhen);
+        Optional<O> Or(Func<O> orRightValueFunc, Func<O, bool> chooseRightWhen);
 
         // Map methods
         [Pure]
-        IOptional<B> Map<B>(Func<O, B> mapOnSome);
+        Optional<B> Map<B>(Func<O, B> mapOnSome);
 
         [Pure]
-        IOptional<O> MapNone(Func<O> mapOnNone);
+        Optional<O> MapNone(Func<O> mapOnNone);
 
         // Match methods
         [Pure]
@@ -71,10 +71,10 @@ namespace FluentCoding
 
         // ToOutcome methods
         [Pure]
-        IOutcome<F, O> ToOutcome<F>(Func<F> onNone);
+        Outcome<F, O> ToOutcome<F>(Func<F> onNone);
 
         [Pure]
-        IOutcome<F, O> ToOutcome<F>(F valueOnNone);
+        Outcome<F, O> ToOutcome<F>(F valueOnNone);
 
         // Properties
         bool IsSome { get; }

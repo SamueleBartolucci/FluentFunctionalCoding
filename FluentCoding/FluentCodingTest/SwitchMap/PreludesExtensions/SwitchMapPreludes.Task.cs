@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using FluentCoding;
+using FluentFunctionalCoding;
 
 namespace FluentCodingTest.SwitchMap.Preludes.Task
 {
@@ -11,7 +11,7 @@ namespace FluentCodingTest.SwitchMap.Preludes.Task
             var subject = "test".ToTask();
             var switchFunc = subject.SwitchAsync(sbj => sbj.Length);
 
-            switchFunc.Should().BeOfType<Task<ISwitchMap<string, int>>>();
+            switchFunc.Should().BeOfType<Task<SwitchMap<string, int>>>();
             (switchFunc.Result as SwitchMap<string, int>)._subject.Should().Be(subject.Result);
             (switchFunc.Result as SwitchMap<string, int>)._defaultOrSelectedMapFunction((switchFunc.Result as SwitchMap<string, int>)._subject).Should().Be(4);
         }
@@ -22,7 +22,7 @@ namespace FluentCodingTest.SwitchMap.Preludes.Task
             var subject = "test".ToTask();
             var switchFunc = subject.SwitchAsync(0);
 
-            switchFunc.Should().BeOfType<Task<ISwitchMap<string, int>>>();
+            switchFunc.Should().BeOfType<Task<SwitchMap<string, int>>>();
             (switchFunc.Result as SwitchMap<string, int>)._subject.Should().Be(subject.Result);
             (switchFunc.Result as SwitchMap<string, int>)._defaultOrSelectedMapFunction((switchFunc.Result as SwitchMap<string, int>)._subject).Should().Be(0);
         }

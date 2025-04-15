@@ -1,7 +1,7 @@
-﻿namespace FluentCoding
+﻿namespace FluentFunctionalCoding
 {
 
-    public partial record SwitchMap<TIn, TOut> : ISwitchMap<TIn, TOut>
+    public partial record SwitchMap<TIn, TOut> //: ISwitchMap<TIn, TOut>
     {        
         private SwitchMap<TIn, TOut> CheckAndSelectMapFunction(bool predicateValue, Func<TIn, TOut> mapFunc)
         {            
@@ -14,13 +14,13 @@
             return this;
         }
 
-        public ISwitchMap<TIn, TOut> Case(bool predicate, Func<TIn, TOut> map)
+        public SwitchMap<TIn, TOut> Case(bool predicate, Func<TIn, TOut> map)
             => CheckAndSelectMapFunction(predicate, map);
 
-        public ISwitchMap<TIn, TOut> Case(Func<bool> predicate, Func<TIn, TOut> map)
+        public SwitchMap<TIn, TOut> Case(Func<bool> predicate, Func<TIn, TOut> map)
             => (!_validPredicatFound)? CheckAndSelectMapFunction(predicate(), map) : this;
 
-        public ISwitchMap<TIn, TOut> Case(Func<TIn, bool> predicate, Func<TIn, TOut> map) 
+        public SwitchMap<TIn, TOut> Case(Func<TIn, bool> predicate, Func<TIn, TOut> map) 
             => (!_validPredicatFound) ? CheckAndSelectMapFunction(predicate(_subject), map) : this;
     }
 }

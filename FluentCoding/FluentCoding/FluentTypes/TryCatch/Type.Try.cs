@@ -1,4 +1,4 @@
-﻿namespace FluentCoding
+﻿namespace FluentFunctionalCoding
 {
     public abstract partial record Try<S, R, E>
     {
@@ -10,11 +10,7 @@
             _ => false,
         };
 
-        public bool IsFail => this switch
-        {
-            Success<S, R, E> => false,
-            _ => true,
-        };
+        public bool IsFail => !IsSuccess;
 
         internal Try() { }
 
