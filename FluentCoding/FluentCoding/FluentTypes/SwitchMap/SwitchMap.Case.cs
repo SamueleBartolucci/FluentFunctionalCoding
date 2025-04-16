@@ -1,26 +1,24 @@
 ﻿namespace FluentFunctionalCoding
 {
 
-    public partial record SwitchMap<TIn, TOut> //: ISwitchMap<TIn, TOut>
+    public abstract partial record SwitchMap<TIn, TOut> //: ISwitchMap<TIn, TOut>
     {        
-        private SwitchMap<TIn, TOut> CheckAndSelectMapFunction(bool predicateValue, Func<TIn, TOut> mapFunc)
+        private SwitchMap<TIn, TOut> CheckAndSelectMapFunction(bool isPredicateTrue, Func<TIn, TOut> mapFunc)
         {            
-            if (!_validPredicatFound && predicateValue)
+            return this switch
             {
-                //newMap = this with { _validPredicatFound = true, _defaultOrSelectedMapFunction = mapFunc };
-                _defaultOrSelectedMapFunction = mapFunc;
-                _validPredicatFound = true;
-            }
-            return this;
-        }
+                DefaultCase<TIn, TOut> (TIn sbj, _) when isPredicateTrue => new PredicateMatchCase<TIn, TOut>(sbj, mapFunc),
+                var noChangeOfState => noChangeOfState
+            };
+        }       
 
         public SwitchMap<TIn, TOut> Case(bool predicate, Func<TIn, TOut> map)
             => CheckAndSelectMapFunction(predicate, map);
 
         public SwitchMap<TIn, TOut> Case(Func<bool> predicate, Func<TIn, TOut> map)
-            => (!_validPredicatFound)? CheckAndSelectMapFunction(predicate(), map) : this;
+            => (this is DefaultCase<TIn, TOut>) ? CheckAndSelectMapFunction(predicate(), map) : this;
 
-        public SwitchMap<TIn, TOut> Case(Func<TIn, bool> predicate, Func<TIn, TOut> map) 
-            => (!_validPredicatFound) ? CheckAndSelectMapFunction(predicate(_subject), map) : this;
+        public SwitchMap<TIn, TOut> Case(Func<TIn, bool> predicate, Func<TIn, TOut> map)
+           => (this is DefaultCase<TIn, TOut>(var sbj, _)) ? CheckAndSelectMapFunction(predicate(sbj), map) : this;
     }
 }

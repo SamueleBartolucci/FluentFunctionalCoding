@@ -12,8 +12,8 @@ namespace FluentCodingTest.SwitchMap.Preludes.Task
             var switchFunc = subject.SwitchAsync(sbj => sbj.Length);
 
             switchFunc.Should().BeOfType<Task<SwitchMap<string, int>>>();
-            (switchFunc.Result as SwitchMap<string, int>)._subject.Should().Be(subject.Result);
-            (switchFunc.Result as SwitchMap<string, int>)._defaultOrSelectedMapFunction((switchFunc.Result as SwitchMap<string, int>)._subject).Should().Be(4);
+            switchFunc.Result.AsValues()._subject.Should().Be(subject.Result);
+            switchFunc.Result.AsValues()._defaultOrSelectedMapFunction(switchFunc.Result.AsValues()._subject).Should().Be(4);
         }
 
         [Test]
@@ -23,8 +23,8 @@ namespace FluentCodingTest.SwitchMap.Preludes.Task
             var switchFunc = subject.SwitchAsync(0);
 
             switchFunc.Should().BeOfType<Task<SwitchMap<string, int>>>();
-            (switchFunc.Result as SwitchMap<string, int>)._subject.Should().Be(subject.Result);
-            (switchFunc.Result as SwitchMap<string, int>)._defaultOrSelectedMapFunction((switchFunc.Result as SwitchMap<string, int>)._subject).Should().Be(0);
+            switchFunc.Result.AsValues()._subject.Should().Be(subject.Result);
+            switchFunc.Result.AsValues()._defaultOrSelectedMapFunction(switchFunc.Result.AsValues()._subject).Should().Be(0);
         }
     }
 }

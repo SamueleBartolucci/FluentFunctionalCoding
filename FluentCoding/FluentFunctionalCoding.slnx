@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="FluentCoding/FluentFunctionalCoding.csproj" />
+  <Project Path="FluentCodingTest/FluentFunctionalCodingTest.csproj" />
+</Solution>
