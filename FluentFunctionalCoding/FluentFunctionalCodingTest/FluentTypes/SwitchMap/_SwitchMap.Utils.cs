@@ -3,7 +3,7 @@ using FluentFunctionalCoding;
 using System.Runtime.CompilerServices;
 
 namespace FluentCodingTest.SwitchMap
-{
+{    
     internal static class SwitchMapUtils
     {
         public static (TI _subject, Func<TI, TO> _defaultOrSelectedMapFunction) AsValues<TI, TO>(this SwitchMap<TI, TO> switchMap) => switchMap switch

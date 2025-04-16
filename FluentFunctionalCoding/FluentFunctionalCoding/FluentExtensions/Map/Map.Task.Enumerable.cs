@@ -12,5 +12,11 @@
         /// <returns></returns>
         public static async Task<IEnumerable<K>> MapAllAsync<T, K>(this Task<IEnumerable<T>> subjectToMap, Func<T, K> mapFunc)
             => (await subjectToMap).MapAll(mapFunc);
+
+        public static async Task<IEnumerable<K>> MapAllAsync<T, K>(this Task<List<T>> subjectToMap, Func<T, K> mapFunc)
+            => (await subjectToMap).MapAll(mapFunc);
+
+        public static async Task<IEnumerable<K>> MapAllAsync<T, K>(this Task<T[]> subjectToMap, Func<T, K> mapFunc)
+            => (await subjectToMap).MapAll(mapFunc);
     }
 }

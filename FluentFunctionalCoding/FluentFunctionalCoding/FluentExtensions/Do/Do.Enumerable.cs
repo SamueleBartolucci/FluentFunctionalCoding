@@ -15,7 +15,7 @@ namespace FluentFunctionalCoding
         public static IEnumerable<T> DoForEach<T>(this IEnumerable<T> enumerableSubject, params Action<T>[] actionsToApplyOnSubject)
         {
             if (enumerableSubject != null)
-            {
+            {                
                 foreach (var itemFromSubject in enumerableSubject)
                     foreach (var actionToApply in actionsToApplyOnSubject)
                         actionToApply(itemFromSubject);

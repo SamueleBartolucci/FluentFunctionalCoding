@@ -24,7 +24,7 @@ namespace FluentFunctionalCoding
         /// <param name="functionsToApplyOnSubject"></param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static async Task<T> DoAsync<T>(this Task<T> subject, params Func<T, T>[] functionsToApplyOnSubject)
+        public static async Task<T> DoAsync<T, K>(this Task<T> subject, params Func<T, K>[] functionsToApplyOnSubject)
             => (await subject).Do(functionsToApplyOnSubject);
     }
 }

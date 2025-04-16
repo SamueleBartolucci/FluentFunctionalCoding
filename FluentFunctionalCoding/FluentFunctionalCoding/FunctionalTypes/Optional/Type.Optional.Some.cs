@@ -1,5 +1,5 @@
 ﻿namespace FluentFunctionalCoding
-{
+{   
     sealed internal record Some<O> : Optional<O>
     {
         internal O _value;

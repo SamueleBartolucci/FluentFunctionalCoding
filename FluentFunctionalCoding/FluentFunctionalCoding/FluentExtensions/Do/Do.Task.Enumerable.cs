@@ -15,6 +15,12 @@ namespace FluentFunctionalCoding
         public static async Task<IEnumerable<T>> DoForEachAsync<T>(this Task<IEnumerable<T>> enumerableSubject, params Action<T>[] actionsToApplyOnSubject)
             => (await enumerableSubject).DoForEach(actionsToApplyOnSubject);
 
+        public static async Task<IEnumerable<T>> DoForEachAsync<T>(this Task<List<T>> enumerableSubject, params Action<T>[] actionsToApplyOnSubject)
+           => (await enumerableSubject).DoForEach(actionsToApplyOnSubject);
+
+        public static async Task<IEnumerable<T>> DoForEachAsync<T>(this Task<T[]> enumerableSubject, params Action<T>[] actionsToApplyOnSubject)
+           => (await enumerableSubject).DoForEach(actionsToApplyOnSubject);
+
 
         /// <summary>
         /// Apply a set of functions on each item from the subject (when this is not null) then return the subject
@@ -27,6 +33,10 @@ namespace FluentFunctionalCoding
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static async Task<IEnumerable<T>> DoForEachAsync<T, K>(this Task<IEnumerable<T>> enumerableSubject, params Func<T, K>[] functionsToApplyOnSubject)
+            => (await enumerableSubject).DoForEach(functionsToApplyOnSubject);
+        public static async Task<IEnumerable<T>> DoForEachAsync<T, K>(this Task<List<T>> enumerableSubject, params Func<T, K>[] functionsToApplyOnSubject)
+            => (await enumerableSubject).DoForEach(functionsToApplyOnSubject);
+        public static async Task<IEnumerable<T>> DoForEachAsync<T, K>(this Task<T[]> enumerableSubject, params Func<T, K>[] functionsToApplyOnSubject)
             => (await enumerableSubject).DoForEach(functionsToApplyOnSubject);
     }
 }
