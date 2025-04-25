@@ -11,6 +11,8 @@ namespace FluentCodingTest
         {
         }
 
+        public static void TestFunc()
+        { }
 
         public bool IsHAppyDaySubj(string day) => false;
         public bool IsHAppyDay() => false;
@@ -22,6 +24,9 @@ namespace FluentCodingTest
         [Test]
         public void Test1()
         {
+
+            var myfunc = IsHAppyDaySubj;
+
             List<string> emptyList = new List<string>();
 
             emptyList.IsNullOrEmpty();

@@ -3,13 +3,16 @@
     public record Failure<S, R, E> : Try<S, R, E>
     {
         internal S _subject;
-        internal E _result;
+        internal E _errorResult;
         internal Exception _Error;
 
 
 
-        internal Failure(S subject, E result, Exception ex) : base() => (_subject, _result, _Error) = (subject, result, ex);
+        internal Failure(S subject, E errorResult, Exception ex) : base() => (_subject, _errorResult, _Error) = (subject, errorResult, ex);
 
-        internal void Deconstruct(out S subject, out E result, out Exception ex) => (subject, result, ex) = (_subject, _result, _Error);
+
+        public override bool IsSuccess => false;
+
+        internal void Deconstruct(out S subject, out E result, out Exception ex) => (subject, result, ex) = (_subject, _errorResult, _Error);
     }
 }
