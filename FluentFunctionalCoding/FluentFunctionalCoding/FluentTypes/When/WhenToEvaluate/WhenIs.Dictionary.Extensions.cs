@@ -6,18 +6,18 @@ namespace FluentFunctionalCoding
     {
 
         // IDictionary
-        public static IWhen<IDictionary<TK, TV>> ContainsKey<TK, TV>(this IWhenIs<IDictionary<TK, TV>> whenIs, TK key)
-            => whenIs.ToWhen(sbj => sbj.ContainsKey(key));
+        public static When<IDictionary<TK, TV>> ContainsKey<TK, TV>(this WhenIs<IDictionary<TK, TV>> whenIs, TK key)
+            => whenIs._ToWhen(sbj => sbj.ContainsKey(key));
 
-        public static IWhen<IDictionary<TK, TV>> ContainsValue<TK, TV>(this IWhenIs<IDictionary<TK, TV>> whenIs, KeyValuePair<TK, TV> item)
-            => whenIs.ToWhen(sbj => sbj.Contains(item));
+        public static When<IDictionary<TK, TV>> ContainsValue<TK, TV>(this WhenIs<IDictionary<TK, TV>> whenIs, KeyValuePair<TK, TV> item)
+            => whenIs._ToWhen(sbj => sbj.Contains(item));
 
         // Dictionary
-        public static IWhen<Dictionary<TK, TV>> ContainsKey<TK, TV>(this IWhenIs<Dictionary<TK, TV>> whenIs, TK key)
-               => whenIs.ToWhen(sbj => sbj.ContainsKey(key));
+        public static When<Dictionary<TK, TV>> ContainsKey<TK, TV>(this WhenIs<Dictionary<TK, TV>> whenIs, TK key)
+               => whenIs._ToWhen(sbj => sbj.ContainsKey(key));
 
-        public static IWhen<Dictionary<TK, TV>> ContainsValue<TK, TV>(this IWhenIs<Dictionary<TK, TV>> whenIs, KeyValuePair<TK, TV> item)
-            => whenIs.ToWhen(sbj => sbj.Contains(item));
+        public static When<Dictionary<TK, TV>> ContainsValue<TK, TV>(this WhenIs<Dictionary<TK, TV>> whenIs, KeyValuePair<TK, TV> item)
+            => whenIs._ToWhen(sbj => sbj.Contains(item));
     }
 
 }

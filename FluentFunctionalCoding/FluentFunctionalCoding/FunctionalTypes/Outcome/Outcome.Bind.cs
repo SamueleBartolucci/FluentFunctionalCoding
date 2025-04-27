@@ -6,14 +6,14 @@
         public Outcome<F, S1> Bind<S1>(Func<S, Outcome<F, S1>> bindOnSuccess) => this switch
         {
             Right<F, S>(var s) => bindOnSuccess(s),
-            Left<F, S>(var f) => Outcome<F, S1>.Failure(f),
+            Left<F, S>(var f) => Outcome<F, S1>.Left(f),
             _ => throw UnknownOutcomeType()
         };
 
 
         public Outcome<F1, S> BindFailure<F1>(Func<F, Outcome<F1, S>> bindOnFailure) => this switch
         {
-            Right<F, S>(var s) => Outcome<F1, S>.Success(s),
+            Right<F, S>(var s) => Outcome<F1, S>.Right(s),
             Left<F, S>(var f) => bindOnFailure(f),
             _ => throw UnknownOutcomeType()
         };

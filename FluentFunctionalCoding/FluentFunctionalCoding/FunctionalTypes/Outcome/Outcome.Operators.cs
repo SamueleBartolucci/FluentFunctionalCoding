@@ -3,8 +3,8 @@
 
     public abstract partial record Outcome<F, S>
     {
-        public static implicit operator Outcome<F, S>(S success) => Success(success) as Outcome<F, S>;
-        public static implicit operator Outcome<F, S>(F failure) => Failure(failure) as Outcome<F, S>;
+        public static implicit operator Outcome<F, S>(S success) => Right(success) as Outcome<F, S>;
+        public static implicit operator Outcome<F, S>(F failure) => Left(failure) as Outcome<F, S>;
 
 
         public static bool operator true(Outcome<F, S> value) => value.IsSuccess;

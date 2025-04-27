@@ -1,6 +1,6 @@
 ﻿namespace FluentFunctionalCoding
 {
-    public partial record When<T> : IWhen<T>
+    public partial record When<T>
     {
 
         public T1 Match<T1>(Func<T, T1> mapOnTrue, Func<T, T1> mapOnFalse)

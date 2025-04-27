@@ -1,7 +1,7 @@
-﻿namespace FluentFunctionalCoding
+﻿namespace FluentFunctionalCoding.FluentPreludes
 {
-    public static partial class Prelude
+    public static partial class PreludeFluent
     {
-        public static IWhenIs<T> When<T>(this T whenSubject) => WhenIs<T>.When(whenSubject);
+        public static WhenIs<T> When<T>(this T whenSubject) => Prelude.When(whenSubject);
     }
 }

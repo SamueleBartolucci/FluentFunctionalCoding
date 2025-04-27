@@ -1,6 +1,6 @@
 ﻿using FluentAssertions;
 using FluentFunctionalCoding;
-
+using FluentFunctionalCoding.FluentPreludes;
 
 namespace FluentCodingTest.Optional.BindTaskExtensions
 {

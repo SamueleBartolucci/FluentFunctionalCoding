@@ -1,4 +1,6 @@
 ﻿
+using FluentFunctionalCoding.FluentPreludes;
+
 namespace FluentFunctionalCoding
 {
     public abstract partial record Optional<O>// : Optional<O>

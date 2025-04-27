@@ -1,11 +1,7 @@
-﻿namespace FluentFunctionalCoding
+﻿namespace FluentFunctionalCoding.FluentPreludes
 {
-    public static partial class Prelude
+    public static partial class PreludeFluent
     {
-        public static async Task<IWhenIs<T>> WhenAsync<T>(this Task<T> whenSubject)
-        {
-            await whenSubject;
-            return WhenIs<T>.When(whenSubject.Result);
-        }
+        public static Task<WhenIs<T>> WhenAsync<T>(this Task<T> whenSubject) => Prelude.When(whenSubject);
     }
 }

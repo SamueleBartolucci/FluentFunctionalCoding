@@ -2,34 +2,34 @@
 {
     public static partial class WhenExtension
     {
-        public static IWhen<Optional<T>> OnTrue<T>(this IWhen<Optional<T>> when, Action<T> actionToCallOnSomeSubject)
+        public static When<Optional<T>> OnTrue<T>(this When<Optional<T>> when, Action<T> actionToCallOnSomeSubject)
         {  
             if (when.IsTrue)
-                when.Subject().OnSome(actionToCallOnSomeSubject);
+                when._subject.OnSome(actionToCallOnSomeSubject);
 
             return when;
         }
 
-        public static IWhen<Optional<T>> OnFalse<T>(this IWhen<Optional<T>> when, Action<T> actionToCallOnSomeSubject)
+        public static When<Optional<T>> OnFalse<T>(this When<Optional<T>> when, Action<T> actionToCallOnSomeSubject)
         {
             if (!when.IsTrue)
-                when.Subject().OnSome(actionToCallOnSomeSubject);
+                when._subject.OnSome(actionToCallOnSomeSubject);
 
             return when;
         }
 
-        public static IWhen<Optional<T>> OnTrue<T, X>(this IWhen<Optional<T>> when, Func<T, X> funcAsActionToCallOnSomeSubject)
+        public static When<Optional<T>> OnTrue<T, X>(this When<Optional<T>> when, Func<T, X> funcAsActionToCallOnSomeSubject)
         {
             if (when.IsTrue)
-                when.Subject().OnSome(funcAsActionToCallOnSomeSubject);
+                when._subject.OnSome(funcAsActionToCallOnSomeSubject);
 
             return when;
         }
 
-        public static IWhen<Optional<T>> OnFalse<T, X>(this IWhen<Optional<T>> when, Func<T, X> funcAsActionToCallOnSomeSubject)
+        public static When<Optional<T>> OnFalse<T, X>(this When<Optional<T>> when, Func<T, X> funcAsActionToCallOnSomeSubject)
         {
             if (!when.IsTrue)
-                when.Subject().OnSome(funcAsActionToCallOnSomeSubject);
+                when._subject.OnSome(funcAsActionToCallOnSomeSubject);
 
             return when;
         }

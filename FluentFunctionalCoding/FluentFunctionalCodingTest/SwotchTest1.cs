@@ -1,4 +1,5 @@
 using FluentFunctionalCoding;
+using FluentFunctionalCoding.FluentPreludes;
 
 
 namespace FluentCodingTest

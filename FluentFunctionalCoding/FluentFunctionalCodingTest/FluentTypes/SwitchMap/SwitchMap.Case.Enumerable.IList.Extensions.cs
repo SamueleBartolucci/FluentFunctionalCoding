@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using FluentFunctionalCoding;
+using FluentFunctionalCoding.FluentPreludes;
 
 namespace FluentCodingTest.SwitchMap.Case.Extensions.IList
 {

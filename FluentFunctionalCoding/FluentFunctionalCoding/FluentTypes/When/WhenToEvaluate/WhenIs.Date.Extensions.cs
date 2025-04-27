@@ -13,13 +13,13 @@ namespace FluentFunctionalCoding
         private static bool IsLess(int comparisonResult) => comparisonResult < 0;
         private static bool IsMore(int comparisonResult) => comparisonResult > 0;
 
-        public static IWhen<DateTime> IsGraterThan<T>(this IWhenIs<DateTime> whenIs, DateTime compareDate, bool allowEquals = false, bool dateOnly = false)
-             => whenIs.ToWhen(sbj => CompareDates(sbj, compareDate, dateOnly).Map(r => CheckResult(r, allowEquals, IsMore))); 
+        public static When<DateTime> IsGraterThan<T>(this WhenIs<DateTime> whenIs, DateTime compareDate, bool allowEquals = false, bool dateOnly = false)
+             => whenIs._ToWhen(sbj => CompareDates(sbj, compareDate, dateOnly).Map(r => CheckResult(r, allowEquals, IsMore))); 
 
-        public static IWhen<DateTime> IsLessThan<T>(this IWhenIs<DateTime> whenIs, DateTime compareDate, bool allowEquals = false, bool dateOnly = false)
-            => whenIs.ToWhen(sbj => CompareDates(sbj, compareDate, dateOnly).Map(r => CheckResult(r, allowEquals, IsLess)));
+        public static When<DateTime> IsLessThan<T>(this WhenIs<DateTime> whenIs, DateTime compareDate, bool allowEquals = false, bool dateOnly = false)
+            => whenIs._ToWhen(sbj => CompareDates(sbj, compareDate, dateOnly).Map(r => CheckResult(r, allowEquals, IsLess)));
 
-        public static IWhen<DateTime> IsEqualsTo<T>(this IWhenIs<DateTime> whenIs, DateTime compareDate, bool dateOnly = false)
-            => whenIs.ToWhen(sbj => CompareDates(sbj, compareDate, dateOnly) == 0);
+        public static When<DateTime> IsEqualsTo<T>(this WhenIs<DateTime> whenIs, DateTime compareDate, bool dateOnly = false)
+            => whenIs._ToWhen(sbj => CompareDates(sbj, compareDate, dateOnly) == 0);
     }
 }

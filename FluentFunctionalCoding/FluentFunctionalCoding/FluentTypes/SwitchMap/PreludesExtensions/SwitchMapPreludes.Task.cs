@@ -1,19 +1,13 @@
 ﻿
-namespace FluentFunctionalCoding
+namespace FluentFunctionalCoding.FluentPreludes
 {
-    public static partial class Prelude
+    public static partial class PreludeFluent
     {
-        public static async Task<SwitchMap<T, T1>> SwitchAsync<T, T1>(this Task<T> subject, Func<T, T1> defaultCase)
-        {
-            await (subject);
-            return SwitchMap<T, T1>.Switch(subject.Result, defaultCase);
-        }
+        public static Task<SwitchMap<T, T1>> SwitchAsync<T, T1>(this Task<T> subject, Func<T, T1> defaultCase)
+         => Prelude.Switch(subject, defaultCase);
 
-        public static async Task<SwitchMap<T, T1>> SwitchAsync<T, T1>(this Task<T> subject, T1 defaultCase)
-        {
-            await (subject);
-            return SwitchMap<T, T1>.Switch(subject.Result, defaultCase);
-        }
+        public static Task<SwitchMap<T, T1>> SwitchAsync<T, T1>(this Task<T> subject, T1 defaultCase)
+            => Prelude.Switch(subject, defaultCase);
     }
 
 }

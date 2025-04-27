@@ -21,10 +21,10 @@ namespace FluentFunctionalCodingTest.FluentTypes.TryCatch.Factories
 
 
         [Test]
-        public void Wrap_ShouldReturnSuccess_WhenActionSucceeds()
+        public void Try_ShouldReturnSuccess_WhenActionSucceeds()
         {            
             var subject = "Subject";
-            var result = Try<string, Nothing, Exception>.Wrap(subject, DoNothingAction);
+            var result = Prelude.Try(subject, DoNothingAction);
             result.Should().BeOfType<Success<string, Nothing, Exception>>();            
             (result as Success<string, Nothing, Exception>)!.Do(
                 outcome => outcome._result.Should().BeOfType<Nothing>(),
@@ -33,11 +33,11 @@ namespace FluentFunctionalCodingTest.FluentTypes.TryCatch.Factories
         }
 
         [Test]
-        public void Wrap_ShouldReturnFailure_WhenActionThrowsException()
+        public void Try_ShouldReturnFailure_WhenActionThrowsException()
         {
             
             var subject = "Subject";
-            var result = Try<string, Nothing, Exception>.Wrap(subject, DoThrowAction);
+            var result = Prelude.Try(subject, DoThrowAction);
             result.Should().BeOfType<Failure<string, Nothing, Exception>>();
             (result as Failure<string, Nothing, Exception>)!.Do(
                 outcome => outcome._Error.Message.Should().Be("TestActionException"),
@@ -47,10 +47,10 @@ namespace FluentFunctionalCodingTest.FluentTypes.TryCatch.Factories
         }
 
         [Test]
-        public void Wrap_ShouldReturnSuccess_WhenFuncSucceeds()
+        public void Try_ShouldReturnSuccess_WhenFuncSucceeds()
         {
             var subject = "Subject";
-            var result = Try<string, int, Exception>.Wrap(subject, DoNothingFunc);
+            var result = Prelude.Try(subject, DoNothingFunc);
             result.Should().BeOfType<Success<string, int, Exception>>();
             (result as Success<string, int, Exception>)!.Do(
                 outcome => outcome._result.Should().Be(-99),
@@ -59,11 +59,11 @@ namespace FluentFunctionalCodingTest.FluentTypes.TryCatch.Factories
         }
 
         [Test]
-        public void Wrap_ShouldReturnFailure_WhenFuncThrowsException()
+        public void Try_ShouldReturnFailure_WhenFuncThrowsException()
         {
 
             var subject = "Subject";
-            var result = Try<string, int, Exception>.Wrap(subject, DoThrowFunc);
+            var result = Prelude.Try(subject, DoThrowFunc);
             result.Should().BeOfType<Failure<string, int, Exception>>();
             (result as Failure<string, int, Exception>)!.Do(
                 outcome => outcome._Error.Message.Should().Be("TestFuncException"),
@@ -74,10 +74,10 @@ namespace FluentFunctionalCodingTest.FluentTypes.TryCatch.Factories
 
 
         [Test]
-        public void Wrap_ShouldReturnSuccess_WhenActionSucceeds_WithManagedExceptionAsAction()
+        public void Try_ShouldReturnSuccess_WhenActionSucceeds_WithManagedExceptionAsAction()
         {
             var subject = "Subject";
-            var result = Try<string, Nothing, Nothing>.Wrap(subject, DoNothingAction, MangeExceptionAction);
+            var result = Prelude.Try(subject, DoNothingAction, MangeExceptionAction);
             result.Should().BeOfType<Success<string, Nothing, Nothing>>();
             (result as Success<string, Nothing, Nothing>)!.Do(
                 outcome => outcome._result.Should().BeOfType<Nothing>(),
@@ -86,11 +86,11 @@ namespace FluentFunctionalCodingTest.FluentTypes.TryCatch.Factories
         }
 
         [Test]
-        public void Wrap_ShouldReturnCustomFailure_WhenActionThrowsException_WithManagedExceptionAsAction()
+        public void Try_ShouldReturnCustomFailure_WhenActionThrowsException_WithManagedExceptionAsAction()
         {
 
             var subject = "Subject";
-            var result = Try<string, Nothing, Nothing>.Wrap(subject, DoThrowAction, MangeExceptionAction);
+            var result = Prelude.Try(subject, DoThrowAction, MangeExceptionAction);
             result.Should().BeOfType<Failure<string, Nothing, Nothing>>();
             (result as Failure<string, Nothing, Nothing>)!.Do(
                 outcome => outcome._Error.Message.Should().Be("TestActionException"),
@@ -100,10 +100,10 @@ namespace FluentFunctionalCodingTest.FluentTypes.TryCatch.Factories
         }
 
         [Test]
-        public void Wrap_ShouldReturnSuccess_WhenFuncSucceeds_WithManagedExceptionAsFunction()
+        public void Try_ShouldReturnSuccess_WhenFuncSucceeds_WithManagedExceptionAsFunction()
         {
             var subject = "Subject";
-            var result = Try<string, int, string>.Wrap(subject, DoNothingFunc, MangeExceptionFunc);
+            var result = Prelude.Try(subject, DoNothingFunc, MangeExceptionFunc);
             result.Should().BeOfType<Success<string, int, string>>();
             (result as Success<string, int, string>)!.Do(
                 outcome => outcome._result.Should().Be(-99),
@@ -112,11 +112,11 @@ namespace FluentFunctionalCodingTest.FluentTypes.TryCatch.Factories
         }
 
         [Test]
-        public void Wrap_ShouldReturnCustomFailure_WhenFuncThrowsException_WithManagedExceptionAsFunction()
+        public void Try_ShouldReturnCustomFailure_WhenFuncThrowsException_WithManagedExceptionAsFunction()
         {
 
             var subject = "Subject";
-            var result = Try<string, int, string>.Wrap(subject, DoThrowFunc, MangeExceptionFunc);
+            var result = Prelude.Try(subject, DoThrowFunc, MangeExceptionFunc);
             result.Should().BeOfType<Failure<string, int, string>>();
             (result as Failure<string, int, string>)!.Do(
                 outcome => outcome._Error.Message.Should().Be("TestFuncException"),
@@ -127,10 +127,10 @@ namespace FluentFunctionalCodingTest.FluentTypes.TryCatch.Factories
 
 
         [Test]
-        public void Wrap_ShouldReturnSuccess_WhenFuncSucceeds_WithManagedExceptionAsAction()
+        public void Try_ShouldReturnSuccess_WhenFuncSucceeds_WithManagedExceptionAsAction()
         {
             var subject = "Subject";
-            var result = Try<string, int, Nothing>.Wrap(subject, DoNothingFunc, MangeExceptionAction);
+            var result = Prelude.Try(subject, DoNothingFunc, MangeExceptionAction);
             result.Should().BeOfType<Success<string, int, Nothing>>();
             (result as Success<string, int, Nothing>)!.Do(
                 outcome => outcome._result.Should().Be(-99),
@@ -139,11 +139,11 @@ namespace FluentFunctionalCodingTest.FluentTypes.TryCatch.Factories
         }
 
         [Test]
-        public void Wrap_ShouldReturnCustomFailure_WhenFuncThrowsException_WithManagedExceptionAsAction()
+        public void Try_ShouldReturnCustomFailure_WhenFuncThrowsException_WithManagedExceptionAsAction()
         {
 
             var subject = "Subject";
-            var result = Try<string, int, Nothing>.Wrap(subject, DoThrowFunc, MangeExceptionAction);
+            var result = Prelude.Try(subject, DoThrowFunc, MangeExceptionAction);
             result.Should().BeOfType<Failure<string, int, Nothing>>();
             (result as Failure<string, int, Nothing>)!.Do(
                 outcome => outcome._Error.Message.Should().Be("TestFuncException"),
@@ -154,10 +154,10 @@ namespace FluentFunctionalCodingTest.FluentTypes.TryCatch.Factories
 
 
         [Test]
-        public void Wrap_ShouldReturnSuccess_WhenActionSucceeds_WithManagedExceptionAsFunction()
+        public void Try_ShouldReturnSuccess_WhenActionSucceeds_WithManagedExceptionAsFunction()
         {
             var subject = "Subject";
-            var result = Try<string, Nothing, string>.Wrap(subject, DoNothingAction, MangeExceptionFunc);
+            var result = Prelude.Try(subject, DoNothingAction, MangeExceptionFunc);
             result.Should().BeOfType<Success<string, Nothing, string>>();
             (result as Success<string, Nothing, string>)!.Do(
                 outcome => outcome._result.Should().BeOfType<Nothing>(),
@@ -166,11 +166,11 @@ namespace FluentFunctionalCodingTest.FluentTypes.TryCatch.Factories
         }
 
         [Test]
-        public void Wrap_ShouldReturnCustomFailure_WhenActionThrowsException_WithManagedExceptionAsFunction()
+        public void Try_ShouldReturnCustomFailure_WhenActionThrowsException_WithManagedExceptionAsFunction()
         {
 
             var subject = "Subject";
-            var result = Try<string, Nothing, string>.Wrap(subject, DoThrowAction, MangeExceptionFunc);
+            var result = Prelude.Try(subject, DoThrowAction, MangeExceptionFunc);
             result.Should().BeOfType<Failure<string, Nothing, string>>();
             (result as Failure<string, Nothing, string>)!.Do(
                 outcome => outcome._Error.Message.Should().Be("TestActionException"),
