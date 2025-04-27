@@ -27,7 +27,7 @@
         public static Try<S, Nothing, Nothing> Wrap(S subject, Action<S> actionToTry, Action<S, Exception> onCatch)
             => Try<S, Nothing, Nothing>.Wrap(subject, actionToTry.AsFunc(), onCatch.AsFunc());
 
-        public static Try<S, R, Nothing> Wraps(S subject, Func<S, R> funcToTry, Action<S, Exception> onCatch)
+        public static Try<S, R, Nothing> Wrap(S subject, Func<S, R> funcToTry, Action<S, Exception> onCatch)
             => Try<S, R, Nothing>.Wrap(subject, funcToTry, onCatch.AsFunc());
 
 

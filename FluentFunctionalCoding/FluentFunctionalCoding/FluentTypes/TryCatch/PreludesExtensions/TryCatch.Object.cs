@@ -9,7 +9,14 @@ namespace FluentFunctionalCoding
             => FluentFunctionalCoding.Try<S, R, E>.Wrap(subject, funcToTry, onCatchFunc);
 
         public static Try<S, Nothing, E> Try<S, E>(this S subject, Action<S> actionToTry, Func<S, Exception, E> onCatchFunc)
-          => FluentFunctionalCoding.Try<S, Nothing, E>.Wrap(subject, s => { actionToTry(s); return Nothing.SoftNull; }, onCatchFunc);
+          => FluentFunctionalCoding.Try<S, Nothing, E>.Wrap(subject, actionToTry, onCatchFunc);
+
+        public static Try<S, R, Nothing> Try<S, R>(this S subject, Func<S, R> funcToTry, Action<S, Exception> onCatchAction)
+            => FluentFunctionalCoding.Try<S, R, Nothing>.Wrap(subject, funcToTry, onCatchAction);
+
+        public static Try<S, Nothing, Nothing> Try<S>(this S subject, Action<S> actionToTry, Action<S, Exception> onCatchAction)
+          => FluentFunctionalCoding.Try<S, Nothing, Nothing>.Wrap(subject, actionToTry, onCatchAction);
+
 
 
         //TRY with CATCH EX 
@@ -17,7 +24,7 @@ namespace FluentFunctionalCoding
             => FluentFunctionalCoding.Try<S, R, Exception>.Wrap(subject, funcToTry);
 
         public static Try<S, Nothing, Exception> Try<S>(this S subject, Action<S> actionToTry)
-            => FluentFunctionalCoding.Try<S, Nothing, Exception>.Wrap(subject, s => { actionToTry(s); return Nothing.SoftNull; });
+            => FluentFunctionalCoding.Try<S, Nothing, Exception>.Wrap(subject, actionToTry);
 
     }
 
