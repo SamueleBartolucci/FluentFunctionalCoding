@@ -13,7 +13,7 @@ namespace FluentFunctionalCoding
         };
 
         [Pure]
-        public Outcome<TErr, TOut> ToEither<F>() => this switch
+        public Outcome<TErr, TOut> ToEither() => this switch
         {
             Success<TIn, TOut, TErr>(_, var r) => Outcome<TErr, TOut>.Right(r),
             Failure<TIn, TOut, TErr>(_, var e, _) => Outcome<TErr, TOut>.Left(e),
@@ -21,7 +21,7 @@ namespace FluentFunctionalCoding
         };
 
         [Pure]
-        public Outcome<Exception, TOut> ToEitherUsingException<F>() => this switch
+        public Outcome<Exception, TOut> ToEitherUsingException() => this switch
         {
             Success<TIn, TOut, TErr>(_, var r) => Outcome<Exception, TOut>.Right(r),
             Failure<TIn, TOut, TErr>(_, _, var ex) => Outcome<Exception, TOut>.Left(ex),
