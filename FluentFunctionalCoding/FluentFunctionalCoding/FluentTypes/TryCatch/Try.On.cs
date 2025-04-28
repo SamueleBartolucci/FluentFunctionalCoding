@@ -1,35 +1,35 @@
 ﻿namespace FluentFunctionalCoding
 {
-    public abstract partial record Try<S, R, E>
+    public abstract partial record Try<TIn, TOut, TErr>
     {
-        public Try<S, R, E> OnFail(Action<S, E> actionOnError)
+        public Try<TIn, TOut, TErr> OnFail(Action<TIn, TErr> actionOnError)
         {
-            if (this is Failure<S, R, E>(var s, var e, _))
+            if (this is Failure<TIn, TOut, TErr>(var s, var e, _))
                 actionOnError(s, e);
 
             return this;
         }
 
-        public Try<S, R, E> OnFail(Action<S> doOnsubjectWhenOnError)
+        public Try<TIn, TOut, TErr> OnFail(Action<TIn> doOnsubjectWhenOnError)
         {
-            if (this is Failure<S, R, E>(var s, _, _))
+            if (this is Failure<TIn, TOut, TErr>(var s, _, _))
                 doOnsubjectWhenOnError(s);
 
             return this;
         }
 
 
-        public Try<S, R, E> OnSuccess(Action<S, R> actionOnSuccess)
+        public Try<TIn, TOut, TErr> OnSuccess(Action<TIn, TOut> actionOnSuccess)
         {
-            if (this is Success<S, R, E>(var s, var r))
+            if (this is Success<TIn, TOut, TErr>(var s, var r))
                 actionOnSuccess(s, r);
 
             return this;
         }
 
-        public Try<S, R, E> OnSuccess(Action<R> doOnResultWhenOnSuccess)
+        public Try<TIn, TOut, TErr> OnSuccess(Action<TOut> doOnResultWhenOnSuccess)
         {
-            if (this is Success<S, R, E>(_, var r))
+            if (this is Success<TIn, TOut, TErr>(_, var r))
                 doOnResultWhenOnSuccess(r);
 
             return this;

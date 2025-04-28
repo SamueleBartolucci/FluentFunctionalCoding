@@ -1,28 +1,28 @@
 ﻿namespace FluentFunctionalCoding
 {
-    public abstract partial record Try<S, R, E>
+    public abstract partial record Try<TIn, TOut, TErr>
     {
-        public R MatchFail(Func<E, R> onError)
+        public TOut MatchFail(Func<TErr, TOut> onError)
              => this switch
              {
-                 Success<S, R, E>(_, var r) => r,
-                 Failure<S, R, E>(_, var e, _) => onError(e),
+                 Success<TIn, TOut, TErr>(_, var r) => r,
+                 Failure<TIn, TOut, TErr>(_, var e, _) => onError(e),
                  _ => throw UnknowImplementation()
              };
 
-        public R MatchFail(R valueOnFail)
+        public TOut MatchFail(TOut valueOnFail)
              => this switch
              {
-                 Success<S, R, E>(_, var r) => r,
-                 Failure<S, R, E>(var s, _, _) => valueOnFail,
+                 Success<TIn, TOut, TErr>(_, var r) => r,
+                 Failure<TIn, TOut, TErr>(var s, _, _) => valueOnFail,
                  _ => throw UnknowImplementation()
              };
 
-        public M Match<M>(Func<R, M> onSuccess, Func<E, M> onError)
+        public M Match<M>(Func<TOut, M> onSuccess, Func<TErr, M> onError)
            => this switch
            {
-               Success<S, R, E>(_, var r) => onSuccess(r),
-               Failure<S, R, E>(_, var e, _) => onError(e),
+               Success<TIn, TOut, TErr>(_, var r) => onSuccess(r),
+               Failure<TIn, TOut, TErr>(_, var e, _) => onError(e),
                _ => throw UnknowImplementation()
            };
     }

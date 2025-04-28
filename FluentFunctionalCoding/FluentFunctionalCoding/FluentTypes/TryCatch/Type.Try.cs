@@ -1,12 +1,16 @@
 ﻿namespace FluentFunctionalCoding
 {
-    public abstract partial record Try<S, R, E>
+    public abstract partial record Try<TIn, TOut, TErr>
     {
-        internal static Exception CarryException(S subject, Exception e) => e;        
+        internal static Exception CarryException(TIn subject, Exception e) => e;        
 
-        internal static NotImplementedException UnknowImplementation() => new NotImplementedException($"Unknown type, expected: {nameof(Success<S, R, E>)} or {nameof(Failure<S, R, E>)}");
-        
-        public abstract bool IsSuccess { get; }
+        internal static NotImplementedException UnknowImplementation() => new NotImplementedException($"Unknown type, expected: {nameof(Success<TIn, TOut, TErr>)} or {nameof(Failure<TIn, TOut, TErr>)}");
+
+        public virtual bool IsSuccess => this switch
+        {
+            Success<TIn, TOut, TErr> success => true,
+            _ => false
+        };
 
         public bool IsFail => !IsSuccess;
 

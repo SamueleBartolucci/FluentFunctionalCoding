@@ -2,12 +2,12 @@
 {
     public static partial class TryExtension
     {
-        public static Try<S, R, E2> Catch<S, R, E2>(this Try<S, R, Exception> tried, Func<S, Exception, E2> functOnCatch)
+        public static Try<Tin, TOut, E2> Catch<Tin, TOut, E2>(this Try<Tin, TOut, Exception> tried, Func<Tin, Exception, E2> functOnCatch)
             => tried switch
             {
-                Success<S, R, Exception>(var s, var r) => new Success<S, R, E2>(s, r),
-                Failure<S, R, Exception>(var s, var r, var ex) => new Failure<S, R, E2>(s, functOnCatch(s, ex), ex),
-                _ => throw Try<S, R, E2>.UnknowImplementation()
+                Success<Tin, TOut, Exception>(var s, var r) => new Success<Tin, TOut, E2>(s, r),
+                Failure<Tin, TOut, Exception>(var s, var r, var ex) => new Failure<Tin, TOut, E2>(s, functOnCatch(s, ex), ex),
+                _ => throw Try<Tin, TOut, E2>.UnknowImplementation()
             };
     }
 }

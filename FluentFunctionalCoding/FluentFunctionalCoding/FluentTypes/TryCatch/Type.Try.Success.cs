@@ -1,16 +1,16 @@
 ﻿namespace FluentFunctionalCoding
 {
-    public record Success<S, R, E> : Try<S, R, E>
+    internal sealed record Success<TIn, TOut, TErr> : Try<TIn, TOut, TErr>
     {
-        internal S _subject;
-        internal R _result;
+        internal TIn _subject;
+        internal TOut _result;
 
 
 
-        internal Success(S subject, R result) : base() => (_subject, _result) = (subject, result);
+        internal Success(TIn subject, TOut result) : base() => (_subject, _result) = (subject, result);
 
         public override bool IsSuccess => true;
 
-        internal void Deconstruct(out S subject, out R result) => (subject, result) = (_subject, _result);
+        internal void Deconstruct(out TIn subject, out TOut result) => (subject, result) = (_subject, _result);
     }
 }

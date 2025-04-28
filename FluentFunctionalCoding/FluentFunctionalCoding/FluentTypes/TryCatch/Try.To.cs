@@ -3,28 +3,28 @@ using System.Diagnostics.Contracts;
 
 namespace FluentFunctionalCoding
 {
-    public abstract partial record Try<S, R, E>
+    public abstract partial record Try<TIn, TOut, TErr>
     {
-        public Optional<R> ToOptional() => this switch
+        public Optional<TOut> ToOptional() => this switch
         {
-            Success<S, R, E>(var _, var r) => Prelude.Optional(r),
-            Failure<S, R, E> _ => Prelude.OptionalNone<R>(),
+            Success<TIn, TOut, TErr>(var _, var r) => Optional<TOut>.Some(r),
+            Failure<TIn, TOut, TErr> _ => Optional<TOut>.None(),
             _ => throw UnknowImplementation()
         };
 
         [Pure]
-        public Outcome<E, R> ToEither<F>() => this switch
+        public Outcome<TErr, TOut> ToEither<F>() => this switch
         {
-            Success<S, R, E>(_, var r) => Prelude.Outcome<E, R>(r),
-            Failure<S, R, E>(_, var e, _) => Prelude.OutcomeFailure<E, R>(e),
+            Success<TIn, TOut, TErr>(_, var r) => Outcome<TErr, TOut>.Right(r),
+            Failure<TIn, TOut, TErr>(_, var e, _) => Outcome<TErr, TOut>.Left(e),
             _ => throw UnknowImplementation()
         };
 
         [Pure]
-        public Outcome<Exception, R> ToEitherUsingException<F>() => this switch
+        public Outcome<Exception, TOut> ToEitherUsingException<F>() => this switch
         {
-            Success<S, R, E>(_, var r) => Prelude.Outcome<Exception, R>(r),
-            Failure<S, R, E>(_, _, var ex) => Prelude.OutcomeFailure<Exception, R>(ex),
+            Success<TIn, TOut, TErr>(_, var r) => Outcome<Exception, TOut>.Right(r),
+            Failure<TIn, TOut, TErr>(_, _, var ex) => Outcome<Exception, TOut>.Left(ex),
             _ => throw UnknowImplementation()
         };
     }

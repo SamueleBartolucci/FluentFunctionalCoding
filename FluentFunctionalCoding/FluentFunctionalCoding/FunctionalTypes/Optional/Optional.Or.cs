@@ -32,23 +32,23 @@ namespace FluentFunctionalCoding
         public Optional<O> Or(Func<O> orRightValueFunc, bool chooseRight = false)
               => this switch
               {
-                  None<O> => orRightValueFunc().ToOptional(),
-                  Some<O> => chooseRight ? orRightValueFunc().ToOptional() : this,
+                  None<O> => Optional<O>.Some(orRightValueFunc()),
+                  Some<O> s => chooseRight ? Optional<O>.Some(orRightValueFunc()) : s,
                   _ => throw UnknowOptionalType()
               };
 
         public Optional<O> Or(Func<O> orRightValueFunc, Func<bool> chooseRightWhen)
             => this switch
             {
-                None<O> => orRightValueFunc().ToOptional(),
-                Some<O> => chooseRightWhen() ? orRightValueFunc() : this,
+                None<O> => Optional<O>.Some(orRightValueFunc()),
+                Some<O> s => chooseRightWhen() ? Optional<O>.Some(orRightValueFunc()) : s,
                 _ => throw UnknowOptionalType()
             };
 
         public Optional<O> Or(Func<O> orRightValueFunc, Func<O, bool> chooseRightWhen)
            => this switch
            {
-               None<O> => orRightValueFunc().ToOptional(),
+               None<O> => Optional<O>.Some(orRightValueFunc()),
                Some<O>(var v) => chooseRightWhen(v) ? orRightValueFunc().ToOptional() : this,
                _ => throw UnknowOptionalType()
            };
