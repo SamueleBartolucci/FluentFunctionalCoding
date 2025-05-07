@@ -23,12 +23,12 @@ jobs:
         source-url: https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json
       env:
         NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
-    - name: where I am
-      run: ls -la
+    - name: mote to project folder
+      run: cd ./FluentFunctionalCoding/FluentFunctionalCoding
     - name: Restore dependencies
-      run: dotnet restore ./FluentFunctionalCoding/FluentFunctionalCoding/FluentFunctionalCoding.csproj
+      run: dotnet restore
     - name: Build
-      run: dotnet build ./FluentFunctionalCoding/FluentFunctionalCoding/FluentFunctionalCoding.csproj
+      run: dotnet build "/p:Configuration=Release"
     #- name: Create the package
     #  run: dotnet pack --configuration Release
     - name: Publish the package to GPR
