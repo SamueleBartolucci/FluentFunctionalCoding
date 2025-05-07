@@ -2,7 +2,7 @@
 
 namespace FluentFunctionalCoding
 {
-    public static partial class MiscExtensions
+    public static partial class FluentExtension
     {   
         /// <summary>
         /// Converts an Action to a Func that returns Nothing.

@@ -1,6 +1,6 @@
 ﻿namespace FluentFunctionalCoding
 {
-    public static partial class MiscExtensions
+    public static partial class FluentExtension
     {
         /// <summary>
         /// Wraps the specified value in a Task, returning a completed Task with the value as its result.

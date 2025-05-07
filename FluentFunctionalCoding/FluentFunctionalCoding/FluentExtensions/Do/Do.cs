@@ -1,5 +1,8 @@
 ﻿namespace FluentFunctionalCoding
 {
+    /// <summary>
+    /// Provides extension methods for fluent functional programming.
+    /// </summary>
     public static partial class FluentExtension
     {
         /// <summary>
@@ -19,8 +22,6 @@
 
             return subject;
         }
-
-
 
         /// <summary>
         /// Applies one or more functions to the subject (if not null) and then returns the subject.

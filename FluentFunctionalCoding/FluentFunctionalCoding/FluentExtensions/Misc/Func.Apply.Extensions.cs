@@ -2,7 +2,7 @@
 
 namespace FluentFunctionalCoding
 {
-    public static partial class MiscExtensions
+    public static partial class FluentExtension
     {   
         /// <summary>
         /// Partially applies the first argument to a function with one parameter, returning a parameterless function.

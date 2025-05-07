@@ -1,6 +1,6 @@
 ﻿namespace FluentFunctionalCoding
 {
-    public static partial class MiscExtensions
+    public static partial class FluentExtension
     {
         /// <summary>
         /// Determines whether the specified value is null.
