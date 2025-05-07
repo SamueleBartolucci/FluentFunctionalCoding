@@ -16,7 +16,7 @@ namespace FluentFunctionalCodingTest.FluentTypes.Try.To
 
         
         [Test]
-        public void Success_ToOptional_ShouldBeSome()
+        public void ToOptional_ShouldReturnSome_WhenTryIsSuccess()
         {
             GetSuccess("42").ToOptional().Do(
                 o => o.Should().BeOfType<Some<int>>(),
@@ -26,7 +26,7 @@ namespace FluentFunctionalCodingTest.FluentTypes.Try.To
         }
 
         [Test]
-        public void Fail_ToOptional_ShouldBeNone()
+        public void ToOptional_ShouldReturnNone_WhenTryIsFailure()
         {
             GetFailure("42").ToOptional().Do(
                 o => o.Should().BeOfType<None<int>>(),
@@ -36,7 +36,7 @@ namespace FluentFunctionalCodingTest.FluentTypes.Try.To
 
 
         [Test]
-        public void Success_ToEither_ShouldBeRight()
+        public void ToEither_ShouldReturnRight_WhenTryIsSuccess()
         {
             var outcome = GetSuccess("42").ToEither();
             outcome.Should().BeOfType<Right<string, int>>();
@@ -46,7 +46,7 @@ namespace FluentFunctionalCodingTest.FluentTypes.Try.To
         }
 
         [Test]
-        public void Fail_ToEither_ShouldBeLeft()
+        public void ToEither_ShouldReturnLeft_WhenTryIsFailure()
         {
             GetFailure("42").ToEither().Do(
                 o => o.Should().BeOfType<Left<string,int>>(),
@@ -58,7 +58,7 @@ namespace FluentFunctionalCodingTest.FluentTypes.Try.To
 
 
         [Test]
-        public void Success_ToEitherUsingException_ShouldBeRight()
+        public void ToEitherUsingException_ShouldReturnRight_WhenTryIsSuccess()
         {
             var outcome = GetSuccess("42").ToEitherUsingException();
             outcome.Should().BeOfType<Right<Exception, int>>();
@@ -68,7 +68,7 @@ namespace FluentFunctionalCodingTest.FluentTypes.Try.To
         }
 
         [Test]
-        public void Fail_ToEitherUsingException_ShouldBeLeft()
+        public void ToEitherUsingException_ShouldReturnLeft_WhenTryIsFailure()
         {
             GetFailure("42").ToEitherUsingException().Do(
                 o => o.Should().BeOfType<Left<Exception, int>>(),

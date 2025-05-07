@@ -20,7 +20,7 @@ namespace FluentCodingTest.SwitchMap.Case.Outcome.Success.Extensions
 
 
         [Test]
-        public void Case_bool_predicate_true()
+        public void CaseOutcome_BoolPredicate_ReturnsDefault_WhenFalse_AndReturnsValue_WhenTrue()
         {
             var switchCase = GetOutcomeSwitch();
             switchCase.Should().BeOfType<DefaultCase<Outcome<bool, string>, Outcome<bool, string>>>();
@@ -36,7 +36,7 @@ namespace FluentCodingTest.SwitchMap.Case.Outcome.Success.Extensions
 
 
         [Test]
-        public void Case_bool_predicate_false()
+        public void CaseOutcome_BoolPredicate_ReturnsDefault_WhenFalse()
         {
             var switchCase = GetOutcomeSwitch();
             switchCase.Should().BeOfType<DefaultCase<Outcome<bool, string>, Outcome<bool, string>>>();
@@ -49,7 +49,7 @@ namespace FluentCodingTest.SwitchMap.Case.Outcome.Success.Extensions
 
 
         [Test]
-        public void Case_funcnoparam_predicate_true()
+        public void CaseOutcome_FuncNoParamPredicate_ReturnsDefault_WhenFalse_AndReturnsValue_WhenTrue()
         {
             var switchCase = GetOutcomeSwitch();
 
@@ -63,7 +63,7 @@ namespace FluentCodingTest.SwitchMap.Case.Outcome.Success.Extensions
         }
 
         [Test]
-        public void Case_funcnoparam_predicate_false()
+        public void CaseOutcome_FuncNoParamPredicate_ReturnsDefault_WhenFalse()
         {
             var switchCase = GetOutcomeSwitch();
             switchCase.Should().BeOfType<DefaultCase<Outcome<bool, string>, Outcome<bool, string>>>();
@@ -75,7 +75,7 @@ namespace FluentCodingTest.SwitchMap.Case.Outcome.Success.Extensions
 
 
         [Test]
-        public void Case_func_predicate_true()
+        public void CaseOutcome_FuncPredicate_ReturnsDefault_WhenNoMatch_AndReturnsValue_WhenMatch()
         {
             var switchCase = GetOutcomeSwitch();
 
@@ -89,7 +89,7 @@ namespace FluentCodingTest.SwitchMap.Case.Outcome.Success.Extensions
         }
 
         [Test]
-        public void Case_func_predicate_false()
+        public void CaseOutcome_FuncPredicate_ReturnsDefault_WhenNoMatch()
         {
             var switchCase = GetOutcomeSwitch();
             switchCase.Should().BeOfType<DefaultCase<Outcome<bool, string>, Outcome<bool, string>>>();
@@ -101,7 +101,7 @@ namespace FluentCodingTest.SwitchMap.Case.Outcome.Success.Extensions
 
 
         [Test]
-        public void Case_multiple_predicate_true()
+        public void CaseOutcome_MultiplePredicates_StopsAtFirstMatch()
         {
             var switchCase = GetOutcomeSwitch();
 

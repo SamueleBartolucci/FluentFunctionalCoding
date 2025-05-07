@@ -7,7 +7,7 @@ namespace FluentFunctionalCodingTest.FluentTypes.When.WhenIs
     public class WhenIsIsTests
     {
         [Test]
-        public void Is_WithBool_ReturnsCorrectWhen()
+        public void Is_WithBool_ShouldReturnTrueOrFalseBasedOnInput()
         {
             var whenIs = new WhenIs<int>(5);
             var result = whenIs.Is(true);
@@ -19,7 +19,7 @@ namespace FluentFunctionalCodingTest.FluentTypes.When.WhenIs
         }
 
         [Test]
-        public void Is_WithFuncBoolArray_ReturnsCorrectWhen()
+        public void Is_WithFuncBoolArray_ShouldReturnTrueIfAllFuncsTrue()
         {
             var whenIs = new WhenIs<int>(5);
             var result = whenIs.Is(() => true, () => true);
@@ -29,7 +29,7 @@ namespace FluentFunctionalCodingTest.FluentTypes.When.WhenIs
         }
 
         [Test]
-        public void Is_WithFuncTBoolArray_ReturnsCorrectWhen()
+        public void Is_WithFuncTBoolArray_ShouldReturnTrueIfAllFuncsTrueForValue()
         {
             var whenIs = new WhenIs<int>(5);
             var result = whenIs.Is(x => x == 5, x => x > 0);

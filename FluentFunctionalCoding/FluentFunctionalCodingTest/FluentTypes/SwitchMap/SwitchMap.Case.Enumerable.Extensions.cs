@@ -12,7 +12,7 @@ namespace FluentCodingTest.SwitchMap.Case.Enumerable.Extensions
 
 
         [Test]
-        public void Case_CaseAny_true()
+        public void CaseAny_ReturnsDefault_WhenNoMatch_AndReturnsValue_WhenMatchFound()
         {
             var switchCase = GetSwitch();
             switchCase.Should().BeOfType<DefaultCase<IEnumerable<int>, string>>();
@@ -28,7 +28,7 @@ namespace FluentCodingTest.SwitchMap.Case.Enumerable.Extensions
 
 
         [Test]
-        public void Case_CaseAny_false()
+        public void CaseAny_ReturnsDefault_WhenNoMatch()
         {
             var switchCase = GetSwitch();
             switchCase.Should().BeOfType<DefaultCase<IEnumerable<int>, string>>();
@@ -40,7 +40,7 @@ namespace FluentCodingTest.SwitchMap.Case.Enumerable.Extensions
 
 
         [Test]
-        public void Case_CaseAll_true()
+        public void CaseAll_ReturnsDefault_WhenNoMatch_AndReturnsValue_WhenAllMatch()
         {
             var switchCase = GetSwitch();
             switchCase.Should().BeOfType<DefaultCase<IEnumerable<int>, string>>();
@@ -60,7 +60,7 @@ namespace FluentCodingTest.SwitchMap.Case.Enumerable.Extensions
 
 
         [Test]
-        public void Case_CaseAll_false()
+        public void CaseAll_ReturnsDefault_WhenNoMatch()
         {
             var switchCase = GetSwitch();
             switchCase.Should().BeOfType<DefaultCase<IEnumerable<int>, string>>();
@@ -72,7 +72,7 @@ namespace FluentCodingTest.SwitchMap.Case.Enumerable.Extensions
 
 
         [Test]
-        public void Case_IsEmpty_false()
+        public void CaseIsEmpty_ReturnsDefault_WhenNotEmpty()
         {
             var switchCase = GetSwitch();
             switchCase.Should().BeOfType<DefaultCase<IEnumerable<int>, string>>();
@@ -83,7 +83,7 @@ namespace FluentCodingTest.SwitchMap.Case.Enumerable.Extensions
         }
 
         [Test]
-        public void Case_IsEmpty_true()
+        public void CaseIsEmpty_ReturnsValue_WhenEmpty()
         {
             var switchCase = defaultSubject.Where(_ => false).Switch("default");
             switchCase = switchCase.CaseIsEmpty(_ => "EMPTY");
@@ -92,7 +92,7 @@ namespace FluentCodingTest.SwitchMap.Case.Enumerable.Extensions
         }
 
         [Test]
-        public void Case_IsNotEmpty_true()
+        public void CaseIsNotEmpty_ReturnsValue_WhenNotEmpty()
         {
             var switchCase = GetSwitch();
             switchCase.Should().BeOfType<DefaultCase<IEnumerable<int>, string>>();
@@ -103,7 +103,7 @@ namespace FluentCodingTest.SwitchMap.Case.Enumerable.Extensions
         }
 
         [Test]
-        public void Case_IsNotEmpty_false()
+        public void CaseIsNotEmpty_ReturnsDefault_WhenEmpty()
         {
             var switchCase = defaultSubject.Where(_ => false).Switch("default");
             switchCase.Should().BeOfType<DefaultCase<IEnumerable<int>, string>>();
@@ -114,7 +114,7 @@ namespace FluentCodingTest.SwitchMap.Case.Enumerable.Extensions
         }
 
         [Test]
-        public void Case_Count_true()
+        public void CaseCount_ReturnsValue_WhenCountMatches()
         {
             var switchCase = GetSwitch();
             switchCase.Should().BeOfType<DefaultCase<IEnumerable<int>, string>>();
@@ -125,7 +125,7 @@ namespace FluentCodingTest.SwitchMap.Case.Enumerable.Extensions
         }
 
         [Test]
-        public void Case_Count_false()
+        public void CaseCount_ReturnsDefault_WhenCountDoesNotMatch()
         {
             var switchCase = GetSwitch();
             switchCase.Should().BeOfType<DefaultCase<IEnumerable<int>, string>>();

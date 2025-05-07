@@ -9,7 +9,7 @@ namespace FluentFunctionalCodingTest.FluentExtensions.Map
     public class MapTaskTests
     {
         [Test]
-        public async Task MapAsync_MapsValue_WhenTaskCompletes()
+        public async Task MapAsync_ReturnsMappedValue_WhenTaskCompletes()
         {
             Task<int> subject = Task.FromResult(3);
             var result = await subject.MapAsync(x => x + 1);
@@ -17,7 +17,7 @@ namespace FluentFunctionalCodingTest.FluentExtensions.Map
         }
 
         [Test]
-        public void MapAsync_Throws_WhenMapFuncIsNull()
+        public void MapAsync_ThrowsNullReferenceException_WhenMapFuncIsNull()
         {
             Task<int> subject = Task.FromResult(3);
             Func<int, int>? mapFunc = null;

@@ -9,7 +9,7 @@ namespace FluentFunctionalCodingTest.FunctionalTypes.Optional
     public class Type_Optional_Tests
     {
         [Test]
-        public void Bind_OnSome_ReturnsExpected()
+        public void Bind_WhenSomeValuePresent_MapsToNewOptionalWithMappedValue()
         {
             var opt = Optional<string>.Some("abc");
             var result = opt.Bind(s => Optional<int>.Some(s.Length));
@@ -18,7 +18,7 @@ namespace FluentFunctionalCodingTest.FunctionalTypes.Optional
         }
 
         [Test]
-        public void Bind_OnNone_ReturnsNone()
+        public void Bind_WhenNoneValuePresent_ReturnsNoneOptional()
         {
             var opt = Optional<string>.None();
             var result = opt.Bind(s => Optional<int>.Some(s.Length));
@@ -26,7 +26,7 @@ namespace FluentFunctionalCodingTest.FunctionalTypes.Optional
         }
 
         [Test]
-        public void BindNone_OnNone_InvokesFunc()
+        public void BindNone_WhenNoneValuePresent_InvokesFallbackAndReturnsOptional()
         {
             var opt = Optional<string>.None();
             var result = opt.BindNone(() => Optional<string>.Some("fallback"));
@@ -35,7 +35,7 @@ namespace FluentFunctionalCodingTest.FunctionalTypes.Optional
         }
 
         [Test]
-        public void BindNone_OnSome_DoesNotInvokeFunc()
+        public void BindNone_WhenSomeValuePresent_DoesNotInvokeFallbackAndReturnsOriginal()
         {
             var opt = Optional<string>.Some("abc");
             var result = opt.BindNone(() => Optional<string>.Some("fallback"));
@@ -43,7 +43,7 @@ namespace FluentFunctionalCodingTest.FunctionalTypes.Optional
         }
 
         [Test]
-        public async Task BindAsync_OnSome_ReturnsExpected()
+        public async Task BindAsync_WhenSomeValuePresent_MapsToNewOptionalAsync()
         {
             var opt = Optional<string>.Some("abc");
             var result = await opt.BindAsync(s => Task.FromResult(Optional<int>.Some(s.Length)));
@@ -52,7 +52,7 @@ namespace FluentFunctionalCodingTest.FunctionalTypes.Optional
         }
 
         [Test]
-        public async Task BindAsync_OnNone_ReturnsNone()
+        public async Task BindAsync_WhenNoneValuePresent_ReturnsNoneOptionalAsync()
         {
             var opt = Optional<string>.None();
             var result = await opt.BindAsync(s => Task.FromResult(Optional<int>.Some(s.Length)));
@@ -60,7 +60,7 @@ namespace FluentFunctionalCodingTest.FunctionalTypes.Optional
         }
 
         [Test]
-        public async Task BindNoneAsync_OnNone_InvokesFunc()
+        public async Task BindNoneAsync_WhenNoneValuePresent_InvokesFallbackAndReturnsOptionalAsync()
         {
             var opt = Optional<string>.None();
             var result = await opt.BindNoneAsync(() => Task.FromResult(Optional<string>.Some("fallback")));
@@ -69,7 +69,7 @@ namespace FluentFunctionalCodingTest.FunctionalTypes.Optional
         }
 
         [Test]
-        public async Task BindNoneAsync_OnSome_DoesNotInvokeFunc()
+        public async Task BindNoneAsync_WhenSomeValuePresent_DoesNotInvokeFallbackAndReturnsOriginalAsync()
         {
             var opt = Optional<string>.Some("abc");
             var result = await opt.BindNoneAsync(() => Task.FromResult(Optional<string>.Some("fallback")));
@@ -77,7 +77,7 @@ namespace FluentFunctionalCodingTest.FunctionalTypes.Optional
         }
 
         [Test]
-        public void OnSome_Action_InvokedIfSome()
+        public void OnSome_WithAction_WhenSomeValuePresent_InvokesAction()
         {
             var opt = Optional<string>.Some("abc");
             string captured = null;
@@ -86,7 +86,7 @@ namespace FluentFunctionalCodingTest.FunctionalTypes.Optional
         }
 
         [Test]
-        public void OnSome_Action_NotInvokedIfNone()
+        public void OnSome_WithAction_WhenNoneValuePresent_DoesNotInvokeAction()
         {
             var opt = Optional<string>.None();
             string captured = null;
@@ -95,7 +95,7 @@ namespace FluentFunctionalCodingTest.FunctionalTypes.Optional
         }
 
         [Test]
-        public void OnSome_Func_InvokedIfSome()
+        public void OnSome_WithFunc_WhenSomeValuePresent_InvokesFunc()
         {
             var opt = Optional<string>.Some("abc");
             string captured = null;
@@ -104,7 +104,7 @@ namespace FluentFunctionalCodingTest.FunctionalTypes.Optional
         }
 
         [Test]
-        public void OnNone_Action_InvokedIfNone()
+        public void OnNone_WithAction_WhenNoneValuePresent_InvokesAction()
         {
             var opt = Optional<string>.None();
             bool called = false;
@@ -113,7 +113,7 @@ namespace FluentFunctionalCodingTest.FunctionalTypes.Optional
         }
 
         [Test]
-        public void OnNone_Action_NotInvokedIfSome()
+        public void OnNone_WithAction_WhenSomeValuePresent_DoesNotInvokeAction()
         {
             var opt = Optional<string>.Some("abc");
             bool called = false;
@@ -122,7 +122,7 @@ namespace FluentFunctionalCodingTest.FunctionalTypes.Optional
         }
 
         [Test]
-        public void OnNone_Func_InvokedIfNone()
+        public void OnNone_WithFunc_WhenNoneValuePresent_InvokesFunc()
         {
             var opt = Optional<string>.None();
             bool called = false;
@@ -131,7 +131,7 @@ namespace FluentFunctionalCodingTest.FunctionalTypes.Optional
         }
 
         [Test]
-        public void Do_Action_InvokedIfSome()
+        public void Do_WithAction_WhenSomeValuePresent_InvokesAction()
         {
             var opt = Optional<string>.Some("abc");
             string captured = null;
@@ -140,7 +140,7 @@ namespace FluentFunctionalCodingTest.FunctionalTypes.Optional
         }
 
         [Test]
-        public void Do_Func_InvokedIfSome()
+        public void Do_WithFunc_WhenSomeValuePresent_InvokesFunc()
         {
             var opt = Optional<string>.Some("abc");
             string captured = null;
@@ -149,7 +149,7 @@ namespace FluentFunctionalCodingTest.FunctionalTypes.Optional
         }
 
         [Test]
-        public void Or_Overloads_WorkAsExpected()
+        public void Or_WithOverloads_ReturnsExpectedOptionalBasedOnPresence()
         {
             var some = Optional<string>.Some("abc");
             var none = Optional<string>.None();
@@ -160,7 +160,7 @@ namespace FluentFunctionalCodingTest.FunctionalTypes.Optional
         }
 
         [Test]
-        public void Map_Overloads_WorkAsExpected()
+        public void Map_WithOverloads_MapsValuesOrReturnsFallback()
         {
             var some = Optional<string>.Some("abc");
             var none = Optional<string>.None();
@@ -170,7 +170,7 @@ namespace FluentFunctionalCodingTest.FunctionalTypes.Optional
         }
 
         [Test]
-        public void Match_Overloads_WorkAsExpected()
+        public void Match_WithOverloads_ReturnsExpectedResultsForSomeAndNone()
         {
             var some = Optional<string>.Some("abc");
             var none = Optional<string>.None();
@@ -181,7 +181,7 @@ namespace FluentFunctionalCodingTest.FunctionalTypes.Optional
         }
 
         [Test]
-        public void ToOutcome_Overloads_WorkAsExpected()
+        public void ToOutcome_WithOverloads_ConvertsOptionalToOutcomeCorrectly()
         {
             var some = Optional<string>.Some("abc");
             var none = Optional<string>.None();

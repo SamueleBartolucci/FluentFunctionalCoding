@@ -7,7 +7,7 @@ namespace FluentFunctionalCodingTest.FluentTypes.When.WhenMatch
     public class WhenTests
     {
         [Test]
-        public void IsTrue_And_IsFalse_Properties_Work()
+        public void IsTrueAndIsFalse_ShouldReflectConditionCorrectly()
         {
             var when = new When<int>(42, true);
             when.IsTrue.Should().BeTrue();
@@ -18,7 +18,7 @@ namespace FluentFunctionalCodingTest.FluentTypes.When.WhenMatch
         }
 
         [Test]
-        public void Match_Returns_CorrectValue()
+        public void Match_ShouldReturnUpperOrLowerBasedOnCondition()
         {
             var when = new When<string>("foo", true);
             var result = when.Match(s => s.ToUpper(), s => s.ToLower());
@@ -29,7 +29,7 @@ namespace FluentFunctionalCodingTest.FluentTypes.When.WhenMatch
         }
 
         [Test]
-        public void MatchTrue_Maps_WhenTrue()
+        public void MatchTrue_ShouldMapOnlyWhenTrue()
         {
             var when = new When<int>(10, true);
             var result = when.MatchTrue(x => x + 1);
@@ -40,7 +40,7 @@ namespace FluentFunctionalCodingTest.FluentTypes.When.WhenMatch
         }
 
         [Test]
-        public void MatchFalse_Maps_WhenFalse()
+        public void MatchFalse_ShouldMapOnlyWhenFalse()
         {
             var when = new When<int>(10, false);
             var result = when.MatchFalse(x => x + 2);

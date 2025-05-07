@@ -27,7 +27,7 @@ namespace FluentCodingTest.SwitchMap.Case.Task.Extensions
         
 
         [Test]
-        public void Case_bool_predicate_true()
+        public void CaseAsync_BoolPredicate_ReturnsDefault_WhenFalse_AndReturnsValue_WhenTrue()
         {
             var switchCase = GetSwitch();
             switchCase.Result.Should().BeOfType<DefaultCase<string, string>>();
@@ -43,7 +43,7 @@ namespace FluentCodingTest.SwitchMap.Case.Task.Extensions
 
 
         [Test]
-        public void Case_bool_predicate_false()
+        public void CaseAsync_BoolPredicate_ReturnsDefault_WhenFalse()
         {
             var switchCase = GetSwitch();
             switchCase.Result.Should().BeOfType<DefaultCase<string, string>>();
@@ -56,7 +56,7 @@ namespace FluentCodingTest.SwitchMap.Case.Task.Extensions
 
 
         [Test]
-        public void Case_funcnoparam_predicate_true()
+        public void CaseAsync_FuncNoParamPredicate_ReturnsDefault_WhenFalse_AndReturnsValue_WhenTrue()
         {
             var switchCase = GetSwitch();
 
@@ -70,7 +70,7 @@ namespace FluentCodingTest.SwitchMap.Case.Task.Extensions
         }
 
         [Test]
-        public void Case_funcnoparam_predicate_false()
+        public void CaseAsync_FuncNoParamPredicate_ReturnsDefault_WhenFalse()
         {
             var switchCase = GetSwitch();
             switchCase.Result.Should().BeOfType<DefaultCase<string, string>>();
@@ -82,7 +82,7 @@ namespace FluentCodingTest.SwitchMap.Case.Task.Extensions
 
 
         [Test]
-        public void Case_func_predicate_true()
+        public void CaseAsync_FuncPredicate_ReturnsDefault_WhenNoMatch_AndReturnsValue_WhenMatch()
         {
             var switchCase = GetSwitch();
 
@@ -96,7 +96,7 @@ namespace FluentCodingTest.SwitchMap.Case.Task.Extensions
         }
 
         [Test]
-        public void Case_func_predicate_false()
+        public void CaseAsync_FuncPredicate_ReturnsDefault_WhenNoMatch()
         {
             var switchCase = GetSwitch();
             switchCase.Result.Should().BeOfType<DefaultCase<string, string>>();
@@ -108,7 +108,7 @@ namespace FluentCodingTest.SwitchMap.Case.Task.Extensions
 
 
         [Test]
-        public void Case_multiple_predicate_true()
+        public void CaseAsync_MultiplePredicates_StopsAtFirstMatch()
         {
             var switchCase = GetSwitch();
 

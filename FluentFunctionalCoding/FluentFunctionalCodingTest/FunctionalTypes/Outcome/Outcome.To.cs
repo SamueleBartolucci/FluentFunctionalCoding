@@ -8,7 +8,7 @@ namespace FluentCodingTest.Outcome.To
     {
 
         [Test]
-        public void Success_ToOptional()
+        public void Should_ConvertSuccessOutcome_ToOptionalSome()
         {
             var result = "succ".ToOutcome<Exception, string>().ToOptional();
             result.Should().BeOfType<Some<string>>();
@@ -16,21 +16,21 @@ namespace FluentCodingTest.Outcome.To
         }
 
         [Test]
-        public void Success_ToOptionalFailure()
+        public void Should_ConvertSuccessOutcome_ToOptionalFailureNone()
         {
             var result = "succ".ToOutcome<Exception, string>().ToOptionalFailure();
             result.Should().BeOfType<None<Exception>>();
         }
 
         [Test]
-        public void Failure_ToOptional()
+        public void Should_ConvertFailureOutcome_ToOptionalNone()
         {
             var result = (new Exception("fail")).ToOutcomeFailure<Exception, string>().ToOptional();
             result.Should().BeOfType<None<string>>();
         }
 
         [Test]
-        public void Failure_ToOptionalFailure()
+        public void Should_ConvertFailureOutcome_ToOptionalFailureSome()
         {
             var result = (new Exception("fail")).ToOutcomeFailure<Exception, string>().ToOptionalFailure();
             result.Should().BeOfType<Some<Exception>>();

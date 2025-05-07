@@ -27,7 +27,7 @@ namespace FluentFunctionalCodingTest.FluentExtensions.OrTask
         }
 
         [Test]
-        public async Task OrAsync_WithChooseRightTrue_ReturnsRight()
+        public async Task OrAsync_ChooseRightTrue_ReturnsRight()
         {
             Task<string> left = Task.FromResult("left");
             string right = "right";
@@ -36,7 +36,7 @@ namespace FluentFunctionalCodingTest.FluentExtensions.OrTask
         }
 
         [Test]
-        public async Task OrAsync_WithChooseRightWhenFunc_ReturnsRight_WhenPredicateTrue()
+        public async Task OrAsync_ChooseRightWhenFunc_ReturnsRight_WhenPredicateTrue()
         {
             Task<string> left = Task.FromResult("left");
             string right = "right";
@@ -45,7 +45,7 @@ namespace FluentFunctionalCodingTest.FluentExtensions.OrTask
         }
 
         [Test]
-        public async Task OrAsync_WithChooseRightWhenFunc_ReturnsLeft_WhenPredicateFalse()
+        public async Task OrAsync_ChooseRightWhenFunc_ReturnsLeft_WhenPredicateFalse()
         {
             Task<string> left = Task.FromResult("left");
             string right = "right";
@@ -54,7 +54,7 @@ namespace FluentFunctionalCodingTest.FluentExtensions.OrTask
         }
 
         [Test]
-        public async Task OrAsync_WithChooseRightWhenFuncT_ReturnsRight_WhenPredicateTrue()
+        public async Task OrAsync_ChooseRightWhenFuncT_ReturnsRight_WhenPredicateTrue()
         {
             Task<string> left = Task.FromResult("left");
             string right = "right";
@@ -63,7 +63,7 @@ namespace FluentFunctionalCodingTest.FluentExtensions.OrTask
         }
 
         [Test]
-        public async Task OrAsync_WithChooseRightWhenFuncT_ReturnsLeft_WhenPredicateFalse()
+        public async Task OrAsync_ChooseRightWhenFuncT_ReturnsLeft_WhenPredicateFalse()
         {
             Task<string> left = Task.FromResult("left");
             string right = "right";
@@ -72,7 +72,7 @@ namespace FluentFunctionalCodingTest.FluentExtensions.OrTask
         }
 
         [Test]
-        public async Task OrAsync_WithRightFactory_ReturnsLeft_WhenLeftIsNotNull()
+        public async Task OrAsync_RightFactory_ReturnsLeft_WhenLeftIsNotNull()
         {
             Task<string> left = Task.FromResult("left");
             var result = await left.OrAsync(() => "right");
@@ -80,7 +80,7 @@ namespace FluentFunctionalCodingTest.FluentExtensions.OrTask
         }
 
         [Test]
-        public async Task OrAsync_WithRightFactory_ReturnsRight_WhenLeftIsNull()
+        public async Task OrAsync_RightFactory_ReturnsRight_WhenLeftIsNull()
         {
             Task<string?> left = Task.FromResult<string?>(null);
             var result = await left.OrAsync(() => "right");
@@ -88,7 +88,7 @@ namespace FluentFunctionalCodingTest.FluentExtensions.OrTask
         }
 
         [Test]
-        public async Task OrAsync_WithRightFactory_ChooseRightTrue_ReturnsRight()
+        public async Task OrAsync_RightFactory_ChooseRightTrue_ReturnsRight()
         {
             Task<string> left = Task.FromResult("left");
             var result = await left.OrAsync(() => "right", chooseRight: true);
@@ -96,7 +96,7 @@ namespace FluentFunctionalCodingTest.FluentExtensions.OrTask
         }
 
         [Test]
-        public async Task OrAsync_WithRightFactory_ChooseRightWhenFunc_ReturnsRight_WhenPredicateTrue()
+        public async Task OrAsync_RightFactory_ChooseRightWhenFunc_ReturnsRight_WhenPredicateTrue()
         {
             Task<string> left = Task.FromResult("left");
             var result = await left.OrAsync(() => "right", () => true);
@@ -104,7 +104,7 @@ namespace FluentFunctionalCodingTest.FluentExtensions.OrTask
         }
 
         [Test]
-        public async Task OrAsync_WithRightFactory_ChooseRightWhenFunc_ReturnsLeft_WhenPredicateFalse()
+        public async Task OrAsync_RightFactory_ChooseRightWhenFunc_ReturnsLeft_WhenPredicateFalse()
         {
             Task<string> left = Task.FromResult("left");
             var result = await left.OrAsync(() => "right", () => false);
@@ -112,7 +112,7 @@ namespace FluentFunctionalCodingTest.FluentExtensions.OrTask
         }
 
         [Test]
-        public async Task OrAsync_WithRightFactory_ChooseRightWhenFuncT_ReturnsRight_WhenPredicateTrue()
+        public async Task OrAsync_RightFactory_ChooseRightWhenFuncT_ReturnsRight_WhenPredicateTrue()
         {
             Task<string> left = Task.FromResult("left");
             var result = await left.OrAsync(() => "right", l => l == "left");
@@ -120,7 +120,7 @@ namespace FluentFunctionalCodingTest.FluentExtensions.OrTask
         }
 
         [Test]
-        public async Task OrAsync_WithRightFactory_ChooseRightWhenFuncT_ReturnsLeft_WhenPredicateFalse()
+        public async Task OrAsync_RightFactory_ChooseRightWhenFuncT_ReturnsLeft_WhenPredicateFalse()
         {
             Task<string> left = Task.FromResult("left");
             var result = await left.OrAsync(() => "right", l => l == "other");

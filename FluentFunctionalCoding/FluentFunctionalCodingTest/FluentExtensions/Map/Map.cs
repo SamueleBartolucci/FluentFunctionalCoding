@@ -27,7 +27,7 @@ namespace FluentFunctionalCodingTest.FluentExtensions.Map
         }
 
         [Test]
-        public void Map_ReturnsDefault_WhenMapFuncIsNull()
+        public void Map_ThrowsNullReferenceException_WhenMapFuncIsNull()
         {
             int subject = 5;
             Func<int, int>? mapFunc = null;

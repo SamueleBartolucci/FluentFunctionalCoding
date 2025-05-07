@@ -14,7 +14,7 @@ namespace FluentCodingTest.Outcome.Bind
         public Outcome<string, string> FuncWithOutcomeResultFAilure(Exception e) => e.Message.ToOutcomeFailure<string, string>();
 
         [Test]
-        public void Success_Bind()
+        public void Bind_ShouldReturnSuccess_WhenInputIsValid()
         {
 
             var result = "1".ToOutcome<Exception, string>().Bind(FuncWithOutcomeResult);
@@ -23,7 +23,7 @@ namespace FluentCodingTest.Outcome.Bind
         }
 
         [Test]
-        public void Success_BindFailure()
+        public void BindFailure_ShouldReturnSuccess_WhenNoFailure()
         {
 
             var result = "1".ToOutcome<Exception, string>().BindFailure(FuncWithOutcomeResultFAilure);
@@ -32,7 +32,7 @@ namespace FluentCodingTest.Outcome.Bind
         }
 
         [Test]
-        public void Success_BindFull()
+        public void BindFull_ShouldReturnSuccess_WhenInputIsValid()
         {
 
             var result = "1".ToOutcome<string, string>().BindFull(FuncWithOutcomeResult, FuncWithOutcomeResultFailure);
@@ -41,7 +41,7 @@ namespace FluentCodingTest.Outcome.Bind
         }
 
         [Test]
-        public void Failure_Bind()
+        public void Bind_ShouldReturnFailure_WhenInputIsInvalid()
         {
 
             var result = new Exception("parse failure").ToOutcomeFailure<Exception, string>().Bind(FuncWithOutcomeResult);
@@ -50,7 +50,7 @@ namespace FluentCodingTest.Outcome.Bind
         }
 
         [Test]
-        public void Failure_BindFailure()
+        public void BindFailure_ShouldReturnFailure_WhenInputIsInvalid()
         {
 
             var result = new Exception("parse failure").ToOutcomeFailure<Exception, string>().BindFailure(FuncWithOutcomeResultFAilure);
@@ -59,7 +59,7 @@ namespace FluentCodingTest.Outcome.Bind
         }
 
         [Test]
-        public void Failure_BindFull()
+        public void BindFull_ShouldReturnFailure_WhenInputIsInvalid()
         {
 
             var result = "parse failure".ToOutcomeFailure<string, string>().BindFull(FuncWithOutcomeResult, FuncWithOutcomeResultFailure);

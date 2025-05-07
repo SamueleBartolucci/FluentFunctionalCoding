@@ -22,7 +22,7 @@ namespace FluentCodingTest.SwitchMap.Case.Optional.Some.Extensions
 
 
         [Test]
-        public void Case_bool_predicate_true()
+        public void CaseOptional_BoolPredicate_ReturnsDefault_WhenFalse_AndReturnsValue_WhenTrue()
         {
             var switchCase = GetSomeSwitch();
             switchCase.Should().BeOfType<DefaultCase<Optional<string>, Optional<string>>>();
@@ -38,7 +38,7 @@ namespace FluentCodingTest.SwitchMap.Case.Optional.Some.Extensions
 
 
         [Test]
-        public void Case_bool_predicate_false()
+        public void CaseOptional_BoolPredicate_ReturnsDefault_WhenFalse()
         {
             var switchCase = GetSomeSwitch();
             switchCase.Should().BeOfType<DefaultCase<Optional<string>, Optional<string>>>();
@@ -51,7 +51,7 @@ namespace FluentCodingTest.SwitchMap.Case.Optional.Some.Extensions
 
 
         [Test]
-        public void Case_funcnoparam_predicate_true()
+        public void CaseOptional_FuncNoParamPredicate_ReturnsDefault_WhenFalse_AndReturnsValue_WhenTrue()
         {
             var switchCase = GetSomeSwitch();
 
@@ -65,7 +65,7 @@ namespace FluentCodingTest.SwitchMap.Case.Optional.Some.Extensions
         }
 
         [Test]
-        public void Case_funcnoparam_predicate_false()
+        public void CaseOptional_FuncNoParamPredicate_ReturnsDefault_WhenFalse()
         {
             var switchCase = GetSomeSwitch();
             switchCase.Should().BeOfType<DefaultCase<Optional<string>, Optional<string>>>();
@@ -77,7 +77,7 @@ namespace FluentCodingTest.SwitchMap.Case.Optional.Some.Extensions
 
 
         [Test]
-        public void Case_func_predicate_true()
+        public void CaseOptional_FuncPredicate_ReturnsDefault_WhenNoMatch_AndReturnsValue_WhenMatch()
         {
             var switchCase = GetSomeSwitch();
 
@@ -91,7 +91,7 @@ namespace FluentCodingTest.SwitchMap.Case.Optional.Some.Extensions
         }
 
         [Test]
-        public void Case_func_predicate_false()
+        public void CaseOptional_FuncPredicate_ReturnsDefault_WhenNoMatch()
         {
             var switchCase = GetSomeSwitch();
             switchCase.Should().BeOfType<DefaultCase<Optional<string>, Optional<string>>>();
@@ -103,7 +103,7 @@ namespace FluentCodingTest.SwitchMap.Case.Optional.Some.Extensions
 
 
         [Test]
-        public void Case_multiple_predicate_true()
+        public void CaseOptional_MultiplePredicates_StopsAtFirstMatch()
         {
             var switchCase = GetSomeSwitch();
 

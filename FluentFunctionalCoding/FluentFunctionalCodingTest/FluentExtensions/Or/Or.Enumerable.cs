@@ -28,7 +28,7 @@ namespace FluentFunctionalCodingTest.FluentExtensions.Or.Enumerable
         }
 
         [Test]
-        public void OrWhenEmpty_WithChooseRightTrue_ReturnsRight()
+        public void OrWhenEmpty_ChooseRightTrue_ReturnsRight()
         {
             var left = new List<int> { 1, 2 };
             var right = new List<int> { 3, 4 };
@@ -37,7 +37,7 @@ namespace FluentFunctionalCodingTest.FluentExtensions.Or.Enumerable
         }
 
         [Test]
-        public void OrWhenEmpty_WithChooseRightWhenFunc_ReturnsRight_WhenFuncTrue()
+        public void OrWhenEmpty_ChooseRightWhenFunc_ReturnsRight_WhenFuncTrue()
         {
             var left = new List<int> { 1, 2 };
             var right = new List<int> { 3, 4 };
@@ -46,7 +46,7 @@ namespace FluentFunctionalCodingTest.FluentExtensions.Or.Enumerable
         }
 
         [Test]
-        public void OrWhenEmpty_WithChooseRightWhenFunc_ReturnsLeft_WhenFuncFalse()
+        public void OrWhenEmpty_ChooseRightWhenFunc_ReturnsLeft_WhenFuncFalse()
         {
             var left = new List<int> { 1, 2 };
             var right = new List<int> { 3, 4 };
@@ -55,7 +55,7 @@ namespace FluentFunctionalCodingTest.FluentExtensions.Or.Enumerable
         }
 
         [Test]
-        public void OrWhenEmpty_WithChooseRightWhenEnumerableFunc_ReturnsRight_WhenFuncTrue()
+        public void OrWhenEmpty_ChooseRightWhenEnumerableFunc_ReturnsRight_WhenFuncTrue()
         {
             var left = new List<int> { 1, 2 };
             var right = new List<int> { 3, 4 };
@@ -64,7 +64,7 @@ namespace FluentFunctionalCodingTest.FluentExtensions.Or.Enumerable
         }
 
         [Test]
-        public void OrWhenEmpty_WithChooseRightWhenEnumerableFunc_ReturnsLeft_WhenFuncFalse()
+        public void OrWhenEmpty_ChooseRightWhenEnumerableFunc_ReturnsLeft_WhenFuncFalse()
         {
             var left = new List<int> { 1, 2 };
             var right = new List<int> { 3, 4 };
@@ -73,7 +73,7 @@ namespace FluentFunctionalCodingTest.FluentExtensions.Or.Enumerable
         }
 
         [Test]
-        public void OrWhenEmpty_WithFuncRight_ReturnsRight_WhenLeftEmpty()
+        public void OrWhenEmpty_FuncRight_ReturnsRight_WhenLeftEmpty()
         {
             var left = new List<int>();
             var result = left.OrWhenEmpty(() => new List<int> { 5, 6 });
@@ -81,7 +81,7 @@ namespace FluentFunctionalCodingTest.FluentExtensions.Or.Enumerable
         }
 
         [Test]
-        public void OrWhenEmpty_WithFuncRight_ReturnsLeft_WhenNotEmpty()
+        public void OrWhenEmpty_FuncRight_ReturnsLeft_WhenNotEmpty()
         {
             var left = new List<int> { 7 };
             var result = left.OrWhenEmpty(() => new List<int> { 8, 9 });
@@ -89,7 +89,7 @@ namespace FluentFunctionalCodingTest.FluentExtensions.Or.Enumerable
         }
 
         [Test]
-        public void OrWhenEmpty_WithFuncRight_ChooseRightTrue_ReturnsRight()
+        public void OrWhenEmpty_FuncRight_ChooseRightTrue_ReturnsRight()
         {
             var left = new List<int> { 1 };
             var result = left.OrWhenEmpty(() => new List<int> { 2, 3 }, true);
@@ -97,7 +97,7 @@ namespace FluentFunctionalCodingTest.FluentExtensions.Or.Enumerable
         }
 
         [Test]
-        public void OrWhenEmpty_WithFuncRight_ChooseRightWhenFunc_ReturnsRight_WhenFuncTrue()
+        public void OrWhenEmpty_FuncRight_ChooseRightWhenFunc_ReturnsRight_WhenFuncTrue()
         {
             var left = new List<int> { 1 };
             var result = left.OrWhenEmpty(() => new List<int> { 2, 3 }, () => true);
@@ -105,7 +105,7 @@ namespace FluentFunctionalCodingTest.FluentExtensions.Or.Enumerable
         }
 
         [Test]
-        public void OrWhenEmpty_WithFuncRight_ChooseRightWhenFunc_ReturnsLeft_WhenFuncFalse()
+        public void OrWhenEmpty_FuncRight_ChooseRightWhenFunc_ReturnsLeft_WhenFuncFalse()
         {
             var left = new List<int> { 1 };
             var result = left.OrWhenEmpty(() => new List<int> { 2, 3 }, () => false);
@@ -113,7 +113,7 @@ namespace FluentFunctionalCodingTest.FluentExtensions.Or.Enumerable
         }
 
         [Test]
-        public void OrWhenEmpty_WithFuncRight_ChooseRightWhenEnumerableFunc_ReturnsRight_WhenFuncTrue()
+        public void OrWhenEmpty_FuncRight_ChooseRightWhenEnumerableFunc_ReturnsRight_WhenFuncTrue()
         {
             var left = new List<int> { 1 };
             var result = left.OrWhenEmpty(() => new List<int> { 2, 3 }, l => l.Count() == 1);
@@ -121,7 +121,7 @@ namespace FluentFunctionalCodingTest.FluentExtensions.Or.Enumerable
         }
 
         [Test]
-        public void OrWhenEmpty_WithFuncRight_ChooseRightWhenEnumerableFunc_ReturnsLeft_WhenFuncFalse()
+        public void OrWhenEmpty_FuncRight_ChooseRightWhenEnumerableFunc_ReturnsLeft_WhenFuncFalse()
         {
             var left = new List<int> { 1 };
             var result = left.OrWhenEmpty(() => new List<int> { 2, 3 }, l => l.Count() == 2);

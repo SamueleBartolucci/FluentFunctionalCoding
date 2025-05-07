@@ -26,7 +26,7 @@ namespace FluentFunctionalCodingTest.FluentExtensions.Or.String
         }
 
         [Test]
-        public void OrWhenEmpty_WithChooseRightTrue_ReturnsRight()
+        public void OrWhenEmpty_ChooseRightTrue_ReturnsRight()
         {
             string left = "not empty";
             string right = "right";
@@ -35,7 +35,7 @@ namespace FluentFunctionalCodingTest.FluentExtensions.Or.String
         }
 
         [Test]
-        public void OrWhenEmpty_WithChooseRightWhenFunc_ReturnsRight_WhenFuncTrue()
+        public void OrWhenEmpty_ChooseRightWhenFunc_ReturnsRight_WhenFuncTrue()
         {
             string left = "not empty";
             string right = "right";
@@ -44,7 +44,7 @@ namespace FluentFunctionalCodingTest.FluentExtensions.Or.String
         }
 
         [Test]
-        public void OrWhenEmpty_WithChooseRightWhenFunc_ReturnsLeft_WhenFuncFalse()
+        public void OrWhenEmpty_ChooseRightWhenFunc_ReturnsLeft_WhenFuncFalse()
         {
             string left = "not empty";
             string right = "right";
@@ -53,7 +53,7 @@ namespace FluentFunctionalCodingTest.FluentExtensions.Or.String
         }
 
         [Test]
-        public void OrWhenEmpty_WithChooseRightWhenStringFunc_ReturnsRight_WhenFuncTrue()
+        public void OrWhenEmpty_ChooseRightWhenStringFunc_ReturnsRight_WhenFuncTrue()
         {
             string left = "not empty";
             string right = "right";
@@ -62,7 +62,7 @@ namespace FluentFunctionalCodingTest.FluentExtensions.Or.String
         }
 
         [Test]
-        public void OrWhenEmpty_WithChooseRightWhenStringFunc_ReturnsLeft_WhenFuncFalse()
+        public void OrWhenEmpty_ChooseRightWhenStringFunc_ReturnsLeft_WhenFuncFalse()
         {
             string left = "not empty";
             string right = "right";
@@ -71,7 +71,7 @@ namespace FluentFunctionalCodingTest.FluentExtensions.Or.String
         }
 
         [Test]
-        public void OrWhenEmpty_WithFuncRight_ReturnsRight_WhenLeftEmpty()
+        public void OrWhenEmpty_FuncRight_ReturnsRight_WhenLeftEmpty()
         {
             string left = "";
             var result = left.OrWhenEmpty(() => "fallback");
@@ -79,7 +79,7 @@ namespace FluentFunctionalCodingTest.FluentExtensions.Or.String
         }
 
         [Test]
-        public void OrWhenEmpty_WithFuncRight_ReturnsLeft_WhenNotEmpty()
+        public void OrWhenEmpty_FuncRight_ReturnsLeft_WhenNotEmpty()
         {
             string left = "not empty";
             var result = left.OrWhenEmpty(() => "fallback");
@@ -87,7 +87,7 @@ namespace FluentFunctionalCodingTest.FluentExtensions.Or.String
         }
 
         [Test]
-        public void OrWhenEmpty_WithFuncRight_ChooseRightTrue_ReturnsRight()
+        public void OrWhenEmpty_FuncRight_ChooseRightTrue_ReturnsRight()
         {
             string left = "not empty";
             var result = left.OrWhenEmpty(() => "fallback", true);
@@ -95,7 +95,7 @@ namespace FluentFunctionalCodingTest.FluentExtensions.Or.String
         }
 
         [Test]
-        public void OrWhenEmpty_WithFuncRight_ChooseRightWhenFunc_ReturnsRight_WhenFuncTrue()
+        public void OrWhenEmpty_FuncRight_ChooseRightWhenFunc_ReturnsRight_WhenFuncTrue()
         {
             string left = "not empty";
             var result = left.OrWhenEmpty(() => "fallback", () => true);
@@ -103,7 +103,7 @@ namespace FluentFunctionalCodingTest.FluentExtensions.Or.String
         }
 
         [Test]
-        public void OrWhenEmpty_WithFuncRight_ChooseRightWhenFunc_ReturnsLeft_WhenFuncFalse()
+        public void OrWhenEmpty_FuncRight_ChooseRightWhenFunc_ReturnsLeft_WhenFuncFalse()
         {
             string left = "not empty";
             var result = left.OrWhenEmpty(() => "fallback", () => false);
@@ -111,7 +111,7 @@ namespace FluentFunctionalCodingTest.FluentExtensions.Or.String
         }
 
         [Test]
-        public void OrWhenEmpty_WithFuncRight_ChooseRightWhenStringFunc_ReturnsRight_WhenFuncTrue()
+        public void OrWhenEmpty_FuncRight_ChooseRightWhenStringFunc_ReturnsRight_WhenFuncTrue()
         {
             string left = "not empty";
             var result = left.OrWhenEmpty(() => "fallback", l => l.Length > 0);
@@ -119,7 +119,7 @@ namespace FluentFunctionalCodingTest.FluentExtensions.Or.String
         }
 
         [Test]
-        public void OrWhenEmpty_WithFuncRight_ChooseRightWhenStringFunc_ReturnsLeft_WhenFuncFalse()
+        public void OrWhenEmpty_FuncRight_ChooseRightWhenStringFunc_ReturnsLeft_WhenFuncFalse()
         {
             string left = "not empty";
             var result = left.OrWhenEmpty(() => "fallback", l => l.Length == 0);

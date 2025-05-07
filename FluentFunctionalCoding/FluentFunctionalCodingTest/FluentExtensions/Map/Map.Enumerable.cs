@@ -18,7 +18,7 @@ namespace FluentFunctionalCodingTest.FluentExtensions.Map.Enumerable
         }
 
         [Test]
-        public void MapAll_ReturnsDefault_WhenSourceIsNull()
+        public void MapAll_ReturnsNull_WhenSourceIsNull()
         {
             IEnumerable<int>? source = null;
             var result = source.MapAll(x => x * 2);
@@ -26,7 +26,7 @@ namespace FluentFunctionalCodingTest.FluentExtensions.Map.Enumerable
         }
 
         [Test]
-        public void MapAll_ReturnsDefault_WhenMapFuncIsNull()
+        public void MapAll_ThrowsArgumentNullException_WhenMapFuncIsNull()
         {
             var source = new[] { 1, 2, 3 };
             Func<int, int>? mapFunc = null;

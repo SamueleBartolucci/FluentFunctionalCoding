@@ -7,7 +7,7 @@ namespace FluentFunctionalCodingTest.FluentTypes.When.WhenIs
     public class WhenIsBoolExtensionsTests
     {
         [Test]
-        public void IsTrue_Returns_WhenTrue()
+        public void IsTrue_ShouldReturnIsTrue_WhenValueIsTrue()
         {
             var whenIs = new WhenIs<bool>(true);
             var result = whenIs.IsTrue();
@@ -16,7 +16,7 @@ namespace FluentFunctionalCodingTest.FluentTypes.When.WhenIs
         }
 
         [Test]
-        public void IsTrue_Returns_WhenFalse()
+        public void IsTrue_ShouldReturnIsFalse_WhenValueIsFalse()
         {
             var whenIs = new WhenIs<bool>(false);
             var result = whenIs.IsTrue();
@@ -25,7 +25,7 @@ namespace FluentFunctionalCodingTest.FluentTypes.When.WhenIs
         }
 
         [Test]
-        public void IsFalse_Returns_WhenTrue()
+        public void IsFalse_ShouldReturnIsFalse_WhenValueIsTrue()
         {
             var whenIs = new WhenIs<bool>(true);
             var result = whenIs.IsFalse();
@@ -34,7 +34,7 @@ namespace FluentFunctionalCodingTest.FluentTypes.When.WhenIs
         }
 
         [Test]
-        public void IsFalse_Returns_WhenFalse()
+        public void IsFalse_ShouldReturnIsTrue_WhenValueIsFalse()
         {
             var whenIs = new WhenIs<bool>(false);
             var result = whenIs.IsFalse();

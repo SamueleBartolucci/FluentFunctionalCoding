@@ -8,7 +8,7 @@ namespace FluentFunctionalCodingTest.FunctionalTypes.Outcome
     public class Type_Outcome_Tests
     {
         [Test]
-        public void On_Overloads_WorkAsExpected()
+        public void On_WithFuncOverloads_ShouldReturnCorrectOutcomeType_ForRightAndLeft()
         {
             var right = Outcome<string, int>.Right(42);
             var left = Outcome<string, int>.Left("fail");
@@ -17,7 +17,7 @@ namespace FluentFunctionalCodingTest.FunctionalTypes.Outcome
         }
 
         [Test]
-        public void OnSuccess_Func_InvokedIfSuccess()
+        public void OnSuccess_WithFunc_ShouldInvokeFuncAndCaptureValue_WhenRight()
         {
             var right = Outcome<string, int>.Right(42);
             int captured = 0;
@@ -26,7 +26,7 @@ namespace FluentFunctionalCodingTest.FunctionalTypes.Outcome
         }
 
         [Test]
-        public void OnFailure_Func_InvokedIfFailure()
+        public void OnFailure_WithFunc_ShouldInvokeFuncAndCaptureValue_WhenLeft()
         {
             var left = Outcome<string, int>.Left("fail");
             string captured = null;
@@ -35,7 +35,7 @@ namespace FluentFunctionalCodingTest.FunctionalTypes.Outcome
         }
 
         [Test]
-        public void On_Action_InvokedIfSuccessOrFailure()
+        public void On_WithActionOverloads_ShouldInvokeCorrectAction_ForRightAndLeft()
         {
             var right = Outcome<string, int>.Right(42);
             var left = Outcome<string, int>.Left("fail");
@@ -47,7 +47,7 @@ namespace FluentFunctionalCodingTest.FunctionalTypes.Outcome
         }
 
         [Test]
-        public void OnSuccess_Action_InvokedIfSuccess()
+        public void OnSuccess_WithAction_ShouldInvokeActionAndCaptureValue_WhenRight()
         {
             var right = Outcome<string, int>.Right(42);
             int captured = 0;
@@ -56,7 +56,7 @@ namespace FluentFunctionalCodingTest.FunctionalTypes.Outcome
         }
 
         [Test]
-        public void OnFailure_Action_InvokedIfFailure()
+        public void OnFailure_WithAction_ShouldInvokeActionAndCaptureValue_WhenLeft()
         {
             var left = Outcome<string, int>.Left("fail");
             string captured = null;
@@ -65,7 +65,7 @@ namespace FluentFunctionalCodingTest.FunctionalTypes.Outcome
         }
 
         [Test]
-        public void Match_Overloads_WorkAsExpected()
+        public void Match_WithFuncAndDefaultOverloads_ShouldReturnExpectedResult_ForRightAndLeft()
         {
             var right = Outcome<string, int>.Right(42);
             var left = Outcome<string, int>.Left("fail");
@@ -76,7 +76,7 @@ namespace FluentFunctionalCodingTest.FunctionalTypes.Outcome
         }
 
         [Test]
-        public void Bind_Overloads_WorkAsExpected()
+        public void Bind_BindFailure_BindFull_WithOverloads_ShouldWorkAsExpected_ForRightAndLeft()
         {
             var right = Outcome<string, int>.Right(42);
             var left = Outcome<string, int>.Left("fail");
@@ -89,7 +89,7 @@ namespace FluentFunctionalCodingTest.FunctionalTypes.Outcome
         }
 
         [Test]
-        public void Do_Overloads_WorkAsExpected()
+        public void Do_WithActionAndFuncOverloads_ShouldInvokeCorrectly_WhenRight()
         {
             var right = Outcome<string, int>.Right(42);
             int captured = 0;
@@ -100,7 +100,7 @@ namespace FluentFunctionalCodingTest.FunctionalTypes.Outcome
         }
 
         [Test]
-        public void Map_Overloads_WorkAsExpected()
+        public void Map_WithAllOverloads_ShouldMapCorrectly_ForRightAndLeft()
         {
             var right = Outcome<string, int>.Right(42);
             var left = Outcome<string, int>.Left("fail");
@@ -111,7 +111,7 @@ namespace FluentFunctionalCodingTest.FunctionalTypes.Outcome
         }
 
         [Test]
-        public void ToOptional_Overloads_WorkAsExpected()
+        public void ToOptional_ToOptionalFailure_WithOverloads_ShouldConvertCorrectly_ForRightAndLeft()
         {
             var right = Outcome<string, int>.Right(42);
             var left = Outcome<string, int>.Left("fail");

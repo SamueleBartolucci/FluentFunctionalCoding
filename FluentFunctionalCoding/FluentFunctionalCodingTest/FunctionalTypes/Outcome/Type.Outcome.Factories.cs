@@ -8,7 +8,7 @@ namespace FluentCodingTest.Outcome
     {
 
         [Test]
-        public void Success()
+        public void RightFactory_ShouldCreateRightOutcome_WithSuccessValue()
         {
             var date = DateTime.Now;
             var outcome = Outcome<Exception, DateTime>.Right(date);
@@ -19,7 +19,7 @@ namespace FluentCodingTest.Outcome
         }
 
         [Test]
-        public void Failure()
+        public void LeftFactory_ShouldCreateLeftOutcome_WithFailureValue()
         {
 
             var outcome = Outcome<Exception, DateTime>.Left(new Exception("fail"));

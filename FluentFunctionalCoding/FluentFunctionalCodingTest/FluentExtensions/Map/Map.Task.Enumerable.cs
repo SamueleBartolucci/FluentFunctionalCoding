@@ -35,7 +35,7 @@ namespace FluentFunctionalCodingTest.FluentExtensions.MapTask.Enumerable
         }
 
         [Test]
-        public void MapAllAsync_Throws_WhenMapFuncIsNull()
+        public void MapAllAsync_ThrowsArgumentNullException_WhenMapFuncIsNull()
         {
             Task<IEnumerable<int>> subject = Task.FromResult<IEnumerable<int>>(new[] { 1, 2 });
             Func<int, int>? mapFunc = null;
