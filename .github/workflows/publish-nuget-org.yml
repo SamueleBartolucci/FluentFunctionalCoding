@@ -33,7 +33,7 @@ jobs:
       run: |
         cd ./FluentFunctionalCoding/FluentFunctionalCoding/bin/Release
         ls -la
-        dotnet nuget push *.nupkg --source https://api.nuget.org/v3/index.json --api-key "${{ secrets.PUSH_TO_NUGET_ORG }}" --skip-duplicate
+        dotnet nuget push *.nupkg --source https://api.nuget.org/v3/index.json --api-key "${{ secrets.NUGET_API_KEY }}" --skip-duplicate
 
 #jobs:
 #publish: 
