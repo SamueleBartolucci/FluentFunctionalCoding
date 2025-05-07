@@ -20,9 +20,13 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 9.0.x
-    - name: Restore dependencies
-      run: dotnet restore
+   # - name: Restore dependencies
+   #   run: |
+   #     cd ./FluentCodingRewrite/FluentFunctionalCoding
+   #     dotnet restore
     - name: Build
-      run: dotnet build --no-restore
+      run: |
+        cd ./FluentCodingRewrite/FluentFunctionalCoding
+        dotnet build ./FluentFunctionalCoding.sln
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test ./FluentFunctionalCoding.sln --verbosity normal
