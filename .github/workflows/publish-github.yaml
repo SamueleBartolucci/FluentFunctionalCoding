@@ -2,7 +2,7 @@ name: Publish Github
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "main" ]
   workflow_dispatch:
 #    inputs:
 #      version:
@@ -24,7 +24,7 @@ jobs:
       env:
         NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
     - name: Restore dependencies
-      run: dotnet restore .\FluentFunctionalCoding\FluentFunctionalCoding\FluentFunctionalCoding.csproj     
+      run: dotnet restore
     - name: Build
       run: dotnet build
     #- name: Create the package
