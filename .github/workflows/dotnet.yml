@@ -21,15 +21,10 @@ jobs:
         source-url: https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json
       env:
         NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
-    - name: prepare and build
+    - name: prepare build and test
       run:  |
-        cd ./FluentFunctionalCoding/FluentFunctionalCoding
+        cd ./FluentFunctionalCoding
         ls -la
-        dotnet restore
-        dotnet build --configuration Debug --no-restore
-    - name: Test
-      run: | 
-        ls -la
-        cd ./FluentCodingRewrite/FluentFunctionalCoding
-        ls -la
+        dotnet restore ./FluentFunctionalCoding.sln
+        dotnet build ./FluentFunctionalCoding.sln --configuration Debug --no-restore
         dotnet test ./FluentFunctionalCoding.sln --verbosity normal
