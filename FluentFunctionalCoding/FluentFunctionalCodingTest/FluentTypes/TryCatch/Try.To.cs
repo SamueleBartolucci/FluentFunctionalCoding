@@ -14,9 +14,8 @@ namespace FluentFunctionalCodingTest.FluentTypes.Try.To
         Try<string, int, string> GetSuccess(string intValueAsString) => new Success<string, int, string>(intValueAsString, int.Parse(intValueAsString)).As<Try<string, int, string>>();
         Try<string, int, string> GetFailure(string intValueAsString) => new Failure<string, int, string>(intValueAsString, "parsing failed", new FormatException("parsing failed")).As<Try<string, int, string>>();
 
-        
         [Test]
-        public void ToOptional_ShouldReturnSome_WhenTryIsSuccess()
+        public void ToOptional_Success_ShouldReturnSome()
         {
             GetSuccess("42").ToOptional().Do(
                 o => o.Should().BeOfType<Some<int>>(),
@@ -26,7 +25,7 @@ namespace FluentFunctionalCodingTest.FluentTypes.Try.To
         }
 
         [Test]
-        public void ToOptional_ShouldReturnNone_WhenTryIsFailure()
+        public void ToOptional_Failure_ShouldReturnNone()
         {
             GetFailure("42").ToOptional().Do(
                 o => o.Should().BeOfType<None<int>>(),
@@ -34,11 +33,10 @@ namespace FluentFunctionalCodingTest.FluentTypes.Try.To
                 o => o.IsNone.Should().BeTrue());
         }
 
-
         [Test]
-        public void ToEither_ShouldReturnRight_WhenTryIsSuccess()
+        public void ToOutcome_Success_ShouldReturnRight()
         {
-            var outcome = GetSuccess("42").ToEither();
+            var outcome = GetSuccess("42").ToOutcome();
             outcome.Should().BeOfType<Right<string, int>>();
             outcome.IsSuccess.Should().BeTrue();
             outcome.IsFailure.Should().BeFalse();
@@ -46,21 +44,19 @@ namespace FluentFunctionalCodingTest.FluentTypes.Try.To
         }
 
         [Test]
-        public void ToEither_ShouldReturnLeft_WhenTryIsFailure()
+        public void ToOutcome_Failure_ShouldReturnLeft()
         {
-            GetFailure("42").ToEither().Do(
-                o => o.Should().BeOfType<Left<string,int>>(),
+            GetFailure("42").ToOutcome().Do(
+                o => o.Should().BeOfType<Left<string, int>>(),
                 o => o.IsSuccess.Should().BeFalse(),
                 o => o.IsFailure.Should().BeTrue(),
                 o => (o as Left<string, int>)._failureValue.Should().Be("parsing failed"));
         }
 
-
-
         [Test]
-        public void ToEitherUsingException_ShouldReturnRight_WhenTryIsSuccess()
+        public void ToOutcomeUsingException_Success_ShouldReturnRight()
         {
-            var outcome = GetSuccess("42").ToEitherUsingException();
+            var outcome = GetSuccess("42").ToOutcomeUsingException();
             outcome.Should().BeOfType<Right<Exception, int>>();
             outcome.IsSuccess.Should().BeTrue();
             outcome.IsFailure.Should().BeFalse();
@@ -68,14 +64,13 @@ namespace FluentFunctionalCodingTest.FluentTypes.Try.To
         }
 
         [Test]
-        public void ToEitherUsingException_ShouldReturnLeft_WhenTryIsFailure()
+        public void ToOutcomeUsingException_Failure_ShouldReturnLeft()
         {
-            GetFailure("42").ToEitherUsingException().Do(
+            GetFailure("42").ToOutcomeUsingException().Do(
                 o => o.Should().BeOfType<Left<Exception, int>>(),
                 o => o.IsSuccess.Should().BeFalse(),
                 o => o.IsFailure.Should().BeTrue(),
                 o => (o as Left<Exception, int>)._failureValue.Message.Should().Be("parsing failed"));
         }
-
     }
 }

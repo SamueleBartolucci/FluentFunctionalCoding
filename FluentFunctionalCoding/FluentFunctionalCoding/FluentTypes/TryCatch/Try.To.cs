@@ -19,7 +19,7 @@ namespace FluentFunctionalCoding
         /// Converts the Try to an Outcome (Either), returning Right if successful, otherwise Left with the error.
         /// </summary>
         [Pure]
-        public Outcome<TErr, TOut> ToEither() => this switch
+        public Outcome<TErr, TOut> ToOutcome() => this switch
         {
             Success<TIn, TOut, TErr>(_, var r) => Outcome<TErr, TOut>.Right(r),
             Failure<TIn, TOut, TErr>(_, var e, _) => Outcome<TErr, TOut>.Left(e),
@@ -30,7 +30,7 @@ namespace FluentFunctionalCoding
         /// Converts the Try to an Outcome (Either) using Exception as the error type.
         /// </summary>
         [Pure]
-        public Outcome<Exception, TOut> ToEitherUsingException() => this switch
+        public Outcome<Exception, TOut> ToOutcomeUsingException() => this switch
         {
             Success<TIn, TOut, TErr>(_, var r) => Outcome<Exception, TOut>.Right(r),
             Failure<TIn, TOut, TErr>(_, _, var ex) => Outcome<Exception, TOut>.Left(ex),
