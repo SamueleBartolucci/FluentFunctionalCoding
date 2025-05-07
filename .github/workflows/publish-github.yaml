@@ -24,7 +24,7 @@ jobs:
       env:
         NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore .\FluentFunctionalCoding\FluentFunctionalCoding\FluentFunctionalCoding.csproj
     - name: Build
       run: dotnet build
     #- name: Create the package
