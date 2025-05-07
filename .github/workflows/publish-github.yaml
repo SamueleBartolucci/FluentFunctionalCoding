@@ -23,8 +23,10 @@ jobs:
         source-url: https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json
       env:
         NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+    - name: where I am
+      run: ls - la
     - name: Restore dependencies
-      run: dotnet restore .\FluentFunctionalCoding\FluentFunctionalCoding\FluentFunctionalCoding.csproj
+      run: dotnet restore ./FluentFunctionalCoding/FluentFunctionalCoding/FluentFunctionalCoding.csproj
     - name: Build
       run: dotnet build
     #- name: Create the package
