@@ -5,6 +5,9 @@ namespace FluentFunctionalCoding
 {
     public abstract partial record Try<TIn, TOut, TErr>
     {
+        /// <summary>
+        /// Converts the Try to an Optional, returning Some if successful, otherwise None.
+        /// </summary>
         public Optional<TOut> ToOptional() => this switch
         {
             Success<TIn, TOut, TErr>(var _, var r) => Optional<TOut>.Some(r),
@@ -12,6 +15,9 @@ namespace FluentFunctionalCoding
             _ => throw UnknowImplementation()
         };
 
+        /// <summary>
+        /// Converts the Try to an Outcome (Either), returning Right if successful, otherwise Left with the error.
+        /// </summary>
         [Pure]
         public Outcome<TErr, TOut> ToEither() => this switch
         {
@@ -20,6 +26,9 @@ namespace FluentFunctionalCoding
             _ => throw UnknowImplementation()
         };
 
+        /// <summary>
+        /// Converts the Try to an Outcome (Either) using Exception as the error type.
+        /// </summary>
         [Pure]
         public Outcome<Exception, TOut> ToEitherUsingException() => this switch
         {

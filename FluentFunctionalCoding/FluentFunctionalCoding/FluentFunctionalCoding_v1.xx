@@ -1,0 +1,275 @@
+# FluentFunctionalCoding
+
+## Project Idea
+
+**FluentFunctionalCoding** is a .NET library providing functional programming primitives and fluent extensions for C#. It includes types and helpers for Optionals, Outcomes (Either), Try/Catch, SwitchMap, and fluent functional operations on collections and tasks. The library aims to enable expressive, safe, and concise code by leveraging functional programming concepts in C#.
+
+---
+
+## Project Features Overview
+
+- **Optional**: Safe handling of values that may or may not exist.
+- **Outcome**: Functional Either type for success/failure flows.
+- **Try**: Functional try/catch with fluent error handling.
+- **SwitchMap**: Fluent pattern matching for values and collections.
+- **When**: Fluent conditional logic for values and collections.
+- **Fluent Extensions**: `Do`, `Map`, `Or`, and more for collections, tasks, and primitives.
+
+---
+
+## Project Folders in Detail
+
+### FluentExtensions
+
+This folder contains classes with extension methods for type `T` to enable fluent, LINQ-style coding.
+
+#### Do Folder
+
+A set of functions used to alter or use an input object and then return the object itself.
+
+- **Do**: Apply any action/function on the input object and return the object itself.
+- **DoForEach**: Apply any action/function on each object from the enumerator and return the enumerator itself.
+- **DoAsync**: Like Do but with a `Task<T>` as input object.
+- **DoForEachAsync**: Like DoForEach but with a `Task<IEnumerable<T>>` as input object.
+
+**Examples:**
+
+```csharp
+"hello".Do(Console.WriteLine); // Prints "hello" and returns "hello"
+
+var numbers = new List<int> { 1, 2, 3 };
+numbers.DoForEach(n => Console.WriteLine(n)); // Prints each number
+
+await Task.FromResult("async").DoAsync(s => Console.WriteLine(s)); // Prints "async"
+
+await Task.FromResult(numbers).DoForEachAsync(n => Console.WriteLine(n)); // Prints each number
+```
+
+---
+
+#### Equals Folder
+
+Functions used to check equality between two objects.
+
+- **EqualsToAny**: Checks if an object equals any of the provided values.
+
+**Example:**
+
+```csharp
+int value = 5;
+bool isMatch = value.EqualsToAny(1, 3, 5); // true
+```
+
+---
+
+#### Map Folder
+
+Functions used to map an object using a mapping function.
+
+- **Map**: Transform an input object using a mapping function.
+- **MapAll**: Transform each object from an Enumerable input into a new Enumerable where each object is mapped using a mapping function.
+- **MapAsync**: Like Map but the input object is wrapped in a Task.
+- **MapAllAsync**: Like MapAll but the input IEnumerable object is wrapped in a Task.
+
+**Examples:**
+
+```csharp
+var mapped = "123".Map(s => int.Parse(s)); // 123
+
+var numbers = new List<int> { 1, 2, 3 };
+var squared = numbers.MapAll(n => n * n); // [1, 4, 9]
+
+var asyncMapped = await Task.FromResult("456").MapAsync(s => int.Parse(s)); // 456
+
+var asyncSquared = await Task.FromResult(numbers).MapAllAsync(n => n * n); // [1, 4, 9]
+```
+
+---
+
+#### Misc Folder
+
+A collection of various extension methods.
+
+- **Apply for Action**: Partially apply an Action.
+- **AsFunc**: Transform an Action into a Func with a return type of Nothing.
+- **Apply for Func**: Partially apply a Func.
+- **IsNull, IsNullOrEmpty**: Utility methods to check for null or empty objects.
+- **ToTask**: Utility method to wrap an object into a Task.
+
+**Examples:**
+
+```csharp
+Action<int, int> add = (a, b) => Console.WriteLine(a + b);
+var add5 = add.Apply(5);
+add5(10); // Output: 15
+
+var isNull = ((object)null).IsNull(); // true
+var isEmpty = "".IsNullOrEmpty(); // true
+
+var task = 42.ToTask(); // Task<int>
+```
+
+---
+
+#### Or Folder
+
+Functions used to provide a fallback value based on null value or custom conditions.
+
+- **Or**: Provides a fallback value if the current value is null or if the 'choose' argument is true.
+- **OrWhenEmpty for Enumerable**: Like Or but applies also to empty IEnumerable.
+- **OrWhenEmpty for strings**: Like Or but applies also to empty string.
+- **OrAsync**: Like Or but the input object is wrapped in a Task.
+
+**Examples:**
+
+```csharp
+string value = null;
+var fallback = value.Or("default"); // "default"
+
+var list = new List<int>();
+var fallbackList = list.OrWhenEmpty(new List<int> { 1, 2 }); // [1, 2]
+
+string empty = "";
+var fallbackString = empty.OrWhenEmpty("fallback"); // "fallback"
+
+var asyncValue = await Task.FromResult<string>(null).OrAsync("async default"); // "async default"
+```
+
+---
+
+### FluentTypes
+
+Collection of types that enable fluent coding functionalities to replace the syntax constructs: if/else, switch/case, try/catch.
+
+#### SwitchMap Folder
+
+Types and methods that implement a fluent version of the switch/case syntax. The workflow starts with a `Switch`, followed by a series of `Case` statements, and ends with a `Match`.
+
+- **Case**: Add a case to the switch.
+- **CaseContainsKey, CaseContains, CaseAny, CaseAll, CaseIsEmpty, CaseIsNotEmpty, CaseCount**: Cases to manage a switch over a Dictionary-like object.
+- **CaseOptional**: Cases to manage a switch over an Optional object.
+- **CaseOutcome**: Cases to manage a switch over an Outcome object.
+- **CaseAsync**: Cases to manage a switch over a Task object.
+- **Match**: Switch closure.
+- **MatchAsync**: Switch closure for a switch over a Task object.
+
+**Examples:**
+
+```csharp
+var value = 5;
+var result = Prelude.Switch(value, -1)
+    .Case(v => v == 0, v => 100)
+    .Case(v => v > 0, v => v * 10)
+    .Match(); // result = 50
+
+var dict = new Dictionary<int, string> { { 1, "one" }, { 2, "two" } };
+var dictResult = dict.Switch("not found")
+    .CaseContainsKey(1, d => d[1])
+    .CaseContains(new KeyValuePair<int, string>(2, "two"), d => "HasTwo")
+    .Match(); // dictResult = "one"
+```
+
+---
+
+#### TryCatch
+
+Fluent implementation of the try/catch syntax.
+
+**Example:**
+
+```csharp
+var tryResult = Prelude.Try("input", s => int.Parse(s));
+
+tryResult.Match(
+    onSuccess: (input, result) => Console.WriteLine($"Parsed: {result}"),
+    onFail: (input, ex) => Console.WriteLine($"Failed to parse '{input}': {ex.Message}")
+);
+
+var optional = tryResult.ToOptional();
+var outcome = tryResult.ToEither();
+```
+
+---
+
+#### When
+
+Fluent implementation of the if or if/else syntax.
+
+**Examples:**
+
+```csharp
+var when = Prelude.When(10)
+    .Is(x => x > 5);
+
+when.Match(
+    onTrue: () => Console.WriteLine("Greater than 5"),
+    onFalse: () => Console.WriteLine("Not greater than 5")
+);
+
+var opt = Optional<int>.Some(7);
+var whenOpt = Prelude.When(opt)
+    .Is<Optional<int>>(o => o.Match(x => x > 5, () => false));
+
+whenOpt.Match(
+    onTrue: () => Console.WriteLine("Optional value is greater than 5"),
+    onFalse: () => Console.WriteLine("Optional value is not greater than 5")
+);
+
+var nums = new List<int> { 1, 2, 3 };
+var whenList = Prelude.When(nums)
+    .Is<List<int>>(l => l.Count > 2);
+
+whenList.Match(
+    onTrue: () => Console.WriteLine("List has more than 2 items"),
+    onFalse: () => Console.WriteLine("List has 2 or fewer items")
+);
+```
+
+---
+
+### FunctionalTypes
+
+#### Optional
+
+Fluent implementation of functional programming Some/None.
+
+**Examples:**
+
+```csharp
+var some = Optional<int>.Some(42);
+var none = Optional<int>.None();
+
+some.Match(
+    onSome: x => Console.WriteLine($"Value is {x}"),
+    onNone: () => Console.WriteLine("No value present")
+);
+
+var result = some.Bind(x => Optional<string>.Some($"Value: {x}"))
+                 .Match(s => s, () => "No value");
+```
+
+---
+
+#### Outcome
+
+Fluent implementation of functional programming Either.
+
+**Examples:**
+
+```csharp
+var right = Outcome<string, int>.Right(10);
+var left = Outcome<string, int>.Left("Error");
+
+var mapped = right.MapSuccess(x => x * 2); // Right(20)
+
+var message = left.Match(
+    onSuccess: x => $"Success: {x}",
+    onFailure: err => $"Failed: {err}"
+);
+```
+
+---
+
+## License
+
+This project is licensed under the MIT License.

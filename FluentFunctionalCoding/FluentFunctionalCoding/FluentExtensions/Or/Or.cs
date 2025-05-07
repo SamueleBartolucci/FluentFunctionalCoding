@@ -3,86 +3,77 @@
     public static partial class FluentExtension
     {
         /// <summary>
-        /// Choose between the left or the right value.
-        /// Pick left when not null and 'chooseRight' bool is false
-        /// Empty string is considered NOT null
+        /// Returns <paramref name="orRightValue"/> if <paramref name="leftValue"/> is null or <paramref name="chooseRight"/> is true; otherwise returns <paramref name="leftValue"/>.
+        /// Empty string is considered NOT null.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="leftValue"></param>
-        /// <param name="orRightValue"></param>
-        /// <param name="chooseRight"></param>
-        /// <returns></returns>
+        /// <typeparam name="T">Type of the values to choose from.</typeparam>
+        /// <param name="leftValue">Primary value to check.</param>
+        /// <param name="orRightValue">Fallback value if primary is null or <paramref name="chooseRight"/> is true.</param>
+        /// <param name="chooseRight">If true, always returns <paramref name="orRightValue"/>.</param>
+        /// <returns>The chosen value based on the conditions.</returns>
         public static T Or<T>(this T leftValue, T orRightValue, bool chooseRight = false)
             => (leftValue == null || chooseRight) ? orRightValue : leftValue;
 
-
         /// <summary>
-        /// Choose between the left or the right value.
-        /// Pick left when not null and chooseRightWhen() is false
-        /// Empty string is considered NOT null
+        /// Returns <paramref name="orRightValue"/> if <paramref name="leftValue"/> is null or <paramref name="chooseRightWhen"/> returns true; otherwise returns <paramref name="leftValue"/>.
+        /// Empty string is considered NOT null.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="leftValue"></param>
-        /// <param name="orRightValue"></param>
-        /// <param name="chooseRightWhen"></param>
-        /// <returns></returns>
+        /// <typeparam name="T">Type of the values to choose from.</typeparam>
+        /// <param name="leftValue">Primary value to check.</param>
+        /// <param name="orRightValue">Fallback value if primary is null or <paramref name="chooseRightWhen"/> returns true.</param>
+        /// <param name="chooseRightWhen">A function that determines if the right value should be chosen.</param>
+        /// <returns>The chosen value based on the conditions.</returns>
         public static T Or<T>(this T leftValue, T orRightValue, Func<bool> chooseRightWhen)
             => (leftValue == null || chooseRightWhen()) ? orRightValue : leftValue;
 
         /// <summary>
-        /// Choose between the left or the right value.
-        /// Pick left when not null and chooseRightWhen(leftValue) is false
-        /// Empty string is considered NOT null        
+        /// Returns <paramref name="orRightValue"/> if <paramref name="leftValue"/> is null or <paramref name="chooseRightWhen"/> returns true for <paramref name="leftValue"/>; otherwise returns <paramref name="leftValue"/>.
+        /// Empty string is considered NOT null.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="leftValue"></param>
-        /// <param name="orRightValue"></param>
-        /// <param name="chooseRightWhen"></param>
-        /// <returns></returns>
+        /// <typeparam name="T">Type of the values to choose from.</typeparam>
+        /// <param name="leftValue">Primary value to check.</param>
+        /// <param name="orRightValue">Fallback value if primary is null or <paramref name="chooseRightWhen"/> returns true.</param>
+        /// <param name="chooseRightWhen">A function that takes the primary value and determines if the right value should be chosen.</param>
+        /// <returns>The chosen value based on the conditions.</returns>
         public static T Or<T>(this T leftValue, T orRightValue, Func<T, bool> chooseRightWhen)
            => (leftValue == null || chooseRightWhen(leftValue)) ? orRightValue : leftValue;
 
-
         /// <summary>
-        /// Choose between the left or the right value.
-        /// Pick left when not null and chooseRight bool is false
+        /// Returns the result of <paramref name="orRightValueFunc"/> if <paramref name="leftValue"/> is null or <paramref name="chooseRight"/> is true; otherwise returns <paramref name="leftValue"/>.
         /// Empty string is considered NOT null.
-        /// The orRightValueFunc is evaluated only when right value must be returned
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="leftValue"></param>
-        /// <param name="orRightValueFunc"></param>
-        /// <param name="chooseRight"></param>
-        /// <returns></returns>
+        /// <typeparam name="T">Type of the values to choose from.</typeparam>
+        /// <param name="leftValue">Primary value to check.</param>
+        /// <param name="orRightValueFunc">A function that provides the fallback value.</param>
+        /// <param name="chooseRight">If true, always returns the result of <paramref name="orRightValueFunc"/>.</param>
+        /// <returns>The chosen value based on the conditions.</returns>
+        /// <remarks>The <paramref name="orRightValueFunc"/> function is only evaluated if needed.</remarks>
         public static T Or<T>(this T leftValue, Func<T> orRightValueFunc, bool chooseRight = false)
             => (leftValue == null || chooseRight) ? orRightValueFunc() : leftValue;
 
-
         /// <summary>
-        /// Choose between the left or the right value.
-        /// Pick left when not null and chooseRightWhen() is false
-        /// Empty string is considered NOT null
-        /// The orRightValueFunc is evaluated only when right value must be returned
+        /// Returns the result of <paramref name="orRightValueFunc"/> if <paramref name="leftValue"/> is null or <paramref name="chooseRightWhen"/> returns true; otherwise returns <paramref name="leftValue"/>.
+        /// Empty string is considered NOT null.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="leftValue"></param>
-        /// <param name="orRightValueFunc"></param>
-        /// <param name="chooseRightWhen"></param>
-        /// <returns></returns>
+        /// <typeparam name="T">Type of the values to choose from.</typeparam>
+        /// <param name="leftValue">Primary value to check.</param>
+        /// <param name="orRightValueFunc">A function that provides the fallback value.</param>
+        /// <param name="chooseRightWhen">A function that determines if the right value should be chosen.</param>
+        /// <returns>The chosen value based on the conditions.</returns>
+        /// <remarks>The <paramref name="orRightValueFunc"/> function is only evaluated if needed.</remarks>
         public static T Or<T>(this T leftValue, Func<T> orRightValueFunc, Func<bool> chooseRightWhen)
             => (leftValue == null || chooseRightWhen()) ? orRightValueFunc() : leftValue;
 
         /// <summary>
-        /// Choose between the left or the right value.
-        /// Pick left when not null and chooseRightWhen(leftValue) is false
-        /// Empty string is considered NOT null
-        /// The orRightValueFunc is evaluated only when right value must be returned
+        /// Returns the result of <paramref name="orRightValueFunc"/> if <paramref name="leftValue"/> is null or <paramref name="chooseRightWhen"/> returns true for <paramref name="leftValue"/>; otherwise returns <paramref name="leftValue"/>.
+        /// Empty string is considered NOT null.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="leftValue"></param>
-        /// <param name="orRightValueFunc"></param>
-        /// <param name="chooseRightWhen"></param>
-        /// <returns></returns>
+        /// <typeparam name="T">Type of the values to choose from.</typeparam>
+        /// <param name="leftValue">Primary value to check.</param>
+        /// <param name="orRightValueFunc">A function that provides the fallback value.</param>
+        /// <param name="chooseRightWhen">A function that takes the primary value and determines if the right value should be chosen.</param>
+        /// <returns>The chosen value based on the conditions.</returns>
+        /// <remarks>The <paramref name="orRightValueFunc"/> function is only evaluated if needed.</remarks>
         public static T Or<T>(this T leftValue, Func<T> orRightValueFunc, Func<T, bool> chooseRightWhen)
            => (leftValue == null || chooseRightWhen(leftValue)) ? orRightValueFunc() : leftValue;
 
