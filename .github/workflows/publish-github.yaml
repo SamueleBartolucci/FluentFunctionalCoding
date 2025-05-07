@@ -24,7 +24,7 @@ jobs:
       env:
         NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
     - name: where I am
-      run: ls - la
+      run: ls -la
     - name: Restore dependencies
       run: dotnet restore ./FluentFunctionalCoding/FluentFunctionalCoding/FluentFunctionalCoding.csproj
     - name: Build
