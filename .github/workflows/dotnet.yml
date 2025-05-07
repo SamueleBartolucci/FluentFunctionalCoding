@@ -11,22 +11,25 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
+    
     steps:
-    - uses: actions/checkout@v4
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v4
+    - uses: actions/checkout@v3
+    - uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: 9.0.x
-   # - name: Restore dependencies
-   #   run: |
-   #     cd ./FluentCodingRewrite/FluentFunctionalCoding
-   #     dotnet restore
-    - name: Build
-      run: |
-        cd ./FluentCodingRewrite/FluentFunctionalCoding
-        dotnet build ./FluentFunctionalCoding.sln
+        dotnet-version: '9.0.x'
+        source-url: https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json
+      env:
+        NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+    - name: prepare and build
+      run:  |
+        cd ./FluentFunctionalCoding/FluentFunctionalCoding
+        ls -la
+        dotnet restore
+        dotnet build --configuration Debug --no-restore
     - name: Test
-      run: dotnet test ./FluentFunctionalCoding.sln --verbosity normal
+      run: | 
+        ls -la
+        cd ./FluentCodingRewrite/FluentFunctionalCoding
+        ls -la
+        dotnet test ./FluentFunctionalCoding.sln --verbosity normal
