@@ -1,6 +1,6 @@
 # FluentFunctionalCoding
 
-## Project Idea
+## Project concept
 
 **FluentFunctionalCoding** is a .NET library providing functional programming primitives and fluent extensions for C#. It includes types and helpers for Optionals, Outcomes (Either), Try/Catch, SwitchMap, and fluent functional operations on collections and tasks. The library aims to enable expressive, safe, and concise code by leveraging functional programming concepts in C#.
 
@@ -8,52 +8,137 @@
 
 ## Project Features Overview
 
-- **Optional**: Safe handling of values that may or may not exist.
-- **Outcome**: Functional Either type for success/failure flows.
-- **Try**: Functional try/catch with fluent error handling.
-- **SwitchMap**: Fluent pattern matching for values and collections.
-- **When**: Fluent conditional logic for values and collections.
-- **Fluent Extensions**: `Do`, `Map`, `Or`, and more for collections, tasks, and primitives.
+1. **Fluent Extensions**: `Do`, `Map`, `Or`, and more for collections, tasks, and primitives.
+2. **Fluent Types**
+    - **Try**: Functional try/catch with fluent error handling.
+    - **SwitchMap**: Fluent pattern matching for values and collections.
+    - **When**: Fluent conditional logic for values and collections.
+3. **Functional Types**
+    - **Outcome**: Functional Either type for success/failure flows.
+    - **Optional**: Safe handling of values that may or may not exist.
+
+
+### Preludes for Fluent and Functional types
+Theese types require a prelude to create a warp context.
+
+#### Explicit vs Implicit Context Creation
+
+FluentFunctionalCoding supports two ways to create a functional context:
+
+- **Explicit Prelude**: Use static Prelude functions to explicitly create a context for functional operations.
+    
+    ```csharp
+    // Explicitly create a Try context
+    var tryResult = Prelude.Try("123", s => int.Parse(s));
+
+    // Explicitly create a Switch context
+    var switchResult = Prelude.Switch(5, -1)
+        .Case(x => x > 0, x => x * 2)
+        .Match();
+
+    // Explicitly create a When context
+    var whenExplicit = Prelude.When(10)
+                               .IsGreaterThan(5)
+                               .Match(
+                                   onTrue: () => "Greater",
+                                   onFalse: () => "Not greater"
+                               );
+
+    // Explicitly create an Optional context
+    var optExplicit = Prelude.Optional(42);
+    var optNoneExplicit = Prelude.Optional<int>();
+
+    // Explicitly create an Outcome context
+    var outcomeSuccess = Prelude.Outcome<string, int>.  Right(100);
+    var outcomeFailure = Prelude.Outcome<string, int>.Left  ("fail");
+    ```
+
+- **Implicit Prelude**: Use extension methods directly on types to create a context fluently.
+    
+    ```csharp
+    // Implicitly create a Try context via extension
+    var tryResult = "123".Try(s => int.Parse(s));
+
+    // Implicitly create a Switch context via extension
+    var switchResult = 5.Switch(-1)
+        .Case(x => x > 0, x => x * 2)
+        .Match();
+
+    // Implicitly create a When context via extension
+    var whenImplicit = 10.When()
+                         .IsGreaterThan(5)
+                         .Match(
+                             onTrue: () => "Greater",
+                             onFalse: () => "Not greater"
+                         );
+
+    // Implicitly create a Switch context
+    var optImplicit = 42.Optional();
+    var optNoneImplicit = ((int?)null).Optional();
+
+    // Implicitly create an Outcome context
+    var outcomeSuccessImplicit = 100.ToOutcome<string>();
+    var outcomeFailureImplicit = "fail".ToOutcome<int>();
+    ```
+
+This dual approach allows you to choose between explicit functional style or idiomatic C# extension-based style for context creation.
+
+
+**NOTE**: to use the implicit preludes add the using of `FluentFunctionalCoding.FluentPreludes`, this because it will add a lots of bloat static methods fo any generic `T` type
 
 ---
 
-## Project Folders in Detail
+# Project in Detail
 
-### FluentExtensions
+## 1 FluentExtensions
 
-This folder contains extension methods for type `T` to enable fluent, LINQ-style coding.
+Extension methods for type `T` to enable fluent, LINQ-style coding.
 
-#### Do Folder
+### Do
 
 A set of functions used to alter or use an input object and then return the object itself, enabling side effects or logging in a fluent chain.
 
-- **Do**: Applies an action or function to the input object and returns the object itself. Useful for logging, debugging, or side effects in a fluent chain.
+- **Do**: Applies one or more actions or functions to the subject (if not null) and then returns the subject. Useful for performing side effects such as logging, debugging, or mutation in a fluent chain. The function results are discarded.
 
     ```csharp
-    "hello".Do(Console.WriteLine); // Prints "hello" and returns "hello"
-    var result = 42.Do(x => Debug.WriteLine($"Value: {x}")); // Logs and returns 42
+    // Applies Console.WriteLine to the string, prints "hello", and returns "hello"
+    "hello".Do(Console.WriteLine);
+    // Logs the value and returns 42
+    var result = 42.Do(x => Debug.WriteLine($"Value: {x}"));
+    // Applies multiple actions
+    obj.Do(action1, action2);
+    // Applies multiple functions (results ignored)
+    obj.Do(func1, func2);
     ```
 
-- **DoForEach**: Applies an action to each element in an enumerable and returns the enumerable itself. Useful for side effects on collections.
+- **DoForEach**: Applies one or more actions or functions to each element in an enumerable and returns the enumerable itself. Useful for side effects on collections, such as logging or mutation, in a fluent chain. The function results are discarded.
 
     ```csharp
     var numbers = new List<int> { 1, 2, 3 };
-    numbers.DoForEach(n => Console.WriteLine(n)); // Prints 1, 2, 3 and returns the list
+    // Prints 1, 2, 3 and returns the list
+    numbers.DoForEach(n => Console.WriteLine(n));
+    // Applies multiple actions to each element
+    numbers.DoForEach(action1, action2);
+    // Applies multiple functions to each element (results ignored)
+    numbers.DoForEach(func1, func2);
     ```
 
-- **DoAsync**: Like `Do`, but operates on a `Task<T>`. Awaits the task, applies the action, and returns the original result.
+- **DoAsync**: Like `Do`, but operates on a `Task<T>`. Awaits the task, applies the actions or functions, and returns the original result. Useful for performing side effects in asynchronous fluent chains.
 
     ```csharp
-    await Task.FromResult("async").DoAsync(s => Console.WriteLine(s)); // Prints "async"
+    await someTask.DoAsync(Console.WriteLine);
+    await someTask.DoAsync(x => Debug.WriteLine($"Value: {x}"));
+    await someTask.DoAsync(func1, func2);
     ```
 
-- **DoForEachAsync**: Like `DoForEach`, but operates on a `Task<IEnumerable<T>>`. Awaits the task, applies the action to each element, and returns the original enumerable.
+- **DoForEachAsync**: Like `DoForEach`, but operates on a `Task<IEnumerable<T>>`, `Task<List<T>>`, or `Task<T[]>`. Awaits the task, applies the actions or functions to each element, and returns the original collection.
 
     ```csharp
-    await Task.FromResult(numbers).DoForEachAsync(n => Console.WriteLine(n)); // Prints 1, 2, 3
+    await numbersTask.DoForEachAsync(n => Console.WriteLine(n));
+    await numbersTask.DoForEachAsync(func1, func2);
     ```
 
-#### Equals Folder
+### Equals
 
 Functions used to check equality between objects in a fluent way.
 
@@ -66,7 +151,7 @@ Functions used to check equality between objects in a fluent way.
     bool found = color.EqualsToAny("blue", "green", "red"); // true
     ```
 
-#### Map Folder
+### Map
 
 Functions used to transform objects or collections using mapping functions.
 
@@ -96,7 +181,7 @@ Functions used to transform objects or collections using mapping functions.
     var asyncList = await Task.FromResult(new[] { 2, 4, 6 }).MapAllAsync(x => x / 2); // [1, 2, 3]
     ```
 
-#### Misc Folder
+### Misc
 
 A collection of various extension methods for functional and utility purposes.
 
@@ -122,6 +207,10 @@ A collection of various extension methods for functional and utility purposes.
     Func<int, int, int> add = (a, b) => a + b;
     var addFive = add.Apply(5);
     int sum = addFive(3); // 8
+    // Overload: Apply for Func<T1, T2, TResult>
+    Func<int, int, int, int> sum3 = (a, b, c) => a + b + c;
+    var addTen = sum3.Apply(10);
+    int result = addTen(2, 3); // 15
     ```
 
 - **IsNull, IsNullOrEmpty**: Checks if an object or collection is null or empty.
@@ -132,6 +221,9 @@ A collection of various extension methods for functional and utility purposes.
     bool isEmpty = "".IsNullOrEmpty(); // true
     var list = new List<int>();
     bool listEmpty = list.IsNullOrEmpty(); // true
+    // Overload: IsNull for reference types
+    object obj = null;
+    bool nullObj = obj.IsNull(); // true
     ```
 
 - **ToTask**: Wraps an object into a completed `Task<T>`.
@@ -141,7 +233,7 @@ A collection of various extension methods for functional and utility purposes.
     int result = await task; // 42
     ```
 
-#### Or Folder
+### Or
 
 Provides fallback values in case of nulls, empties, or custom conditions.
 
@@ -152,6 +244,8 @@ Provides fallback values in case of nulls, empties, or custom conditions.
     var fallback = value.Or("default"); // "default"
     int? n = null;
     var safe = n.Or(10); // 10
+    // Overload: Or with predicate
+    var custom = value.Or(() => "computed");
     ```
 
 - **OrWhenEmpty for Enumerable**: Returns the current enumerable if not empty, otherwise returns the fallback enumerable.
@@ -168,21 +262,243 @@ Provides fallback values in case of nulls, empties, or custom conditions.
     string empty = "";
     var fallbackString = empty.OrWhenEmpty("fallback"); // "fallback"
     var notEmpty = "abc".OrWhenEmpty("fallback"); // "abc"
+    // Overload: OrWhenEmpty with predicate
+    var customString = empty.OrWhenEmpty(() => "computed");
     ```
 
 - **OrAsync**: Like `Or`, but operates on a `Task<T>`. Awaits the task, returns the result if not null, otherwise returns the fallback.
 
     ```csharp
     var asyncValue = await Task.FromResult<string>(null).OrAsync("async default"); // "async default"
+    // Overload: OrAsync with predicate
+    var asyncCustom = await Task.FromResult<string>(null).OrAsync(() => "computed async");
     ```
 
 ---
 
-### FluentTypes
+## 2 FluentTypes
 
 C# implementation of functional types `Option` (as `Optional`) and `Either` (as `Outcome`), providing a rich set of fluent methods for safe, expressive, and composable functional programming.
 
-#### Optional Folder
+
+### SwitchMap
+
+Types and methods that implement a fluent version of the switch/case syntax. The workflow starts with a `Switch`, followed by a series of `Case` statements, and ends with a `Match`.
+
+- **Case**: Adds a case to the switch. If the predicate matches, the associated function is executed.
+
+    ```csharp
+    var value = 5;
+    var result = Prelude.Switch(value, -1)
+        .Case(v => v == 0, v => 100)
+        .Case(v => v > 0, v => v * 10)
+        .Match(); // result = 50
+    ```
+
+- **CaseContainsKey, CaseContains, CaseAny, CaseAll, CaseIsEmpty, CaseIsNotEmpty, CaseCount**: Specialized cases for dictionaries and collections.
+
+    ```csharp
+    var dict = new Dictionary<int, string> { { 1, "one" }, { 2, "two" } };
+    var dictResult = dict.Switch("not found")
+        .CaseContainsKey(1, d => d[1])
+        .CaseContains(new KeyValuePair<int, string>(2, "two"), d => "HasTwo")
+        .CaseIsEmpty(d => "EmptyDict")
+        .Match(); // dictResult = "one"
+    ```
+
+- **CaseOptional**: Adds a case for `Optional` types.
+
+    ```csharp
+    var opt = Optional<int>.Some(10);
+    var msg = opt.Switch("none")
+        .CaseOptional(o => o.HasValue, o => $"Value: {o.Value}")
+        .Match(); // "Value: 10"
+    ```
+
+- **CaseOutcome**: Adds a case for `Outcome` types.
+
+    ```csharp
+    var outcome = Outcome<string, int>.Right(42);
+    var res = outcome.Switch("fail")
+        .CaseOutcome(o => o.IsSuccess, o => $"Success: {o.Success}")
+        .Match(); // "Success: 42"
+    ```
+
+- **CaseAsync**: Adds a case for `Task` types.
+
+    ```csharp
+    var t = Task.FromResult(5);
+    var asyncSwitch = await t.Switch(-1)
+        .CaseAsync(x => x > 0, x => x * 2)
+        .MatchAsync(); // 10
+    ```
+
+- **Match**: Closes the switch and returns the result of the first matching case or the default.
+
+- **MatchAsync**: Closes the async switch and returns the result.
+
+
+### TryCatch
+
+Types and methods that implement a fluent version of the try/catch syntax.
+
+- **Catch**: Adds a catch handler for exceptions thrown in the try block.
+
+    ```csharp
+    var tryResult = Prelude.Try("input", s => int.Parse(s))
+        .Catch((input, ex) => -1);
+    ```
+
+- **Match**: Closes the try/catch and returns the result, allowing you to specify handlers for success and failure.
+
+    ```csharp
+    tryResult.Match(
+        onSuccess: (input, result) => Console.WriteLine($"Parsed: {result}"),
+        onFail: (input, ex) => Console.WriteLine($"Failed to parse '{input}': {ex.Message}")
+    );
+    ```
+
+- **MatchFail**: Closes the try/catch and returns the result for the failure case only.
+
+    ```csharp
+    tryResult.MatchFail((input, ex) => $"Error: {ex.Message}");
+    ```
+
+- **OnFail**: Executes an action if the try is in a failure state, without closing the context.
+
+    ```csharp
+    tryResult.OnFail((input, ex) => Log.Error(ex));
+    ```
+
+- **OnSuccess**: Executes an action if the try is in a success state, without closing the context.
+
+    ```csharp
+    tryResult.OnSuccess((input, result) => Log.Info(result));
+    ```
+
+- **ToOptional**: Converts the try context into an `Optional` object.
+
+    ```csharp
+    var optional = tryResult.ToOptional();
+    ```
+
+- **ToEither**: Converts the try context into an `Outcome` object.
+
+    ```csharp
+    var outcome = tryResult.ToEither();
+    ```
+
+- **ToEitherUsingException**: Converts the try context into an `Outcome` using the exception as the failure value.
+
+    ```csharp
+    var outcome = tryResult.ToEitherUsingException();
+    ```
+
+
+### When
+
+Types and methods that implement a fluent version of the if/else or if-only syntax.
+
+- **IsTrue, IsFalse**: Checks for a when context on a boolean.
+
+    ```csharp
+    var result = Prelude.When(true)
+        .IsTrue()
+        .Match(
+            onTrue: () => "It's true",
+            onFalse: () => "It's false"
+        ); // "It's true"
+    ```
+
+- **IsGreaterThan, IsLessThan, IsEqualsTo**: Checks for a when context on numbers or dates.
+
+    ```csharp
+    var res = Prelude.When(10)
+        .IsGreaterThan(5)
+        .Match(
+            onTrue: () => "Greater",
+            onFalse: () => "Not greater"
+        ); // "Greater"
+    ```
+
+- **ContainsKey, ContainsValue**: Checks for a when context on a dictionary.
+
+    ```csharp
+    var dict = new Dictionary<string, int> { ["a"] = 1 };
+    var found = Prelude.When(dict)
+        .ContainsKey("a")
+        .Match(
+            onTrue: () => "Found",
+            onFalse: () => "Not found"
+        ); // "Found"
+    ```
+
+- **Any, All**: Checks for a when context on an enumerable.
+
+    ```csharp
+    var nums = new[] { 2, 4, 6 };
+    var allEven = Prelude.When(nums)
+        .All(n => n % 2 == 0)
+        .Match(
+            onTrue: () => "All even",
+            onFalse: () => "Not all even"
+        ); // "All even"
+    ```
+
+- **Is**: Default check to apply on any when context.
+
+    ```csharp
+    var check = Prelude.When("abc")
+        .Is(s => s.Length == 3)
+        .Match(
+            onTrue: () => "Length 3",
+            onFalse: () => "Other length"
+        ); // "Length 3"
+    ```
+
+- **Is for Optional and Outcome**: Checks for presence or success.
+
+    ```csharp
+    var opt = Optional<int>.Some(5);
+    var msg = Prelude.When(opt)
+        .Is(o => o.HasValue)
+        .Match(
+            onTrue: () => "Has value",
+            onFalse: () => "No value"
+        ); // "Has value"
+    ```
+
+- **IsNullOrEmpty, IsNotNullOrEmpty, IsEqualsTo**: Checks for a when context on a string.
+
+    ```csharp
+    var s = "";
+    var res = Prelude.When(s)
+        .IsNullOrEmpty()
+        .Match(
+            onTrue: () => "Empty",
+            onFalse: () => "Not empty"
+        ); // "Empty"
+    ```
+
+- **IsAsync**: Checks for a when context on a Task.
+
+    ```csharp
+    var t = Task.FromResult(10);
+    var asyncRes = await Prelude.When(t)
+        .IsAsync(x => x > 5)
+        .Match(
+            onTrue: () => "Greater",
+            onFalse: () => "Not greater"
+        ); // "Greater"
+    ```
+
+- **Match**: Closes the when context and returns the result, allowing you to specify handlers for both true and false cases.
+
+---
+## 3 Functional Types
+Implementation of functional counterpart `Either` and `Option`
+
+### Optional
 
 Fluent implementation of the functional programming `Option` type, representing a value that may or may not exist.
 
@@ -289,7 +605,7 @@ Fluent implementation of the functional programming `Option` type, representing 
     // outcome: Outcome<string, int>.Right(1)
     ```
 
-#### Outcome Folder
+### Outcome
 
 Fluent implementation of the functional programming `Either` type, representing a value that is either a success (`Right`) or a failure (`Left`).
 
@@ -406,225 +722,77 @@ Fluent implementation of the functional programming `Either` type, representing 
     var none = right.ToOptionalFailure(); // Optional<string>.None()
     ```
 
----
-
-### SwitchMap Folder
-
-Types and methods that implement a fluent version of the switch/case syntax. The workflow starts with a `Switch`, followed by a series of `Case` statements, and ends with a `Match`.
-
-- **Case**: Adds a case to the switch. If the predicate matches, the associated function is executed.
-
-    ```csharp
-    var value = 5;
-    var result = Prelude.Switch(value, -1)
-        .Case(v => v == 0, v => 100)
-        .Case(v => v > 0, v => v * 10)
-        .Match(); // result = 50
-    ```
-
-- **CaseContainsKey, CaseContains, CaseAny, CaseAll, CaseIsEmpty, CaseIsNotEmpty, CaseCount**: Specialized cases for dictionaries and collections.
-
-    ```csharp
-    var dict = new Dictionary<int, string> { { 1, "one" }, { 2, "two" } };
-    var dictResult = dict.Switch("not found")
-        .CaseContainsKey(1, d => d[1])
-        .CaseContains(new KeyValuePair<int, string>(2, "two"), d => "HasTwo")
-        .CaseIsEmpty(d => "EmptyDict")
-        .Match(); // dictResult = "one"
-    ```
-
-- **CaseOptional**: Adds a case for `Optional` types.
-
-    ```csharp
-    var opt = Optional<int>.Some(10);
-    var msg = opt.Switch("none")
-        .CaseOptional(o => o.HasValue, o => $"Value: {o.Value}")
-        .Match(); // "Value: 10"
-    ```
-
-- **CaseOutcome**: Adds a case for `Outcome` types.
-
-    ```csharp
-    var outcome = Outcome<string, int>.Right(42);
-    var res = outcome.Switch("fail")
-        .CaseOutcome(o => o.IsSuccess, o => $"Success: {o.Success}")
-        .Match(); // "Success: 42"
-    ```
-
-- **CaseAsync**: Adds a case for `Task` types.
-
-    ```csharp
-    var t = Task.FromResult(5);
-    var asyncSwitch = await t.Switch(-1)
-        .CaseAsync(x => x > 0, x => x * 2)
-        .MatchAsync(); // 10
-    ```
-
-- **Match**: Closes the switch and returns the result of the first matching case or the default.
-
-- **MatchAsync**: Closes the async switch and returns the result.
-
----
-
-### TryCatch Folder
-
-Types and methods that implement a fluent version of the try/catch syntax.
-
-- **Catch**: Adds a catch handler for exceptions thrown in the try block.
-
-    ```csharp
-    var tryResult = Prelude.Try("input", s => int.Parse(s))
-        .Catch((input, ex) => -1);
-    ```
-
-- **Match**: Closes the try/catch and returns the result, allowing you to specify handlers for success and failure.
-
-    ```csharp
-    tryResult.Match(
-        onSuccess: (input, result) => Console.WriteLine($"Parsed: {result}"),
-        onFail: (input, ex) => Console.WriteLine($"Failed to parse '{input}': {ex.Message}")
-    );
-    ```
-
-- **MatchFail**: Closes the try/catch and returns the result for the failure case only.
-
-    ```csharp
-    tryResult.MatchFail((input, ex) => $"Error: {ex.Message}");
-    ```
-
-- **OnFail**: Executes an action if the try is in a failure state, without closing the context.
-
-    ```csharp
-    tryResult.OnFail((input, ex) => Log.Error(ex));
-    ```
-
-- **OnSuccess**: Executes an action if the try is in a success state, without closing the context.
-
-    ```csharp
-    tryResult.OnSuccess((input, result) => Log.Info(result));
-    ```
-
-- **ToOptional**: Converts the try context into an `Optional` object.
-
-    ```csharp
-    var optional = tryResult.ToOptional();
-    ```
-
-- **ToEither**: Converts the try context into an `Outcome` object.
-
-    ```csharp
-    var outcome = tryResult.ToEither();
-    ```
-
-- **ToEitherUsingException**: Converts the try context into an `Outcome` using the exception as the failure value.
-
-    ```csharp
-    var outcome = tryResult.ToEitherUsingException();
-    ```
-
----
-
-### When Folder
-
-Types and methods that implement a fluent version of the if/else or if-only syntax.
-
-- **IsTrue, IsFalse**: Checks for a when context on a boolean.
-
-    ```csharp
-    var result = Prelude.When(true)
-        .IsTrue()
-        .Match(
-            onTrue: () => "It's true",
-            onFalse: () => "It's false"
-        ); // "It's true"
-    ```
-
-- **IsGreaterThan, IsLessThan, IsEqualsTo**: Checks for a when context on numbers or dates.
-
-    ```csharp
-    var res = Prelude.When(10)
-        .IsGreaterThan(5)
-        .Match(
-            onTrue: () => "Greater",
-            onFalse: () => "Not greater"
-        ); // "Greater"
-    ```
-
-- **ContainsKey, ContainsValue**: Checks for a when context on a dictionary.
-
-    ```csharp
-    var dict = new Dictionary<string, int> { ["a"] = 1 };
-    var found = Prelude.When(dict)
-        .ContainsKey("a")
-        .Match(
-            onTrue: () => "Found",
-            onFalse: () => "Not found"
-        ); // "Found"
-    ```
-
-- **Any, All**: Checks for a when context on an enumerable.
-
-    ```csharp
-    var nums = new[] { 2, 4, 6 };
-    var allEven = Prelude.When(nums)
-        .All(n => n % 2 == 0)
-        .Match(
-            onTrue: () => "All even",
-            onFalse: () => "Not all even"
-        ); // "All even"
-    ```
-
-- **Is**: Default check to apply on any when context.
-
-    ```csharp
-    var check = Prelude.When("abc")
-        .Is(s => s.Length == 3)
-        .Match(
-            onTrue: () => "Length 3",
-            onFalse: () => "Other length"
-        ); // "Length 3"
-    ```
-
-- **Is for Optional and Outcome**: Checks for presence or success.
-
-    ```csharp
-    var opt = Optional<int>.Some(5);
-    var msg = Prelude.When(opt)
-        .Is(o => o.HasValue)
-        .Match(
-            onTrue: () => "Has value",
-            onFalse: () => "No value"
-        ); // "Has value"
-    ```
-
-- **IsNullOrEmpty, IsNotNullOrEmpty, IsEqualsTo**: Checks for a when context on a string.
-
-    ```csharp
-    var s = "";
-    var res = Prelude.When(s)
-        .IsNullOrEmpty()
-        .Match(
-            onTrue: () => "Empty",
-            onFalse: () => "Not empty"
-        ); // "Empty"
-    ```
-
-- **IsAsync**: Checks for a when context on a Task.
-
-    ```csharp
-    var t = Task.FromResult(10);
-    var asyncRes = await Prelude.When(t)
-        .IsAsync(x => x > 5)
-        .Match(
-            onTrue: () => "Greater",
-            onFalse: () => "Not greater"
-        ); // "Greater"
-    ```
-
-- **Match**: Closes the when context and returns the result, allowing you to specify handlers for both true and false cases.
-
----
-
 ## License
 
 This project is licensed under the MIT License.
+
+---
+
+## More Complex Examples: Combining Components
+
+### 1. Try + Outcome + Fluent Mapping
+
+```csharp
+using static FluentFunctionalCoding.Prelude;
+
+string input = "42";
+
+var result = Try(input, s => int.Parse(s))
+    .ToEitherUsingException()
+    .MapSuccess(x => x + 10)
+    .MapFailure(ex => ex.Message)
+    .Match(
+        onSuccess: val => $"Parsed and incremented: {val}",
+        onFailure: errMsg => $"Failed: {errMsg}"
+    );
+// Output: Parsed and incremented: 52
+```
+
+### 2. Optional + Switch + Map
+
+```csharp
+var opt = Optional<int>.Some(5);
+
+var message = opt
+    .Map(x => x * 2)
+    .Switch("No value")
+    .CaseOptional(o => o > 5, o => $"Big: {o}")
+    .CaseOptional(o => o > 3, o => $"Medium: {o}")
+    .Match();
+// Output: Big: 10
+```
+
+### 3. Outcome + When + Or
+
+```csharp
+var outcome = Outcome<string, int>.Left("error");
+
+var value = When(outcome)
+    .Is(o => o > 0)
+    .Match(
+        mapOnTrue: val => $"Value is: {val}",
+        mapOnFalse: err => $"Something happened: {err}"
+    );
+// Output: 100
+```
+
+### 4. Try + Optional + Or + Do
+
+```csharp
+var opt = Try("abc", s => int.Parse(s))
+    .ToOptional()
+    .Or(-1)
+    .Do(x => Console.WriteLine($"Result: {x}"));
+// Output: Result: -1
+```
+
+### 5. Async: Task + MapAllAsync + DoForEachAsync
+
+```csharp
+var numbersTask = Task.FromResult(new[] { 1, 2, 3 });
+
+await numbersTask
+    .MapAllAsync(x => x * 10)
+    .DoForEachAsync(n => Console.WriteLine($"Value: {n}"));
+// Output: Value: 10, Value: 20, Value: 30
+```
