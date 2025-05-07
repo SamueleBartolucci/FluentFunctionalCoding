@@ -19,7 +19,7 @@
 
 
 ### Preludes for Fluent and Functional types
-Theese types require a prelude to create a warp context.
+These types require a prelude to create a wrap context.
 
 #### Explicit vs Implicit Context Creation
 
