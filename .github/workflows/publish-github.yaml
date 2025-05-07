@@ -28,15 +28,27 @@ jobs:
         cd ./FluentFunctionalCoding/FluentFunctionalCoding
         ls -la
         dotnet restore
-        dotnet build "/p:Configuration=Release"
+        dotnet build --configuration Release --no-restore
+    #dotnet build "/p:Configuration=Release"
     #- name: Create the package
     #  run: dotnet pack --configuration Release
-    - name: Publish the package to GPR
+
+    # Publish the NuGet package to GitHub Packages
+    - name: Publish to GitHub Packages
       run: |
         cd ./FluentFunctionalCoding/FluentFunctionalCoding/bin/Release
         ls -la
-        dotnet nuget push *.nupkg -k ${GITHUB_TOKEN} -s ${SOURCE_URL} --skip-duplicate
-      env:      
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        SOURCE_URL: https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json
+        dotnet nuget push *.nupkg --api-key ${{ secrets.GITHUB_TOKEN }} --source ${NUGET_SERVER_URL} --skip-duplicate
+      env:
+        NUGET_SERVER_URL: "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json"
+        NUGET_API_KEY: ${{ secrets.GITHUB_TOKEN }}
+        
+  #  - name: Publish the package to GPR
+  #    run: |
+  #      cd ./FluentFunctionalCoding/FluentFunctionalCoding/bin/Release
+  #      ls -la
+  #      dotnet nuget push *.nupkg -k ${GITHUB_TOKEN} -s ${SOURCE_URL} --skip-duplicate
+  #    env:      
+  #      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #      SOURCE_URL: https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json
   
