@@ -28,7 +28,7 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore ./FluentFunctionalCoding/FluentFunctionalCoding/FluentFunctionalCoding.csproj
     - name: Build
-      run: dotnet build
+      run: dotnet build ./FluentFunctionalCoding/FluentFunctionalCoding/FluentFunctionalCoding.csproj
     #- name: Create the package
     #  run: dotnet pack --configuration Release
     - name: Publish the package to GPR
