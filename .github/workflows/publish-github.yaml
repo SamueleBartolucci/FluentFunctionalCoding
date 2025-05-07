@@ -1,9 +1,17 @@
 name: Publish Github
 
+#on:
+#  push:
+#    branches: [ "main" ]
+#  workflow_dispatch:
+
 on:
-  push:
-    branches: [ "main" ]
-  workflow_dispatch:
+  workflow_run:
+    workflows:
+      - Continuous Integration
+    types:
+      - completed
+      
 #    inputs:
 #      version:
 #        description: 'package version'
@@ -13,6 +21,7 @@ on:
 
 jobs:
   publish: 
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}    
     runs-on: ubuntu-latest
 
     steps:
