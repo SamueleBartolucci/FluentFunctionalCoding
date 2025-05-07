@@ -11,7 +11,7 @@
         /// Throws a NotImplementedException for unknown outcome types.
         /// </summary>
         /// <returns>NotImplementedException</returns>
-        internal static NotImplementedException UnknownOutcomeType() => new NotImplementedException($"Unknown type, expected: {nameof(Right<F, S>)} or {nameof(Left<F, S)}");
+        internal static NotImplementedException UnknownOutcomeType() => new NotImplementedException($"Unknown type, expected: {nameof(Right<F, S>)} or {nameof(Left<F, S>)}");
                
 
         /// <summary>

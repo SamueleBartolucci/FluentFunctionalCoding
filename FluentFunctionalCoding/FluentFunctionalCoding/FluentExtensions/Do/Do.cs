@@ -12,7 +12,7 @@
         /// <returns>The original subject after actions are applied, or default if subject is null.</returns>
         public static T Do<T>(this T subject, params Action<T>[] actionsToApplyOnSubject)
         {
-            if (subject == null) return default;
+            if (subject == null) return default!;
 
             foreach (var doOnSubject in actionsToApplyOnSubject)
                 doOnSubject(subject);
