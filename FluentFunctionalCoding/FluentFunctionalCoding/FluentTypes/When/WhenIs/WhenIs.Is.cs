@@ -5,5 +5,7 @@
         public When<T> Is(bool isTrue) => Prelude._WhenMatch(_whenSubject, isTrue);
         public When<T> Is(params Func<bool>[] predicates) => Prelude._WhenMatch(_whenSubject, predicates.All(predicate => predicate()));
         public When<T> Is(params Func<T, bool>[] predicates) => Prelude._WhenMatch(_whenSubject, predicates.All(predidate => predidate(_whenSubject)));
+        public When<T> IsNull() => Prelude._WhenMatch(_whenSubject, _whenSubject == null);
+        public When<T> IsNotNull() => Prelude._WhenMatch(_whenSubject, _whenSubject != null);
     }
 }

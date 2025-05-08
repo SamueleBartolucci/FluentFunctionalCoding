@@ -27,5 +27,12 @@
         /// <returns>The mapped or original subject.</returns>
         public T MatchFalse(Func<T, T> mapOnFalse)
             => IsTrue ? _subject : mapOnFalse(_subject);
+
+
+        /// <summary>
+        /// Close the When context and return the subject.
+        /// </summary>        
+        /// <returns>The mapped or original subject.</returns>
+        public T Match() => _subject;
     }
 }

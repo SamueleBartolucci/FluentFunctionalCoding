@@ -37,5 +37,37 @@ namespace FluentFunctionalCodingTest.FluentTypes.When.WhenIs
             result = whenIs.Is(x => x == 5, x => x < 0);
             result.IsTrue.Should().BeFalse();
         }
+
+        [Test]
+        public void IsNull_WithNull_ShouldReturnTrue()
+        {
+            var whenIs = new WhenIs<string>(null);
+            var result = whenIs.IsNull();
+            result.IsTrue.Should().BeTrue();            
+        }
+
+        [Test]
+        public void IsNull_WithValue_ShouldReturnFalse()
+        {
+            var whenIs = new WhenIs<string>("not null");
+            var result = whenIs.IsNull();
+            result.IsTrue.Should().BeFalse();
+        }
+
+        [Test]
+        public void IsNotNull_WithNull_ShouldReturnFalse()
+        {
+            var whenIs = new WhenIs<string>(null);
+            var result = whenIs.IsNotNull();
+            result.IsTrue.Should().BeFalse();
+        }
+
+        [Test]
+        public void IsNotNull_WithValue_ShouldReturnTrueFalse()
+        {
+            var whenIs = new WhenIs<string>("not null");
+            var result = whenIs.IsNotNull();
+            result.IsTrue.Should().BeTrue();
+        }
     }
 }
