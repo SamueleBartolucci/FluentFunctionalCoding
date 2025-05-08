@@ -1,11 +1,17 @@
 ﻿namespace FluentFunctionalCoding
 {
     /// <summary>
-    /// Represents the result of a computation that may succeed or fail, capturing both the result and error information.
+    /// Represents a computation that might fail with an exception.
     /// </summary>
-    /// <typeparam name="TIn">The input type for the computation.</typeparam>
-    /// <typeparam name="TOut">The output type if the computation succeeds.</typeparam>
-    /// <typeparam name="TErr">The error type if the computation fails.</typeparam>
+    /// <typeparam name="TIn">The type of the input to the operation.</typeparam>
+    /// <typeparam name="TOut">The type of the output if the operation succeeds.</typeparam>
+    /// <typeparam name="TErr">The type of the error if the operation fails.</typeparam>
+    /// <remarks>
+    /// The Try monad provides a functional approach to exception handling.
+    /// It encapsulates operations that might throw exceptions into a container 
+    /// that either holds a successful result or the error information.
+    /// This allows for composition of operations in a safe, fluent manner.
+    /// </remarks>
     public abstract partial record Try<TIn, TOut, TErr>
     {
         /// <summary>
@@ -19,7 +25,7 @@
         internal static NotImplementedException UnknowImplementation() => new NotImplementedException($"Unknown type, expected: {nameof(Success<TIn, TOut, TErr>)} or {nameof(Failure<TIn, TOut, TErr>)}");
 
         /// <summary>
-        /// Gets a value indicating whether the computation was successful.
+        /// Gets a value indicating whether the Try operation was successful.
         /// </summary>
         public virtual bool IsSuccess => this switch
         {
@@ -28,7 +34,7 @@
         };
 
         /// <summary>
-        /// Gets a value indicating whether the computation failed.
+        /// Gets a value indicating whether the Try operation failed.
         /// </summary>
         public bool IsFail => !IsSuccess;
 

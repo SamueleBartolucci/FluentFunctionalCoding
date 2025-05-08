@@ -1,34 +1,83 @@
-﻿
-namespace FluentFunctionalCoding.FluentPreludes
+﻿namespace FluentFunctionalCoding.FluentPreludes
 {
     public static partial class PreludeFluent
     {
-        //TRY with custom CATCH
+        /// <summary>
+        /// Executes a function with the specified subject and handles exceptions using a custom catch function.
+        /// </summary>
+        /// <typeparam name="S">The type of the subject.</typeparam>
+        /// <typeparam name="R">The return type of the function.</typeparam>
+        /// <typeparam name="E">The type of the exception result.</typeparam>
+        /// <param name="funcToTry">The function to execute.</param>
+        /// <param name="subject">The subject to pass to the function.</param>
+        /// <param name="onCatchFunc">A function to handle exceptions, receiving the subject and exception.</param>
+        /// <returns>A Try instance representing the result or exception.</returns>
         public static Try<S, R, E> Try<S, R, E>(this Func<S, R> funcToTry, S subject, Func<S, Exception, E> onCatchFunc)
             => Prelude.Try(subject, funcToTry, onCatchFunc);
 
+        /// <summary>
+        /// Executes a function with the specified subject and handles exceptions using a custom catch action.
+        /// </summary>
+        /// <typeparam name="S">The type of the subject.</typeparam>
+        /// <typeparam name="R">The return type of the function.</typeparam>
+        /// <param name="funcToTry">The function to execute.</param>
+        /// <param name="subject">The subject to pass to the function.</param>
+        /// <param name="onCatchAction">An action to handle exceptions, receiving the subject and exception.</param>
+        /// <returns>A Try instance representing the result or exception.</returns>
         public static Try<S, R, Nothing> Try<S, R>(this Func<S, R> funcToTry, S subject, Action<S, Exception> onCatchAction)
             => Prelude.Try(subject, funcToTry, onCatchAction);
 
+        /// <summary>
+        /// Executes an action with the specified subject and handles exceptions using a custom catch function.
+        /// </summary>
+        /// <typeparam name="S">The type of the subject.</typeparam>
+        /// <typeparam name="E">The type of the exception result.</typeparam>
+        /// <param name="actionToTry">The action to execute.</param>
+        /// <param name="subject">The subject to pass to the action.</param>
+        /// <param name="onCatchFunc">A function to handle exceptions, receiving the subject and exception.</param>
+        /// <returns>A Try instance representing the result or exception.</returns>
         public static Try<S, Nothing, E> Try<S, E>(this Action<S> actionToTry, S subject, Func<S, Exception, E> onCatchFunc)
           => Prelude.Try(subject, actionToTry, onCatchFunc);
 
+        /// <summary>
+        /// Executes an action with the specified subject and handles exceptions using a custom catch action.
+        /// </summary>
+        /// <typeparam name="S">The type of the subject.</typeparam>
+        /// <param name="actionToTry">The action to execute.</param>
+        /// <param name="subject">The subject to pass to the action.</param>
+        /// <param name="onCatchAction">An action to handle exceptions, receiving the subject and exception.</param>
+        /// <returns>A Try instance representing the result or exception.</returns>
         public static Try<S, Nothing, Nothing> Try<S>(this Action<S> actionToTry, S subject, Action<S, Exception> onCatchAction)
           => Prelude.Try(subject, actionToTry, onCatchAction);
 
-
-
-        //TRY with CATCH EX
+        /// <summary>
+        /// Executes a function with the specified subject and catches exceptions of type <see cref="Exception"/>.
+        /// </summary>
+        /// <typeparam name="S">The type of the subject.</typeparam>
+        /// <typeparam name="R">The return type of the function.</typeparam>
+        /// <param name="funcToTry">The function to execute.</param>
+        /// <param name="subject">The subject to pass to the function.</param>
+        /// <returns>A Try instance representing the result or exception.</returns>
         public static Try<S, R, Exception> Try<S, R>(this Func<S, R> funcToTry, S subject)
             => Prelude.Try(subject, funcToTry);
 
+        /// <summary>
+        /// Executes an action with the specified subject and catches exceptions of type <see cref="Exception"/>.
+        /// </summary>
+        /// <typeparam name="S">The type of the subject.</typeparam>
+        /// <param name="actionToTry">The action to execute.</param>
+        /// <param name="subject">The subject to pass to the action.</param>
+        /// <returns>A Try instance representing the result or exception.</returns>
         public static Try<S, Nothing, Exception> Try<S>(this Action<S> actionToTry, S subject)
             => Prelude.Try(subject, actionToTry);
 
+        /// <summary>
+        /// Executes an action and catches exceptions of type <see cref="Exception"/>.
+        /// </summary>
+        /// <param name="subjectAction">The action to execute.</param>
+        /// <returns>A Try instance representing the result or exception.</returns>
         public static Try<Nothing, Nothing, Exception> Try(this Action subjectAction)
             => Prelude.Try(Nothing.SoftNull, s => subjectAction());
 
     }
-
-
 }
