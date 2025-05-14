@@ -683,6 +683,11 @@ Fluent implementation of the functional programming `Either` type, representing 
     ```csharp
     Outcome<string, int>.Right(42)
         .Do(x => Console.WriteLine($"Success: {x}"));
+    // Overload: Do with multiple actions
+    Outcome<string, int>.Right(42).Do(x => Log(x), x => Audit(x));
+    // Overload: Do with function(s) (result ignored)
+    Outcome<string, int>.Right(42).Do(x => x + 1);
+    Outcome<string, int>.Right(42).Do(x => x + 1, x => x * 2);
     ```
 
 - **Map**: Applies a mapping function to either the `Right` or `Left` value, depending on the state, returning a new `Outcome`.
@@ -694,6 +699,9 @@ Fluent implementation of the functional programming `Either` type, representing 
         onFailure: err => err.ToUpper()
     );
     // mapped: Outcome<string, int>.Left("FAIL")
+    // Overload: Map with different result types
+    var mapped2 = outcome.Map<int, string>(s => s.ToString(), f => f.Length);
+    // mapped2: Outcome<string, int>.Left(4)
     ```
 
 - **MapSuccess**: Applies a mapping function to the `Right` value if present, returning a new `Outcome`.

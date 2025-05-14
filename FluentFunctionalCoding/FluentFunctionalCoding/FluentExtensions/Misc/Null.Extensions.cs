@@ -15,7 +15,7 @@
         /// </summary>
         /// <typeparam name="T">The type of the value to check.</typeparam>
         /// <param name="valueToNullCheck">The value to check for null.</param>
-        /// <returns>True if the value is null; otherwise, false.</returns>
+        /// <returns>True if the value is not null; otherwise, false.</returns>
         public static bool IsNotNull<T>(this T valueToNullCheck) => valueToNullCheck != null;
 
         /// <summary>
@@ -33,12 +33,11 @@
         /// <returns>True if the enumerable is null or empty; otherwise, false.</returns>
         public static bool IsNullOrEmpty<T>(this IEnumerable<T> valueToNullCheck) => valueToNullCheck == null || !valueToNullCheck.Any();
 
-
         /// <summary>
         /// Determines whether the specified string is not null or an empty string.
         /// </summary>
         /// <param name="valueToNullCheck">The string to check.</param>
-        /// <returns>True if the string is null or empty; otherwise, false.</returns>
+        /// <returns>True if the string is not null or empty; otherwise, false.</returns>
         public static bool IsNotNullOrEmpty(this string valueToNullCheck) => !string.IsNullOrEmpty(valueToNullCheck);
 
         /// <summary>
@@ -46,7 +45,7 @@
         /// </summary>
         /// <typeparam name="T">The type of the elements in the enumerable.</typeparam>
         /// <param name="valueToNullCheck">The enumerable to check.</param>
-        /// <returns>True if the enumerable is null or empty; otherwise, false.</returns>
+        /// <returns>True if the enumerable is not null and contains at least one element; otherwise, false.</returns>
         public static bool IsNotNullOrEmpty<T>(this IEnumerable<T> valueToNullCheck) => valueToNullCheck != null && valueToNullCheck.Any();
     }
 }
