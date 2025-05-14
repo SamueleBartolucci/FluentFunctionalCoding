@@ -8,83 +8,70 @@
 
 ## Project Features Overview
 
-1. **Fluent Extensions**: `Do`, `Map`, `Or`, and more for collections, tasks, and primitives.
-2. **Fluent Types**
-    - **Try**: Functional try/catch with fluent error handling.
-    - **SwitchMap**: Fluent pattern matching for values and collections.
-    - **When**: Fluent conditional logic for values and collections.
-3. **Functional Types**
-    - **Outcome**: Functional Either type for success/failure flows.
-    - **Optional**: Safe handling of values that may or may not exist.
+FluentFunctionalCoding provides a rich set of functional programming primitives and fluent extensions for C#. It enables expressive, safe, and concise code by leveraging functional concepts such as Optionals, Outcomes (Either), Try/Catch, SwitchMap, and fluent operations on collections and tasks.
 
+### Fluent Extensions at a Glance
 
-### Preludes for Fluent and Functional types
-These types require a prelude to create a wrap context.
+| Extension         | Purpose / Description                                 | Example Usage                              |
+|-------------------|-------------------------------------------------------|--------------------------------------------|
+| **Do**            | Perform side effects in a fluent chain                 | `"hello".Do(Console.WriteLine)`            |
+| **Map**           | Transform values/collections fluently                  | `"123".Map(s => int.Parse(s))`             |
+| **EqualsToAny**   | Check if value equals any of provided values/predicate | `5.EqualsToAny(1, 3, 5)`                   |
+| **Or**            | Provide fallback if value is null/empty/condition      | `value.Or("default")`                     |
+| **DoForEach**     | Perform side effects on each element in a collection   | `list.DoForEach(Console.WriteLine)`         |
+| **MapAll**        | Map/transform all elements in a collection             | `list.MapAll(x => x * 2)`                  |
+| **OrWhenEmpty**   | Fallback for empty collections/strings                 | `list.OrWhenEmpty(fallback)`                |
+| **Apply**         | Partial application for Action/Func                    | `log.Apply(1)`                             |
+| **IsNull/IsNullOrEmpty** | Null/empty checks in a fluent way                | `obj.IsNull()`                             |
+| **ToTask**        | Wrap value in a completed Task                        | `42.ToTask()`                              |
 
-#### Explicit vs Implicit Context Creation
+> **Note:** All extension methods are available via `using FluentFunctionalCoding.FluentPreludes;`.
 
-FluentFunctionalCoding supports two ways to create a functional context:
+### Fluent Types at a Glance
 
-- **Explicit Prelude**: Use static Prelude functions to explicitly create a context for functional operations.
-    
-    ```csharp
-    // Explicitly create a Try context
-    var tryResult = Prelude.Try("123", s => int.Parse(s));
+| Type              | Purpose / Description                                 | Example Usage (Extension/Fluent)           | Example Usage (Explicit Prelude)           |
+|-------------------|-------------------------------------------------------|--------------------------------------------|--------------------------------------------|
+| **Try**           | Functional try/catch with fluent error handling        | `"123".Try(s => int.Parse(s))`            | `Prelude.Try("123", s => int.Parse(s))`   |
+| **SwitchMap**     | Fluent pattern matching for values/collections         | `5.Switch(-1)`                             | `Prelude.Switch(5, -1)`                    |
+| **When**          | Fluent conditional logic                              | `10.When()`                                | `Prelude.When(10)`                         |
 
-    // Explicitly create a Switch context
-    var switchResult = Prelude.Switch(5, -1)
-        .Case(x => x > 0, x => x * 2)
-        .Match();
+### Functional Types at a Glance
 
-    // Explicitly create a When context
-    var whenExplicit = Prelude.When(10)
-                               .IsGreaterThan(5)
-                               .Match(
-                                   onTrue: () => "Greater",
-                                   onFalse: () => "Not greater"
-                               );
+| Type              | Purpose / Description                                 | Example Usage (Extension/Fluent)           | Example Usage (Explicit Prelude)           |
+|-------------------|-------------------------------------------------------|--------------------------------------------|--------------------------------------------|
+| **Optional**      | Option type representing a value that may not exist   | `42.Optional()`                            | `Prelude.Optional(42)`                     |
+| **Outcome**       | Either type representing success or failure           | `100.ToOutcome<string>()`                  | `Prelude.Outcome<string, int>.Right(100)`  |
 
-    // Explicitly create an Optional context
-    var optExplicit = Prelude.Optional(42);
-    var optNoneExplicit = Prelude.Optional<int>();
+You can create a functional context in two ways:
 
-    // Explicitly create an Outcome context
-    var outcomeSuccess = Prelude.Outcome<string, int>.  Right(100);
-    var outcomeFailure = Prelude.Outcome<string, int>.Left  ("fail");
-    ```
+- **Explicit Prelude**: Use static `Prelude` functions for explicit, discoverable context creation.
+- **Implicit/Extension**: Use extension methods directly on types for a more idiomatic, fluent C# style.
 
-- **Implicit Prelude**: Use extension methods directly on types to create a context fluently.
-    
-    ```csharp
-    // Implicitly create a Try context via extension
-    var tryResult = "123".Try(s => int.Parse(s));
+**Example:**
 
-    // Implicitly create a Switch context via extension
-    var switchResult = 5.Switch(-1)
-        .Case(x => x > 0, x => x * 2)
-        .Match();
+```csharp
+// Try
+var tryResult1 = Prelude.Try("123", s => int.Parse(s)); // explicit
+var tryResult2 = "123".Try(s => int.Parse(s));           // extension
 
-    // Implicitly create a When context via extension
-    var whenImplicit = 10.When()
-                         .IsGreaterThan(5)
-                         .Match(
-                             onTrue: () => "Greater",
-                             onFalse: () => "Not greater"
-                         );
+// SwitchMap
+var switch1 = Prelude.Switch(5, -1);
+var switch2 = 5.Switch(-1);
 
-    // Implicitly create a Switch context
-    var optImplicit = 42.Optional();
-    var optNoneImplicit = ((int?)null).Optional();
+// When
+var when1 = Prelude.When(10);
+var when2 = 10.When();
 
-    // Implicitly create an Outcome context
-    var outcomeSuccessImplicit = 100.ToOutcome<string>();
-    var outcomeFailureImplicit = "fail".ToOutcome<int>();
-    ```
+// Optional
+var opt1 = Prelude.Optional(42);
+var opt2 = 42.Optional();
 
-This dual approach allows you to choose between explicit functional style or idiomatic C# extension-based style for context creation.
+// Outcome
+var outcome1 = Prelude.Outcome<string, int>.Right(100);
+var outcome2 = 100.ToOutcome<string>();
+```
 
-
-**NOTE**: to use the implicit preludes add the using of `FluentFunctionalCoding.FluentPreludes`, this because it will add a lots of bloat static methods fo any generic `T` type
+> **Note:** To use the implicit/extension style, add `using FluentFunctionalCoding.FluentPreludes;` to your file. This enables extension methods for all supported types.
 
 ---
 
@@ -149,6 +136,18 @@ Functions used to check equality between objects in a fluent way.
     bool isMatch = value.EqualsToAny(1, 3, 5); // true
     string color = "red";
     bool found = color.EqualsToAny("blue", "green", "red"); // true
+    ```
+
+- **EqualsToAny with predicate**: Returns `true` if the predicate returns true for any of the provided values.
+
+    ```csharp
+    int value = 7;
+    // Check if value is equal to any odd number in the list
+    bool isOddMatch = value.EqualsToAny(x => x % 2 == 1, 2, 4, 7, 8); // true (7 is odd and in the list)
+
+    string word = "hello";
+    // Check if word matches any string with length 5
+    bool hasLengthFive = word.EqualsToAny(s => s.Length == 5, "hi", "hello", "world"); // true
     ```
 
 ### Map
@@ -246,6 +245,13 @@ Provides fallback values in case of nulls, empties, or custom conditions.
     var safe = n.Or(10); // 10
     // Overload: Or with predicate
     var custom = value.Or(() => "computed");
+    // Or with predicate to choose fallback only if predicate is true
+    string s = "error";
+    var fallbackIfError = s.Or(v => v == "error", "fallback"); // "fallback"
+    var notFallback = "ok".Or(v => v == "error", "fallback"); // "ok"
+    int? maybe = 0;
+    var fallbackIfZero = maybe.Or(x => x == 0, 42); // 42
+    var notFallbackNum = 7.Or(x => x == 0, 42); // 7
     ```
 
 - **OrWhenEmpty for Enumerable**: Returns the current enumerable if not empty, otherwise returns the fallback enumerable.
@@ -306,22 +312,32 @@ Types and methods that implement a fluent version of the switch/case syntax. The
         .Match(); // dictResult = "one"
     ```
 
-- **CaseOptional**: Adds a case for `Optional` types.
+- **CaseOptional**: Adds a case for `Optional` types, working directly with the inner value.
 
     ```csharp
     var opt = Optional<int>.Some(10);
     var msg = opt.Switch("none")
-        .CaseOptional(o => o.HasValue, o => $"Value: {o.Value}")
+        .CaseOptional(x => x > 5, x => $"Value: {x}") // x is int
         .Match(); // "Value: 10"
+
+    var none = Optional<int>.None();
+    var msgNone = none.Switch("none")
+        .CaseOptional(x => x > 5, x => $"Value: {x}")
+        .Match(); // "none"
     ```
 
-- **CaseOutcome**: Adds a case for `Outcome` types.
+- **CaseOutcome**: Adds a case for `Outcome` types, working directly with the inner value.
 
     ```csharp
     var outcome = Outcome<string, int>.Right(42);
     var res = outcome.Switch("fail")
-        .CaseOutcome(o => o.IsSuccess, o => $"Success: {o.Success}")
+        .CaseOutcome(x => x > 40, x => $"Success: {x}") // x is int
         .Match(); // "Success: 42"
+
+    var fail = Outcome<string, int>.Left("fail");
+    var resFail = fail.Switch("fail")
+        .CaseOutcome(x => x > 40, x => $"Success: {x}")
+        .Match(); // "fail"
     ```
 
 - **CaseAsync**: Adds a case for `Task` types.
@@ -456,16 +472,42 @@ Types and methods that implement a fluent version of the if/else or if-only synt
         ); // "Length 3"
     ```
 
-- **Is for Optional and Outcome**: Checks for presence or success.
+- **Is for Optional and Outcome**: Checks for presence or success and allows working directly with the inner value.
 
     ```csharp
+    // For Optional: predicate and match work with the inner value (or default for None)
     var opt = Optional<int>.Some(5);
     var msg = Prelude.When(opt)
-        .Is(o => o.HasValue)
+        .Is(x => x > 0) // x is int, not Optional<int>
         .Match(
-            onTrue: () => "Has value",
-            onFalse: () => "No value"
-        ); // "Has value"
+            onTrue: x => $"Positive: {x}",
+            onFalse: x => $"Not positive: {x}"
+        ); // "Positive: 5"
+
+    var none = Optional<int>.None();
+    var msgNone = Prelude.When(none)
+        .Is(x => x > 0) // x is None, no value exists
+        .Match(
+            onTrue: x => $"Positive: {x}",
+            onFalse: x => $"Not positive: {x}"
+        ); // "Not positive: 0"
+
+    // For Outcome: predicate and match work with the inner value (Success or Failure)
+    var outcome = Outcome<string, int>.Right(10);
+    var msg2 = Prelude.When(outcome)
+        .Is(x => x > 5) // x is int, not Outcome
+        .Match(
+            onTrue: x => $"Big: {x}",
+            onFalse: x => $"Small: {x}"
+        ); // "Big: 10"
+
+    var fail = Outcome<string, int>.Left("fail");
+    var msgFail = Prelude.When(fail)
+        .Is(x => x > 5) // there is no x, the Outcome contains fail
+        .Match(
+            onTrue: x => $"Big: {x}",
+            onFalse: x => $"Small or error: {x}"
+        ); // "Small or error: 0"
     ```
 
 - **IsNullOrEmpty, IsNotNullOrEmpty, IsEqualsTo**: Checks for a when context on a string.
