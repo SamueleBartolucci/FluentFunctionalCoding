@@ -18,7 +18,7 @@ namespace FluentFunctionalCodingTest.FluentTypes.TryCatch.PreludesExtensions
                 attempts++;
                 if (attempts < 2) throw new Exception("fail");
             }
-            var result = subject.Try(FlakyAction, numRetry: 2);
+            var result = subject.Try(FlakyAction, numRetries: 2);
             result.Should().BeOfType<Success<string, Nothing, Exception>>();
             attempts.Should().Be(2);
         }
@@ -33,7 +33,7 @@ namespace FluentFunctionalCodingTest.FluentTypes.TryCatch.PreludesExtensions
                 attempts++;
                 throw new Exception("fail");
             }
-            var result = subject.Try(AlwaysFail, numRetry: 2);
+            var result = subject.Try(AlwaysFail, numRetries: 2);
             result.Should().BeOfType<Failure<string, Nothing, Exception>>();
             attempts.Should().Be(2);
         }
@@ -49,7 +49,7 @@ namespace FluentFunctionalCodingTest.FluentTypes.TryCatch.PreludesExtensions
                 if (attempts < 3) throw new Exception("fail");
                 return 123;
             }
-            var result = subject.Try(FlakyFunc, numRetry: 3);
+            var result = subject.Try(FlakyFunc, numRetries: 3);
             result.Should().BeOfType<Success<string, int, Exception>>();
             (result as Success<string, int, Exception>)!._result.Should().Be(123);
             attempts.Should().Be(3);
@@ -65,7 +65,7 @@ namespace FluentFunctionalCodingTest.FluentTypes.TryCatch.PreludesExtensions
                 attempts++;
                 throw new Exception("fail");
             }
-            var result = subject.Try(AlwaysFail, numRetry: 2);
+            var result = subject.Try(AlwaysFail, numRetries: 2);
             result.Should().BeOfType<Failure<string, int, Exception>>();
             attempts.Should().Be(2);
         }
@@ -80,7 +80,7 @@ namespace FluentFunctionalCodingTest.FluentTypes.TryCatch.PreludesExtensions
                 callCount++;
                 if (callCount < 2) throw new Exception("fail");
             }
-            var result = subject.Try(SometimesFails, numRetry: 2);
+            var result = subject.Try(SometimesFails, numRetries: 2);
             result.Should().BeOfType<Success<string, Nothing, Exception>>();
             callCount.Should().Be(2);
         }
@@ -95,7 +95,7 @@ namespace FluentFunctionalCodingTest.FluentTypes.TryCatch.PreludesExtensions
                 callCount++;
                 throw new Exception("fail");
             }
-            var result = subject.Try(AlwaysFails, numRetry: 2);
+            var result = subject.Try(AlwaysFails, numRetries: 2);
             result.Should().BeOfType<Failure<string, Nothing, Exception>>();
             callCount.Should().Be(2);
         }
@@ -111,7 +111,7 @@ namespace FluentFunctionalCodingTest.FluentTypes.TryCatch.PreludesExtensions
                 if (callCount < 3) throw new Exception("fail");
                 return 99;
             }
-            var result = subject.Try(SometimesFails, numRetry: 3);
+            var result = subject.Try(SometimesFails, numRetries: 3);
             result.Should().BeOfType<Success<string, int, Exception>>();
             (result as Success<string, int, Exception>)!._result.Should().Be(99);
             callCount.Should().Be(3);
@@ -127,7 +127,7 @@ namespace FluentFunctionalCodingTest.FluentTypes.TryCatch.PreludesExtensions
                 callCount++;
                 throw new Exception("fail");
             }
-            var result = subject.Try(AlwaysFails, numRetry: 2);
+            var result = subject.Try(AlwaysFails, numRetries: 2);
             result.Should().BeOfType<Failure<string, int, Exception>>();
             callCount.Should().Be(2);
         }
@@ -143,7 +143,7 @@ namespace FluentFunctionalCodingTest.FluentTypes.TryCatch.PreludesExtensions
                 return 42;
             }
             string OnCatch(string s, Exception e) => $"err-{attempts}";
-            var result = "subject".Try(FlakyFunc, OnCatch, numRetry: 2);
+            var result = "subject".Try(FlakyFunc, OnCatch, numRetries: 2);
             result.Should().BeOfType<Success<string, int, string>>();
             attempts.Should().Be(2);
         }
@@ -158,7 +158,7 @@ namespace FluentFunctionalCodingTest.FluentTypes.TryCatch.PreludesExtensions
                 throw new Exception("fail");
             }
             string OnCatch(string s, Exception e) => $"err-{attempts}";
-            var result = "subject".Try(AlwaysFail, OnCatch, numRetry: 2);
+            var result = "subject".Try(AlwaysFail, OnCatch, numRetries: 2);
             result.Should().BeOfType<Failure<string, int, string>>();
             attempts.Should().Be(2);
         }
@@ -173,7 +173,7 @@ namespace FluentFunctionalCodingTest.FluentTypes.TryCatch.PreludesExtensions
                 if (attempts < 2) throw new Exception("fail");
             }
             string OnCatch(string s, Exception e) => $"err-{attempts}";
-            var result = "subject".Try(FlakyAction, OnCatch, numRetry: 2);
+            var result = "subject".Try(FlakyAction, OnCatch, numRetries: 2);
             result.Should().BeOfType<Success<string, Nothing, string>>();
             attempts.Should().Be(2);
         }
@@ -188,7 +188,7 @@ namespace FluentFunctionalCodingTest.FluentTypes.TryCatch.PreludesExtensions
                 throw new Exception("fail");
             }
             string OnCatch(string s, Exception e) => $"err-{attempts}";
-            var result = "subject".Try(AlwaysFail, OnCatch, numRetry: 2);
+            var result = "subject".Try(AlwaysFail, OnCatch, numRetries: 2);
             result.Should().BeOfType<Failure<string, Nothing, string>>();
             attempts.Should().Be(2);
         }
@@ -204,7 +204,7 @@ namespace FluentFunctionalCodingTest.FluentTypes.TryCatch.PreludesExtensions
                 return 42;
             }
             void OnCatch(string s, Exception e) { /* custom logic */ }
-            var result = "subject".Try(FlakyFunc, OnCatch, numRetry: 2);
+            var result = "subject".Try(FlakyFunc, OnCatch, numRetries: 2);
             result.Should().BeOfType<Success<string, int, Nothing>>();
             attempts.Should().Be(2);
         }
@@ -219,7 +219,7 @@ namespace FluentFunctionalCodingTest.FluentTypes.TryCatch.PreludesExtensions
                 throw new Exception("fail");
             }
             void OnCatch(string s, Exception e) { /* custom logic */ }
-            var result = "subject".Try(AlwaysFail, OnCatch, numRetry: 2);
+            var result = "subject".Try(AlwaysFail, OnCatch, numRetries: 2);
             result.Should().BeOfType<Failure<string, int, Nothing>>();
             attempts.Should().Be(2);
         }
@@ -234,7 +234,7 @@ namespace FluentFunctionalCodingTest.FluentTypes.TryCatch.PreludesExtensions
                 if (attempts < 2) throw new Exception("fail");
             }
             void OnCatch(string s, Exception e) { /* custom logic */ }
-            var result = "subject".Try(FlakyAction, OnCatch, numRetry: 2);
+            var result = "subject".Try(FlakyAction, OnCatch, numRetries: 2);
             result.Should().BeOfType<Success<string, Nothing, Nothing>>();
             attempts.Should().Be(2);
         }
@@ -249,7 +249,7 @@ namespace FluentFunctionalCodingTest.FluentTypes.TryCatch.PreludesExtensions
                 throw new Exception("fail");
             }
             void OnCatch(string s, Exception e) { /* custom logic */ }
-            var result = "subject".Try(AlwaysFail, OnCatch, numRetry: 2);
+            var result = "subject".Try(AlwaysFail, OnCatch, numRetries: 2);
             result.Should().BeOfType<Failure<string, Nothing, Nothing>>();
             attempts.Should().Be(2);
         }

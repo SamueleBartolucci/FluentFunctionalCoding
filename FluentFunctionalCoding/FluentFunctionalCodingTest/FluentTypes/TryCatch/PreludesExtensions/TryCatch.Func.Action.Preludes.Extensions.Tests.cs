@@ -49,7 +49,7 @@ namespace FluentFunctionalCodingTest.FluentTypes.TryCatch.PreludesExtensions
                 if (attempts < 2) throw new Exception("fail");
             }
             string OnCatch(string s, Exception e) => $"err-{attempts}";
-            var result = new Action<string>(FlakyAction).Try("subject", OnCatch, numRetry: 2);
+            var result = new Action<string>(FlakyAction).Try("subject", OnCatch, numRetries: 2);
             result.Should().BeOfType<Success<string, Nothing, string>>();
             attempts.Should().Be(2);
         }
@@ -64,7 +64,7 @@ namespace FluentFunctionalCodingTest.FluentTypes.TryCatch.PreludesExtensions
                 throw new Exception("fail");
             }
             string OnCatch(string s, Exception e) => $"err-{attempts}";
-            var result = new Action<string>(AlwaysFail).Try("subject", OnCatch, numRetry: 2);
+            var result = new Action<string>(AlwaysFail).Try("subject", OnCatch, numRetries: 2);
             result.Should().BeOfType<Failure<string, Nothing, string>>();
             attempts.Should().Be(2);
         }
@@ -110,7 +110,7 @@ namespace FluentFunctionalCodingTest.FluentTypes.TryCatch.PreludesExtensions
                 if (attempts < 2) throw new Exception("fail");
             }
             void OnCatch(string s, Exception e) { /* custom logic */ }
-            var result = new Action<string>(FlakyAction).Try("subject", OnCatch, numRetry: 2);
+            var result = new Action<string>(FlakyAction).Try("subject", OnCatch, numRetries: 2);
             result.Should().BeOfType<Success<string, Nothing, Nothing>>();
             attempts.Should().Be(2);
         }
@@ -125,7 +125,7 @@ namespace FluentFunctionalCodingTest.FluentTypes.TryCatch.PreludesExtensions
                 throw new Exception("fail");
             }
             void OnCatch(string s, Exception e) { /* custom logic */ }
-            var result = new Action<string>(AlwaysFail).Try("subject", OnCatch, numRetry: 2);
+            var result = new Action<string>(AlwaysFail).Try("subject", OnCatch, numRetries: 2);
             result.Should().BeOfType<Failure<string, Nothing, Nothing>>();
             attempts.Should().Be(2);
         }
