@@ -131,5 +131,127 @@ namespace FluentFunctionalCodingTest.FluentTypes.TryCatch.PreludesExtensions
             result.Should().BeOfType<Failure<string, int, Exception>>();
             callCount.Should().Be(2);
         }
+
+        [Test]
+        public void Object_Try_WithCustomError_ShouldSucceed_OnRetry_Func()
+        {
+            int attempts = 0;
+            int FlakyFunc(string s)
+            {
+                attempts++;
+                if (attempts < 2) throw new Exception("fail");
+                return 42;
+            }
+            string OnCatch(string s, Exception e) => $"err-{attempts}";
+            var result = "subject".Try(FlakyFunc, OnCatch, numRetry: 2);
+            result.Should().BeOfType<Success<string, int, string>>();
+            attempts.Should().Be(2);
+        }
+
+        [Test]
+        public void Object_Try_WithCustomError_ShouldFail_AfterAllRetries_Func()
+        {
+            int attempts = 0;
+            int AlwaysFail(string s)
+            {
+                attempts++;
+                throw new Exception("fail");
+            }
+            string OnCatch(string s, Exception e) => $"err-{attempts}";
+            var result = "subject".Try(AlwaysFail, OnCatch, numRetry: 2);
+            result.Should().BeOfType<Failure<string, int, string>>();
+            attempts.Should().Be(2);
+        }
+
+        [Test]
+        public void Object_Try_WithCustomError_ShouldSucceed_OnRetry_Action()
+        {
+            int attempts = 0;
+            void FlakyAction(string s)
+            {
+                attempts++;
+                if (attempts < 2) throw new Exception("fail");
+            }
+            string OnCatch(string s, Exception e) => $"err-{attempts}";
+            var result = "subject".Try(FlakyAction, OnCatch, numRetry: 2);
+            result.Should().BeOfType<Success<string, Nothing, string>>();
+            attempts.Should().Be(2);
+        }
+
+        [Test]
+        public void Object_Try_WithCustomError_ShouldFail_AfterAllRetries_Action()
+        {
+            int attempts = 0;
+            void AlwaysFail(string s)
+            {
+                attempts++;
+                throw new Exception("fail");
+            }
+            string OnCatch(string s, Exception e) => $"err-{attempts}";
+            var result = "subject".Try(AlwaysFail, OnCatch, numRetry: 2);
+            result.Should().BeOfType<Failure<string, Nothing, string>>();
+            attempts.Should().Be(2);
+        }
+
+        [Test]
+        public void Object_Try_WithCustomCatchAction_ShouldSucceed_OnRetry_Func()
+        {
+            int attempts = 0;
+            int FlakyFunc(string s)
+            {
+                attempts++;
+                if (attempts < 2) throw new Exception("fail");
+                return 42;
+            }
+            void OnCatch(string s, Exception e) { /* custom logic */ }
+            var result = "subject".Try(FlakyFunc, OnCatch, numRetry: 2);
+            result.Should().BeOfType<Success<string, int, Nothing>>();
+            attempts.Should().Be(2);
+        }
+
+        [Test]
+        public void Object_Try_WithCustomCatchAction_ShouldFail_AfterAllRetries_Func()
+        {
+            int attempts = 0;
+            int AlwaysFail(string s)
+            {
+                attempts++;
+                throw new Exception("fail");
+            }
+            void OnCatch(string s, Exception e) { /* custom logic */ }
+            var result = "subject".Try(AlwaysFail, OnCatch, numRetry: 2);
+            result.Should().BeOfType<Failure<string, int, Nothing>>();
+            attempts.Should().Be(2);
+        }
+
+        [Test]
+        public void Object_Try_WithCustomCatchAction_ShouldSucceed_OnRetry_Action()
+        {
+            int attempts = 0;
+            void FlakyAction(string s)
+            {
+                attempts++;
+                if (attempts < 2) throw new Exception("fail");
+            }
+            void OnCatch(string s, Exception e) { /* custom logic */ }
+            var result = "subject".Try(FlakyAction, OnCatch, numRetry: 2);
+            result.Should().BeOfType<Success<string, Nothing, Nothing>>();
+            attempts.Should().Be(2);
+        }
+
+        [Test]
+        public void Object_Try_WithCustomCatchAction_ShouldFail_AfterAllRetries_Action()
+        {
+            int attempts = 0;
+            void AlwaysFail(string s)
+            {
+                attempts++;
+                throw new Exception("fail");
+            }
+            void OnCatch(string s, Exception e) { /* custom logic */ }
+            var result = "subject".Try(AlwaysFail, OnCatch, numRetry: 2);
+            result.Should().BeOfType<Failure<string, Nothing, Nothing>>();
+            attempts.Should().Be(2);
+        }
     }
 }

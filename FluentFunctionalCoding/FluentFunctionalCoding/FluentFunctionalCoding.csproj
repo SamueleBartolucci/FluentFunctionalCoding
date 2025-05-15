@@ -6,7 +6,7 @@
 		<Nullable>enable</Nullable>
 		<LangVersion>latest</LangVersion>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-		<Version>1.0.2</Version>
+		<Version>1.0.3</Version>
 		<Title>Expand linq fluent methods with some useful constructs for developing code</Title>
 		<Authors>Samuele Bartolucci</Authors>
 		<Description>
@@ -17,6 +17,8 @@ The library aims to enable expressive, safe, and concise code by leveraging func
 		<PackageProjectUrl>https://github.com/SamueleBartolucci/FluentFunctionalCoding</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/SamueleBartolucci/FluentFunctionalCoding</RepositoryUrl>
 		<PackageReleaseNotes>
+=> 1.0.3: Introduced retry functionality for the Try fluent type
+
 FluentCoding Rewrite that includes:
 Fluent Extensions: Do, Map, Or, and more for collections, tasks, and primitives.
 Fluent Types: 

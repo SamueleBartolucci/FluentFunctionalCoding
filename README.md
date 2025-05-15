@@ -410,6 +410,45 @@ Types and methods that implement a fluent version of the try/catch syntax.
     var outcome = tryResult.ToEitherUsingException();
     ```
 
+## Retry Logic with `numRetry` Parameter
+
+The `Try` monad and all related extension methods now support a `numRetry` parameter, allowing you to specify how many times an operation should be retried if it throws an exception. This applies to both explicit and fluent/extension usages for `Func` and `Action` signatures.
+
+### Usage Examples
+
+#### Explicit (static Prelude)
+```csharp
+// Retry up to 3 times if the function throws
+var result = Prelude.Try(subject, funcToTry, numRetry: 3);
+
+// Retry with custom error handler
+var result = Prelude.Try(subject, funcToTry, (s, ex) => "custom error", numRetry: 2);
+```
+
+#### Extension Methods (Fluent)
+```csharp
+// Retry up to 2 times using the extension method
+var result = subject.Try(actionToTry, numRetry: 2);
+
+// Retry with custom error handler
+var result = subject.Try(funcToTry, (s, ex) => "custom error", numRetry: 2);
+```
+
+#### Func/Action Extensions
+```csharp
+// Func extension with retry
+var result = myFunc.Try(subject, numRetry: 3);
+
+// Action extension with custom error and retry
+var result = myAction.Try(subject, (s, ex) => "custom error", numRetry: 2);
+```
+
+### Behavior
+- If the operation succeeds before reaching the retry limit, the result is returned immediately.
+- If all retries fail, the last failure is returned.
+- The default value for `numRetry` is 1 (no retry).
+
+See the unit tests for comprehensive examples of retry scenarios for all overloads and extension methods.
 
 ### When
 
