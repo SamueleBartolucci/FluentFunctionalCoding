@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using FluentFunctionalCoding;
+using FluentFunctionalCoding.FluentPreludes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -177,6 +178,130 @@ namespace FluentFunctionalCodingTest.FluentTypes.TryCatch.Factories
                  outcome => outcome._errorResult.Should().Be("Managed Exception"),
                 outcome => outcome.IsSuccess.Should().BeFalse(),
                 outcome => outcome._subject.Should().Be(subject));
+        }
+
+        [Test]
+        public void Try_ShouldSucceed_OnRetry_Action_Explicit()
+        {
+            var subject = "Subject";
+            int attempts = 0;
+            void FlakyAction(string s)
+            {
+                attempts++;
+                if (attempts < 3) throw new Exception("fail");
+            }
+            var result = Prelude.Try(subject, FlakyAction, numRetry: 3);
+            result.Should().BeOfType<Success<string, Nothing, Exception>>();
+            attempts.Should().Be(3);
+        }
+
+        [Test]
+        public void Try_ShouldFail_AfterAllRetries_Action_Explicit()
+        {
+            var subject = "Subject";
+            int attempts = 0;
+            void AlwaysFail(string s)
+            {
+                attempts++;
+                throw new Exception("fail");
+            }
+            var result = Prelude.Try(subject, AlwaysFail, numRetry: 2);
+            result.Should().BeOfType<Failure<string, Nothing, Exception>>();
+            attempts.Should().Be(2);
+        }
+
+        [Test]
+        public void Try_ShouldSucceed_OnRetry_Func_Explicit()
+        {
+            var subject = "Subject";
+            int attempts = 0;
+            int FlakyFunc(string s)
+            {
+                attempts++;
+                if (attempts < 2) throw new Exception("fail");
+                return 42;
+            }
+            var result = Prelude.Try(subject, FlakyFunc, numRetry: 2);
+            result.Should().BeOfType<Success<string, int, Exception>>();
+            (result as Success<string, int, Exception>)!._result.Should().Be(42);
+            attempts.Should().Be(2);
+        }
+
+        [Test]
+        public void Try_ShouldFail_AfterAllRetries_Func_Explicit()
+        {
+            var subject = "Subject";
+            int attempts = 0;
+            int AlwaysFail(string s)
+            {
+                attempts++;
+                throw new Exception("fail");
+            }
+            var result = Prelude.Try(subject, AlwaysFail, numRetry: 3);
+            result.Should().BeOfType<Failure<string, int, Exception>>();
+            attempts.Should().Be(3);
+        }
+
+        [Test]
+        public void Try_ShouldReturnSuccess_AfterRetries_WhenActionThrowsThenSucceeds_Explicit()
+        {
+            var subject = "Subject";
+            int callCount = 0;
+            void SometimesFails(string s)
+            {
+                callCount++;
+                if (callCount < 3) throw new Exception("fail");
+            }
+            var result = Prelude.Try(subject, SometimesFails, numRetry: 3);
+            result.Should().BeOfType<Success<string, Nothing, Exception>>();
+            callCount.Should().Be(3);
+        }
+
+        [Test]
+        public void Try_ShouldReturnFailure_AfterAllRetries_WhenActionAlwaysFails_Explicit()
+        {
+            var subject = "Subject";
+            int callCount = 0;
+            void AlwaysFails(string s)
+            {
+                callCount++;
+                throw new Exception("fail");
+            }
+            var result = Prelude.Try(subject, AlwaysFails, numRetry: 2);
+            result.Should().BeOfType<Failure<string, Nothing, Exception>>();
+            callCount.Should().Be(2);
+        }
+
+        [Test]
+        public void Try_ShouldReturnSuccess_AfterRetries_WhenFuncThrowsThenSucceeds_Explicit()
+        {
+            var subject = "Subject";
+            int callCount = 0;
+            int SometimesFails(string s)
+            {
+                callCount++;
+                if (callCount < 2) throw new Exception("fail");
+                return 42;
+            }
+            var result = Prelude.Try(subject, SometimesFails, numRetry: 2);
+            result.Should().BeOfType<Success<string, int, Exception>>();
+            (result as Success<string, int, Exception>)!._result.Should().Be(42);
+            callCount.Should().Be(2);
+        }
+
+        [Test]
+        public void Try_ShouldReturnFailure_AfterAllRetries_WhenFuncAlwaysFails_Explicit()
+        {
+            var subject = "Subject";
+            int callCount = 0;
+            int AlwaysFails(string s)
+            {
+                callCount++;
+                throw new Exception("fail");
+            }
+            var result = Prelude.Try(subject, AlwaysFails, numRetry: 3);
+            result.Should().BeOfType<Failure<string, int, Exception>>();
+            callCount.Should().Be(3);
         }
     }
 }
