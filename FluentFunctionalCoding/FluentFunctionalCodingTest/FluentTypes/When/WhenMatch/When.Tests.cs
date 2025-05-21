@@ -49,5 +49,30 @@ namespace FluentFunctionalCodingTest.FluentTypes.When.WhenMatch
             var result2 = whenTrue.MatchFalse(x => x + 2);
             result2.Should().Be(10);
         }
+
+        [Test]
+        public void MatchToOutcome_ShouldReturnRightOrLeft_BasedOnCondition()
+        {
+            var whenTrue = new When<int>(5, true);
+            var outcomeTrue = whenTrue.MatchToOutcome(
+                mapOnTrue: v => v * 2,
+                mapOnFalse: v => $"fail-{v}"
+            );
+            if (outcomeTrue is Right<string, int> right)
+                right._successValue.Should().Be(10);
+            else
+                Assert.Fail("Expected Right outcome");
+
+            var whenFalse = new When<int>(7, false);
+            var outcomeFalse = whenFalse.MatchToOutcome(
+                mapOnTrue: v => v * 2,
+                mapOnFalse: v => $"fail-{v}"
+            );
+            if (outcomeFalse is Left<string, int> left)
+                left._failureValue.Should().Be("fail-7");
+            else
+                Assert.Fail("Expected Left outcome");
+        }
+
     }
 }
