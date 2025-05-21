@@ -34,5 +34,18 @@
         /// </summary>        
         /// <returns>The mapped or original subject.</returns>
         public T Match() => _subject;
+
+        /// <summary>
+        /// Applies the specified mapping functions depending on whether the condition is true or false, and converts the result to an Outcome.
+        /// </summary>
+        /// <typeparam name="F">The failure type of the Outcome.</typeparam>
+        /// <typeparam name="S">The success type of the Outcome.</typeparam>
+        /// <param name="mapOnTrue">The function to apply if the condition is true, returning a success value.</param>
+        /// <param name="mapOnFalse">The function to apply if the condition is false, returning a failure value.</param>
+        /// <returns>An Outcome representing the result of the selected mapping function.</returns>
+        public Outcome<F, S> MatchToOutcome<F, S>(Func<T, S> mapOnTrue, Func<T, F> mapOnFalse)
+            => IsTrue
+                ? Outcome<F, S>.Right(mapOnTrue(_subject))
+                : Outcome<F, S>.Left(mapOnFalse(_subject));
     }
 }

@@ -9,8 +9,8 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="Left{F, S}"/> record with the specified failure value.
         /// </summary>
-        /// <param name="SuccessValue">The failure value to store.</param>
-        internal Left(F SuccessValue) => (_failureValue) = (SuccessValue);
+        /// <param name="failureValue">The failure value to store.</param>
+        internal Left(F failureValue) => (_failureValue) = (failureValue);
 
         /// <inheritdoc/>
         public override bool IsSuccess => false;
