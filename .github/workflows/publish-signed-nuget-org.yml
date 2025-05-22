@@ -1,29 +1,29 @@
 name: Sign and publish to nuget.org
 
 on:
-  workflow_run:
-    workflows:
-      - Continuous Integration
-    types:
-      - completed
+  workflow_run:
+    workflows:
+      - Continuous Integration
+    types:
+      - completed
 
 jobs:
-  publish: 
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}    
-    runs-on: ubuntu-latest
+  publish: 
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}    
+    runs-on: ubuntu-latest
 
-    steps:
-    - name: Checkout
-      uses: actions/checkout@main
+    steps:
+    - name: Checkout
+      uses: actions/checkout@main
 
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: '9.0.x'
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '9.0.x'
         source-url: https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json
       env:
         NUGET_AUTH_TOKEN: ${{ github.token }}
-        
+                       
     - name: Create signed package  
       run: |
         cd ./FluentFunctionalCoding/FluentFunctionalCoding       
