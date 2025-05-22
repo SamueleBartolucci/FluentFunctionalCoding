@@ -1,0 +1,36 @@
+name: Sign and publish to nuget.org
+
+on:
+  workflow_run:
+    workflows:
+      - Continuous Integration
+    types:
+      - completed
+
+jobs:
+  publish: 
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}    
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@main
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '9.0.x'
+        source-url: https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json
+      env:
+        NUGET_AUTH_TOKEN: ${{ github.token }}
+        
+    - name: Create signed package  
+      run: |
+        cd ./FluentFunctionalCoding/FluentFunctionalCoding       
+        dotnet restore
+        dotnet build --configuration Release --no-restore /p:SignAssembly=true /p:AssemblyOriginatorKeyFile=../../ffc.snk /p:PackageId=FluentFunctionalCoding.Signed
+    - name: Publish the signed package to nuget repository
+      run: |
+        cd ./FluentFunctionalCoding/FluentFunctionalCoding/bin/Release
+        ls -la
+        dotnet nuget push *.nupkg --source https://api.nuget.org/v3/index.json --api-key "${{ secrets.NUGET_API_KEY }}" --skip-duplicate

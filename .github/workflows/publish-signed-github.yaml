@@ -1,0 +1,49 @@
+name: Publish Github Signed
+
+#on:
+#  push:
+#    branches: [ "main" ]
+#  workflow_dispatch:
+
+on:
+  workflow_run:
+    workflows:
+      - Continuous Integration
+    types:
+      - completed
+      
+#    inputs:
+#      version:
+#        description: 'package version'
+#        required: true
+#        default: '1.0.0'
+#        type: string
+
+jobs:
+  publish: 
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}    
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '9.0.x'
+        source-url: https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json
+      env:
+        NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+    - name: prepare and build signed package
+      run:  |
+        cd ./FluentFunctionalCoding/FluentFunctionalCoding
+        ls -la
+        dotnet restore
+        dotnet build --configuration Release --no-restore /p:SignAssembly=true /p:AssemblyOriginatorKeyFile=../../ffc.snk /p:PackageId=FluentFunctionalCoding.Signed
+    - name: Publish to GitHub signed Package
+      run: |
+        cd ./FluentFunctionalCoding/FluentFunctionalCoding/bin/Release
+        ls -la
+        dotnet nuget push *.nupkg --api-key ${{ secrets.GITHUB_TOKEN }} --source ${NUGET_SERVER_URL} --skip-duplicate
+      env:
+        NUGET_SERVER_URL: "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json"
+        NUGET_API_KEY: ${{ secrets.GITHUB_TOKEN }}
+  
