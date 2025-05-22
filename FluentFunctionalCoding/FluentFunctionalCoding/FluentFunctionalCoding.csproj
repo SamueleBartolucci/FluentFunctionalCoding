@@ -49,7 +49,7 @@ Consolidated naming and functionalities across types and extensions, hidden lots
 	</ItemGroup>
 
 
-	<ItemGroup>
+	<ItemGroup Condition="'$(Configuration)' == 'Debug'">
 		<InternalsVisibleTo Include="FluentFunctionalCodingTest" />
 	</ItemGroup>
 	
