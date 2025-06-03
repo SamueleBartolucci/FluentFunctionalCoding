@@ -18,6 +18,10 @@ The library aims to enable expressive, safe, and concise code by leveraging func
 		<RepositoryUrl>https://github.com/SamueleBartolucci/FluentFunctionalCoding</RepositoryUrl>
 		<PackageReleaseNotes>
 =&gt; 1.1.2: Fixed a bug in Switch that failed the pattern matching on a null subject
+=&gt; 1.1.1: Introduced MapUsing to apply a Map inside a using statement, for types, T, Outcome and Optional
+ 			 Introduced MatchToOutcome to directly convert a Match result into an Outcome.
+=&gt; 1.1.0: Introduced retry functionality for the Try fluent type: all Try preludes now include a new parameter, numRetry, with a default value of 1.
+
 			
 FluentCoding Rewrite that includes:
 Fluent Extensions: Do, Map, Or, and more for collections, tasks, and primitives.
