@@ -6,7 +6,7 @@
 		<Nullable>enable</Nullable>
 		<LangVersion>latest</LangVersion>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-		<Version>1.1.1</Version>
+		<Version>1.1.2</Version>
 		<Title>Expand linq fluent methods with some useful constructs for developing code</Title>
 		<Authors>Samuele Bartolucci</Authors>
 		<Description>
@@ -17,8 +17,7 @@ The library aims to enable expressive, safe, and concise code by leveraging func
 		<PackageProjectUrl>https://github.com/SamueleBartolucci/FluentFunctionalCoding</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/SamueleBartolucci/FluentFunctionalCoding</RepositoryUrl>
 		<PackageReleaseNotes>
-=&gt; 1.1.1: Introduced MapUsing to apply a Map inside a using statement, for types, T, Outcome and Optional
- 			 Introduced MatchToOutcome to directly convert a Match result into an Outcome.
+=&gt; 1.1.2: Fixed a bug in Switch that failed the pattern matching on a null subject
 			
 FluentCoding Rewrite that includes:
 Fluent Extensions: Do, Map, Or, and more for collections, tasks, and primitives.
