@@ -30,7 +30,7 @@ namespace FluentCodingTest.SwitchMap.Case.Outcome.Success.Extensions
             switchCase.AsValues()._defaultOrSelectedMapFunction(switchCase.AsValues()._subject).Should().Be(_default);
 
             switchCase = switchCase.CaseOutcome(true, s => ToTRUE(s));
-            switchCase.Should().BeOfType<PredicateMatchCase<Outcome<bool, string>, Outcome<bool, string>>>();
+            switchCase.Should().BeOfType<MatchedCase<Outcome<bool, string>, Outcome<bool, string>>>();
             switchCase.AsValues()._defaultOrSelectedMapFunction(switchCase.AsValues()._subject).Should().Be(_TRUE);
         }
 
@@ -58,7 +58,7 @@ namespace FluentCodingTest.SwitchMap.Case.Outcome.Success.Extensions
             switchCase.AsValues()._defaultOrSelectedMapFunction(switchCase.AsValues()._subject).Should().Be(_default);
 
             switchCase = switchCase.CaseOutcome(() => true, s => ToTRUE(s));
-            switchCase.Should().BeOfType<PredicateMatchCase<Outcome<bool, string>, Outcome<bool, string>>>();
+            switchCase.Should().BeOfType<MatchedCase<Outcome<bool, string>, Outcome<bool, string>>>();
             switchCase.AsValues()._defaultOrSelectedMapFunction(switchCase.AsValues()._subject).Should().Be(_TRUE);
         }
 
@@ -84,7 +84,7 @@ namespace FluentCodingTest.SwitchMap.Case.Outcome.Success.Extensions
             switchCase.AsValues()._defaultOrSelectedMapFunction(switchCase.AsValues()._subject).Should().Be(_default);
 
             switchCase = switchCase.CaseOutcome(sbj => sbj == "test", s=> ToTRUE(s));
-            switchCase.Should().BeOfType<PredicateMatchCase<Outcome<bool, string>, Outcome<bool, string>>>();
+            switchCase.Should().BeOfType<MatchedCase<Outcome<bool, string>, Outcome<bool, string>>>();
             switchCase.AsValues()._defaultOrSelectedMapFunction(switchCase.AsValues()._subject).Should().Be(_TRUE);
         }
 
@@ -111,15 +111,15 @@ namespace FluentCodingTest.SwitchMap.Case.Outcome.Success.Extensions
                 .Should().Be(_default);
 
             switchCase = switchCase.CaseOutcome(true, sbj => ToTRUE(sbj));
-            switchCase.Should().BeOfType<PredicateMatchCase<Outcome<bool, string>, Outcome<bool, string>>>();
+            switchCase.Should().BeOfType<MatchedCase<Outcome<bool, string>, Outcome<bool, string>>>();
             switchCase.AsValues()._defaultOrSelectedMapFunction(switchCase.AsValues()._subject).Should().BeEquivalentTo(_TRUE);
 
             switchCase = switchCase.CaseOutcome(() => true, sbj => ToTRUE(sbj, "2"));
-            switchCase.Should().BeOfType<PredicateMatchCase<Outcome<bool, string>, Outcome<bool, string>>>();
+            switchCase.Should().BeOfType<MatchedCase<Outcome<bool, string>, Outcome<bool, string>>>();
             switchCase.AsValues()._defaultOrSelectedMapFunction(switchCase.AsValues()._subject).Should().BeEquivalentTo(_TRUE);
 
             switchCase = switchCase.CaseOutcome(sbj => sbj == "test", s => ToTRUE(s, "3"));
-            switchCase.Should().BeOfType<PredicateMatchCase<Outcome<bool, string>, Outcome<bool, string>>>();
+            switchCase.Should().BeOfType<MatchedCase<Outcome<bool, string>, Outcome<bool, string>>>();
             switchCase.AsValues()._defaultOrSelectedMapFunction(switchCase.AsValues()._subject).Should().BeEquivalentTo(_TRUE);
         }
     }

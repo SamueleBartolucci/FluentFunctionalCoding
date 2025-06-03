@@ -29,7 +29,7 @@ namespace FluentCodingTest.SwitchMap.Case.Dictionary.Extensions
             switchCase.AsValues()._defaultOrSelectedMapFunction(switchCase.AsValues()._subject).Should().BeEquivalentTo("default");
 
             switchCase = switchCase.CaseContainsKey(3, sbj => sbj[3]);
-            switchCase.Should().BeOfType<PredicateMatchCase<Dictionary<int, string>, string>>();
+            switchCase.Should().BeOfType<MatchedCase<Dictionary<int, string>, string>>();
             switchCase.AsValues()._defaultOrSelectedMapFunction(switchCase.AsValues()._subject).Should().BeEquivalentTo("3");
         }
 
@@ -61,11 +61,11 @@ namespace FluentCodingTest.SwitchMap.Case.Dictionary.Extensions
             switchCase.AsValues()._defaultOrSelectedMapFunction(switchCase.AsValues()._subject).Should().BeEquivalentTo("default");
 
             switchCase = switchCase.CaseContains(new KeyValuePair<int, string>(1, "1"), sbj => sbj[1]);
-            switchCase.Should().BeOfType<PredicateMatchCase<Dictionary<int, string>, string>>();
+            switchCase.Should().BeOfType<MatchedCase<Dictionary<int, string>, string>>();
             switchCase.AsValues()._defaultOrSelectedMapFunction(switchCase.AsValues()._subject).Should().BeEquivalentTo("1");
 
             switchCase = switchCase.CaseContains(new KeyValuePair<int, string>(2, "2"), sbj => sbj[2]);
-            switchCase.Should().BeOfType<PredicateMatchCase<Dictionary<int, string>, string>>();
+            switchCase.Should().BeOfType<MatchedCase<Dictionary<int, string>, string>>();
             switchCase.AsValues()._defaultOrSelectedMapFunction(switchCase.AsValues()._subject).Should().BeEquivalentTo("1");
         }
 

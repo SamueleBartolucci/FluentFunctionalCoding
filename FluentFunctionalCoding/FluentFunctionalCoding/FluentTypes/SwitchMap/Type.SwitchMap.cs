@@ -11,6 +11,6 @@
         /// Throws an exception for unknown optional types.
         /// </summary>
         /// <returns>A NotImplementedException.</returns>
-        internal static NotImplementedException UnknowOptionalType() => new NotImplementedException($"Unknown type, expected: {nameof(DefaultCase<TIn, TOut>)} or {nameof(PredicateMatchCase<TIn, TOut>)}");        
+        internal static NotImplementedException UnknowOptionalType() => new NotImplementedException($"Unknown type, expected: {nameof(DefaultCase<TIn, TOut>)} or {nameof(MatchedCase<TIn, TOut>)}");        
     }
 }
