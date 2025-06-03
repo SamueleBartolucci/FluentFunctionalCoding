@@ -23,7 +23,7 @@ namespace FluentCodingTest.SwitchMap.Case.Extensions.IList
             switchCase.AsValues()._defaultOrSelectedMapFunction(switchCase.AsValues()._subject).Should().BeEquivalentTo("default");
 
             switchCase = switchCase.CaseAny(value => value == 5, _ => "Found-5");
-            switchCase.Should().BeOfType<PredicateMatchCase<IList<int>, string>>();
+            switchCase.Should().BeOfType<MatchedCase<IList<int>, string>>();
             switchCase.AsValues()._defaultOrSelectedMapFunction(switchCase.AsValues()._subject).Should().BeEquivalentTo("Found-5");
         }
 
@@ -51,11 +51,11 @@ namespace FluentCodingTest.SwitchMap.Case.Extensions.IList
             switchCase.AsValues()._defaultOrSelectedMapFunction(switchCase.AsValues()._subject).Should().BeEquivalentTo("default");
 
             switchCase = switchCase.CaseAll(value => value < 10, _ => "All-less-10");
-            switchCase.Should().BeOfType<PredicateMatchCase<IList<int>, string>>();
+            switchCase.Should().BeOfType<MatchedCase<IList<int>, string>>();
             switchCase.AsValues()._defaultOrSelectedMapFunction(switchCase.AsValues()._subject).Should().BeEquivalentTo("All-less-10");
 
             switchCase = switchCase.CaseAll(value => value < 99, _ => "All-less-99");
-            switchCase.Should().BeOfType<PredicateMatchCase<IList<int>, string>>();
+            switchCase.Should().BeOfType<MatchedCase<IList<int>, string>>();
             switchCase.AsValues()._defaultOrSelectedMapFunction(switchCase.AsValues()._subject).Should().BeEquivalentTo("All-less-10");
         }
 
@@ -89,7 +89,7 @@ namespace FluentCodingTest.SwitchMap.Case.Extensions.IList
             IList<int> test = defaultSubject.Where(_ => false).ToArray();
             var switchCase = test.Switch("default");
             switchCase = switchCase.CaseIsEmpty(_ => "EMPTY");
-            switchCase.Should().BeOfType<PredicateMatchCase<IList<int>, string>>();
+            switchCase.Should().BeOfType<MatchedCase<IList<int>, string>>();
             switchCase.AsValues()._defaultOrSelectedMapFunction(switchCase.AsValues()._subject).Should().BeEquivalentTo("EMPTY");
         }
 
@@ -100,7 +100,7 @@ namespace FluentCodingTest.SwitchMap.Case.Extensions.IList
             switchCase.Should().BeOfType<DefaultCase<IList<int>, string>>();
 
             switchCase = switchCase.CaseIsNotEmpty(_ => "NOT-EMPTY");
-            switchCase.Should().BeOfType<PredicateMatchCase<IList<int>, string>>();
+            switchCase.Should().BeOfType<MatchedCase<IList<int>, string>>();
             switchCase.AsValues()._defaultOrSelectedMapFunction(switchCase.AsValues()._subject).Should().BeEquivalentTo("NOT-EMPTY");
         }
 
@@ -124,7 +124,7 @@ namespace FluentCodingTest.SwitchMap.Case.Extensions.IList
             switchCase.Should().BeOfType<DefaultCase<IList<int>, string>>();
 
             switchCase = switchCase.CaseCount(7, _ => "COUNT");
-            switchCase.Should().BeOfType<PredicateMatchCase<IList<int>, string>>();
+            switchCase.Should().BeOfType<MatchedCase<IList<int>, string>>();
             switchCase.AsValues()._defaultOrSelectedMapFunction(switchCase.AsValues()._subject).Should().BeEquivalentTo("COUNT");
         }
 

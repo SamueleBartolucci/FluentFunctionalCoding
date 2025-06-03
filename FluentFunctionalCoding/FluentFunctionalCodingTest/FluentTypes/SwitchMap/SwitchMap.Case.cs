@@ -10,6 +10,36 @@ namespace FluentCodingTest.SwitchMap.Case
         public SwitchMap<string, string> GetSwitch(string subject = "test") => subject.Switch("default").As<SwitchMap<string, string>>();
 
         [Test]
+        public void Case_with_null_subject_Should_still_match()
+        {
+            new List<string>() { null }
+            .FirstOrDefault()
+            .Switch(_ => "")
+            .Case(s => s.IsNull(), _ => "subject is null")
+            .Case(ae => ae.Length == 10, _ => "this throw exception if reached")
+            .Match()
+            .Should().Be("subject is null");
+
+            ((DateTime?)null)            
+            .Switch(_ => "")
+            .Case(s => s.IsNull(), _ => "subject is null")
+            .Case(date => date.Value < DateTime.Now, _ => "this throw exception if reached")
+            .Match()
+            .Should().Be("subject is null");
+
+
+            ((Stream)null)
+            .Switch(_ => "")
+            .Case(s => s.IsNull(), _ => "subject is null")
+            .Case(strm => strm.CanRead, _ => "this throw exception if reached")
+            .Match()
+            .Should().Be("subject is null");
+
+        }
+
+
+
+        [Test]
         public void Case_bool_predicate_true()
         {
             var switchCase = GetSwitch();
@@ -20,7 +50,7 @@ namespace FluentCodingTest.SwitchMap.Case
             switchCase.AsValues()._defaultOrSelectedMapFunction(switchCase.AsValues()._subject).Should().Be("default");
 
             switchCase = switchCase.Case(true, _ => "TRUE");
-            switchCase.Should().BeOfType<PredicateMatchCase<string, string>>();
+            switchCase.Should().BeOfType<MatchedCase<string, string>>();
             switchCase.AsValues()._defaultOrSelectedMapFunction(switchCase.AsValues()._subject).Should().Be("TRUE");
         }
 
@@ -48,7 +78,7 @@ namespace FluentCodingTest.SwitchMap.Case
             switchCase.AsValues()._defaultOrSelectedMapFunction(switchCase.AsValues()._subject).Should().Be("default");
 
             switchCase = switchCase.Case(() => true, _ => "TRUE");
-            switchCase.Should().BeOfType<PredicateMatchCase<string, string>>();
+            switchCase.Should().BeOfType<MatchedCase<string, string>>();
             switchCase.AsValues()._defaultOrSelectedMapFunction(switchCase.AsValues()._subject).Should().Be("TRUE");
         }
 
@@ -74,7 +104,7 @@ namespace FluentCodingTest.SwitchMap.Case
             switchCase.AsValues()._defaultOrSelectedMapFunction(switchCase.AsValues()._subject).Should().Be("default");
 
             switchCase = switchCase.Case(sbj => sbj == "test", _ => "TRUE");
-            switchCase.Should().BeOfType<PredicateMatchCase<string, string>>();
+            switchCase.Should().BeOfType<MatchedCase<string, string>>();
             switchCase.AsValues()._defaultOrSelectedMapFunction(switchCase.AsValues()._subject).Should().Be("TRUE");
         }
 
@@ -100,19 +130,19 @@ namespace FluentCodingTest.SwitchMap.Case
             switchCase.AsValues()._defaultOrSelectedMapFunction(switchCase.AsValues()._subject).Should().Be("default");
 
             switchCase = switchCase.Case(true, _ => "TRUE");
-            switchCase.Should().BeOfType<PredicateMatchCase<string, string>>();
+            switchCase.Should().BeOfType<MatchedCase<string, string>>();
 
             switchCase.AsValues()._defaultOrSelectedMapFunction(switchCase.AsValues()._subject).Should().Be("TRUE");
             switchCase = switchCase.Case(() => true, _ => "TRUE2");
-            switchCase.Should().BeOfType<PredicateMatchCase<string, string>>();
+            switchCase.Should().BeOfType<MatchedCase<string, string>>();
             switchCase.AsValues()._defaultOrSelectedMapFunction(switchCase.AsValues()._subject).Should().Be("TRUE");
 
             switchCase = switchCase.Case(sbj => sbj == "test", _ => "TRUE3");
-            switchCase.Should().BeOfType<PredicateMatchCase<string, string>>();
+            switchCase.Should().BeOfType<MatchedCase<string, string>>();
             switchCase.AsValues()._defaultOrSelectedMapFunction(switchCase.AsValues()._subject).Should().Be("TRUE");
 
             switchCase = switchCase.Case(true, _ => "TRUE");
-            switchCase.Should().BeOfType<PredicateMatchCase<string, string>>();
+            switchCase.Should().BeOfType<MatchedCase<string, string>>();
             switchCase.AsValues()._defaultOrSelectedMapFunction(switchCase.AsValues()._subject).Should().Be("TRUE");
         }
 

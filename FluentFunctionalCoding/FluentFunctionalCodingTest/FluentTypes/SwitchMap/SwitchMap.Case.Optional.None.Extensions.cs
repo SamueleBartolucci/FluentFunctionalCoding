@@ -32,7 +32,7 @@ namespace FluentCodingTest.SwitchMap.Case.Optional.None.Extensions
             switchCase.AsValues()._defaultOrSelectedMapFunction(switchCase.AsValues()._subject).Should().BeEquivalentTo(_default.ToOptional());
 
             switchCase = switchCase.CaseOptional(true, s => ToTRUE(s));
-            switchCase.Should().BeOfType<PredicateMatchCase<Optional<string>, Optional<string>>>();
+            switchCase.Should().BeOfType<MatchedCase<Optional<string>, Optional<string>>>();
             switchCase.AsValues()._defaultOrSelectedMapFunction(switchCase.AsValues()._subject).Should().BeEquivalentTo(Optional<string>.None());
         }
 
@@ -60,7 +60,7 @@ namespace FluentCodingTest.SwitchMap.Case.Optional.None.Extensions
             switchCase.AsValues()._defaultOrSelectedMapFunction(switchCase.AsValues()._subject).Should().BeEquivalentTo(_default.ToOptional());
 
             switchCase = switchCase.CaseOptional(() => true, s => ToTRUE(s));
-            switchCase.Should().BeOfType<PredicateMatchCase<Optional<string>, Optional<string>>>();
+            switchCase.Should().BeOfType<MatchedCase<Optional<string>, Optional<string>>>();
             switchCase.AsValues()._defaultOrSelectedMapFunction(switchCase.AsValues()._subject).Should().BeEquivalentTo(Optional<string>.None());
         }
 
@@ -113,15 +113,15 @@ namespace FluentCodingTest.SwitchMap.Case.Optional.None.Extensions
             switchCase.AsValues()._defaultOrSelectedMapFunction(switchCase.AsValues()._subject).Should().BeEquivalentTo(_default.ToOptional());
 
             switchCase = switchCase.Case(true, sbj => sbj.Map(s => ToTRUE(s)));
-            switchCase.Should().BeOfType<PredicateMatchCase<Optional<string>, Optional<string>>>();
+            switchCase.Should().BeOfType<MatchedCase<Optional<string>, Optional<string>>>();
             switchCase.AsValues()._defaultOrSelectedMapFunction(switchCase.AsValues()._subject).Should().BeEquivalentTo(Optional<string>.None());
 
             switchCase = switchCase.Case(() => true, sbj => sbj.Map(s => ToTRUE(s, "2")));
-            switchCase.Should().BeOfType<PredicateMatchCase<Optional<string>, Optional<string>>>();
+            switchCase.Should().BeOfType<MatchedCase<Optional<string>, Optional<string>>>();
             switchCase.AsValues()._defaultOrSelectedMapFunction(switchCase.AsValues()._subject).Should().BeEquivalentTo(Optional<string>.None());
 
             switchCase = switchCase.CaseOptional(sbj => sbj == "test", s => ToTRUE(s, "3"));
-            switchCase.Should().BeOfType<PredicateMatchCase<Optional<string>, Optional<string>>>();
+            switchCase.Should().BeOfType<MatchedCase<Optional<string>, Optional<string>>>();
             switchCase.AsValues()._defaultOrSelectedMapFunction(switchCase.AsValues()._subject).Should().BeEquivalentTo(Optional<string>.None());
         }
 
