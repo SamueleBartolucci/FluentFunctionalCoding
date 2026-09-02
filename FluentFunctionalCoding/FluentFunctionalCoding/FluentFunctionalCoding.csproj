@@ -6,7 +6,7 @@
 		<Nullable>enable</Nullable>
 		<LangVersion>latest</LangVersion>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-		<Version>1.1.2</Version>
+		<Version>1.1.3</Version>
 		<Title>Expand linq fluent methods with some useful constructs for developing code</Title>
 		<Authors>Samuele Bartolucci</Authors>
 		<Description>
